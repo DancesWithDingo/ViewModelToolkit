@@ -1,0 +1,81 @@
+is_global = true
+build_property.TargetFramework = net7.0-android
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = true
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.RootNamespace = ViewModelToolkitSample
+build_property.ProjectDir = /Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/
+
+[/Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/App.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ViewModelToolkitSample.App.xaml
+build_metadata.AdditionalFiles.TargetPath = App.xaml
+build_metadata.AdditionalFiles.RelativePath = App.xaml
+
+[/Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/Resources/Styles/Colors.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ViewModelToolkitSample.Resources.Styles.Colors.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources/Styles/Colors.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources/Styles/Colors.xaml
+
+[/Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/Resources/Styles/Styles.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ViewModelToolkitSample.Resources.Styles.Styles.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources/Styles/Styles.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources/Styles/Styles.xaml
+
+[/Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/Styles.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ViewModelToolkitSample.Styles.xaml
+build_metadata.AdditionalFiles.TargetPath = Styles.xaml
+build_metadata.AdditionalFiles.RelativePath = Styles.xaml
+
+[/Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/Views/ComplicatedPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ViewModelToolkitSample.Views.ComplicatedPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/ComplicatedPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/ComplicatedPage.xaml
+
+[/Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/Views/EditCustomerStep1Page.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ViewModelToolkitSample.Views.EditCustomerStep1Page.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/EditCustomerStep1Page.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/EditCustomerStep1Page.xaml
+
+[/Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/Views/EditCustomerStep2Page.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ViewModelToolkitSample.Views.EditCustomerStep2Page.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/EditCustomerStep2Page.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/EditCustomerStep2Page.xaml
+
+[/Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/Views/EditCustomerStep3Page.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ViewModelToolkitSample.Views.EditCustomerStep3Page.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/EditCustomerStep3Page.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/EditCustomerStep3Page.xaml
+
+[/Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/Views/MainPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ViewModelToolkitSample.Views.MainPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/MainPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/MainPage.xaml
+
+[/Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/Views/PickANumberPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ViewModelToolkitSample.Views.PickANumberPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/PickANumberPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/PickANumberPage.xaml
+
+[/Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/Views/SimpleNavigationPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ViewModelToolkitSample.Views.SimpleNavigationPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/SimpleNavigationPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/SimpleNavigationPage.xaml

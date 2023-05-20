@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ViewModelToolkitSample.ViewModels"
+             x:Class="ViewModelToolkitSample.Views.ComplicatedPage"
+             x:DataType="vm:ComplicatedPageViewModel"
+             Title="Complicated Page">
+    <ScrollView>
+        <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,120" RowSpacing="6" ColumnSpacing="6" Padding="30" WidthRequest="{OnPlatform MacCatalyst=600}" HorizontalOptions="Center">
+            <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ContentBorderStyle}">
+                <VerticalStackLayout Spacing="20">
+                    <Label Text="Transaction Description Entry" Style="{StaticResource TitleLabelStyle}" />
+
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="Transaction Id:" Style="{StaticResource HeaderLabelStyle}"/>
+                        <Label Text="{Binding Source.TransactionId}" FontSize="16" Style="{StaticResource FieldLabelStyle}"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="Transaction Time:" Style="{StaticResource HeaderLabelStyle}"/>
+                        <Label Text="{Binding Source.TransactionDate, StringFormat='{0:g}'}" Style="{StaticResource FieldLabelStyle}"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="Transaction Amount:" Style="{StaticResource HeaderLabelStyle}"/>
+                        <Label Text="{Binding Source.Amount, StringFormat='$ {0:f2}'}" Style="{StaticResource FieldLabelStyle}"/>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ContentBorderStyle}">
+                <VerticalStackLayout>
+                    <Label Text="Enter the transaction description:" Style="{StaticResource HeaderLabelStyle}"/>
+                    <Entry x:Name="Entry" Text="{Binding Description}" Placeholder="Enter the transaction description here"/>
+                    <Label Text="{Binding DescriptionErrorText}" Style="{StaticResource ErrorLabelStyle}"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource ContentBorderStyle}">
+                <VerticalStackLayout VerticalOptions="Start">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="Customer Name:" Style="{StaticResource HeaderLabelStyle}"/>
+                        <Label Text="{Binding Person.SortName}" Style="{StaticResource FieldLabelStyle}"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="Customer Date of Birth:" Style="{StaticResource HeaderLabelStyle}"/>
+                        <Label Text="{Binding Person.BirthDate, StringFormat='{0:d}'}" Style="{StaticResource FieldLabelStyle}"/>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource ContentBorderStyle}">
+                <Grid x:Name="SaveBarLayout"/>
+            </Border>
+        </Grid>
+    </ScrollView>
+</ContentPage>

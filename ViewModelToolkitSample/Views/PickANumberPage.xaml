@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ViewModelToolkitSample.ViewModels"
+             xmlns:vmtv="clr-namespace:ViewModelToolkit.Views;assembly=ViewModelToolkit"
+             x:Class="ViewModelToolkitSample.Views.PickANumberPage"
+             x:DataType="vm:PickANumberPageViewModel"
+             Title="Pick-A-Number">
+    <ScrollView>
+        <VerticalStackLayout Spacing="30" Padding="30" WidthRequest="{OnPlatform MacCatalyst=600}" HorizontalOptions="Center">
+            <Label Text="Pick-A-Number Page" Style="{StaticResource TitleLabelStyle}" />
+
+            <Border Style="{StaticResource ContentBorderStyle}">
+                <VerticalStackLayout>
+                    <Label Text="Enter an integer number between 1 and 10:" Style="{StaticResource HeaderLabelStyle}"/>
+                    <Entry Text="{Binding NumberString}" Placeholder="Enter your choice here"/>
+                    <Label Text="{Binding NumberStringErrorText}" Style="{StaticResource ErrorLabelStyle}"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <vmtv:SaveBarView SaveButtonText="Submit"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

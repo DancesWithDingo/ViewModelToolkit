@@ -1,0 +1,211 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ViewModelToolkit</name>
+    </assembly>
+    <members>
+        <member name="M:ViewModelToolkit.Modals.CoreNavigation.NavigateToPage``2(System.Boolean,System.Action{``0,``1})">
+            <summary>
+            Provides navigation to a ContentPage of type TPage, with a non-generic View Model of type ViewModelBase
+            initialized using either the default Initialize() method or the optional <paramref name="initialization"/> action.
+            </summary>
+            <typeparam name="TPage">Type</typeparam>
+            <typeparam name="TViewModel"></typeparam>
+            <param name="useTransitionAnimation">An optional boolean indicating whether to use the default animation (default: <see langword="true"/>)</param>
+            <param name="initialization">An optional <![CDATA[Action<TPage, TViewModel>]]> initializer</param>
+            <exception cref="T:System.NullReferenceException">Thrown if the DependencyResolver couldn't resolve the View Model type.</exception>
+        </member>
+        <member name="M:ViewModelToolkit.Modals.CoreNavigation.NavigateToPage``3(``0,System.Boolean,System.Action{``1,``2})">
+            <summary>
+            Provides navigation to a ContentPage of type <typeparamref name="TPage"/>, with a generic View Model of type ViewModelBase<typeparamref name="TResult"/>
+            initialized using either the default Initialize() method or the optional <paramref name="initialization"/> action.
+            </summary>
+            <typeparam name="TResult">Type of the Model object passed in as <paramref name="input"/> and returned.</typeparam>
+            <typeparam name="TPage">Type for the page to be navigated to. Must derive from ContentPage.</typeparam>
+            <typeparam name="TViewModel">Type for the View Model to be navigated to. Must derive from ModalViewModelBase<typeparamref name="TResult"/>></typeparam>
+            <param name="input">Model of type <typeparamref name="TResult"/> used to initialize the View Model</param>
+            <param name="useTransitionAnimation">An optional boolean indicating whether to use the default animation (default: <see langword="true"/>)</param>
+            <param name="initialization">An optional <![CDATA[Action<TPage, TViewModel>]]> initializer</param>
+            <exception cref="T:System.NullReferenceException">Thown if the DependencyResolver couldn't resolve the View Model type.</exception>
+        </member>
+        <member name="M:ViewModelToolkit.Modals.CoreNavigation.NavigateToModalPageAsync``3(``0,System.Boolean,ViewModelToolkit.Modals.CoreNavigation.NullResultHandling,System.Action{``1,``2},System.Func{``1,ViewModelToolkit.Views.ISaveBarView},System.Func{``0,System.Boolean})">
+            <summary>
+            Provides navigation to a ContentPage of type <typeparamref name="TPage"/>, with a generic View Model of type
+            ViewModelBase<typeparamref name="TResult"/> initialized using either the default Initialize() method or the
+            optional <paramref name="initialization"/> action.
+            </summary>
+            <typeparam name="TResult">Type of the Model object passed in as <paramref name="input"/> and returned.</typeparam>
+            <typeparam name="TPage">Type for the page to be navigated to. Must derive from ContentPage.</typeparam>
+            <typeparam name="TViewModel">Type for the View Model to be navigated to. Must derive from ModalViewModelBase<typeparamref name="TResult"/>></typeparam>
+            <param name="input">Model of type <typeparamref name="TResult"/> used to initialize the View Model</param>
+            <param name="useTransitionAnimation">An optional boolean indicating whether to use the default animation (default: <see langword="true"/>)</param>
+            <param name="nullResultHandling">An optional value of enum type NullResultHandling indicating whether to return <see langword="default"/> or the value of <paramref name="input"/> (default: ReturnDefault)</param>
+            <param name="initialization">An optional <![CDATA[Action<TPage, TViewModel>]]> initializer</param>
+            <param name="saveBarInjector">An optional Func<![CDATA[<ContentPage, ISaveBarView>]]> that permits custom creation and insertion of an ISaveBarView instance into the visual tree.</param>
+            <param name="shouldSuppressReturnNavigationAnimation"></param>
+            <returns>Result of the modal action of type <typeparamref name="TResult"/></returns>
+            <exception cref="T:System.NullReferenceException">Thown if the DependencyResolver couldn't resolve the View Model type.</exception>
+        </member>
+        <member name="M:ViewModelToolkit.Modals.DialogManager`1.ChangeCommandsCanExecute">
+            <summary>
+            Call ChangeCanExecute() on SaveButtonCommand and CancelButtonCommand.
+            </summary>
+        </member>
+        <member name="M:ViewModelToolkit.Modals.DialogManager`1.ExecuteDefaultCancelButtonCommand(System.Boolean)">
+            <summary>
+            Executes the DefaultCancelButtonCommand
+            </summary>
+            <param name="forceIfDirty">An optional boolean value indicating whether to set the IsDirty flag to true before execution. (default: <see langword="false"/>)</param>
+        </member>
+        <member name="M:ViewModelToolkit.Modals.DialogManager`1.ExecuteDefaultSaveButtonCommand(System.Object,System.Boolean)">
+            <summary>
+            Executes the DefaultSaveButtonCommand
+            </summary>
+            <param name="executeSafely">An optional boolean value indicating whether to check the CanExecute parameter of the command (default: <see langword="true"/>)</param>
+        </member>
+        <member name="P:ViewModelToolkit.ViewModels.IViewModelBase.IsDirty">
+            <summary>
+            Bindable Property IsDirty, set when a Set override is called without overriding the
+            </summary>
+        </member>
+        <member name="M:ViewModelToolkit.ViewModels.IViewModelBase.Initialize">
+            <summary>
+            Basic View Model initializer (should not be called from ViewModelBase<![CDATA[<T>]]> descendents)
+            </summary>
+        </member>
+        <member name="M:ViewModelToolkit.ViewModels.IViewModelBase.InitializeCleanly(System.Action)">
+            <summary>
+            Provides support for executing actions without changing IsDirty
+            </summary>
+            <param name="action">Action to execute cleanly</param>
+        </member>
+        <member name="P:ViewModelToolkit.ViewModels.IViewModelBase`1.Source">
+            <summary>
+            Backing store property for the ViewModel. Holds the original value that was used to initialize
+            the View Model. The Source property should not be modified after initialization.
+            </summary>
+        </member>
+        <member name="P:ViewModelToolkit.ViewModels.IViewModelBase`1.IsValid">
+            <summary>
+            A boolean value indicating if the last call to Validate() returned <see langword="true"/>.
+            </summary>
+        </member>
+        <member name="M:ViewModelToolkit.ViewModels.IViewModelBase`1.Initialize(`0)">
+            <summary>
+            Base View Model initializer, sets the value for Source
+            </summary>
+            <param name="item">The item to be assigned to the Source variable of type <typeparamref name="T"/></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:ViewModelToolkit.ViewModels.IViewModelBase`1.Update">
+            <summary>
+            A <see langword="virtual"/> method creates and returns an object of type <typeparamref name="T"/>
+            containing the current property values from the View Model.
+            </summary>
+            <returns>An object of type <typeparamref name="T"/> containing the current property values
+            from the View Model.</returns>
+        </member>
+        <member name="M:ViewModelToolkit.ViewModels.IViewModelBase`1.Validate">
+            <summary>
+            A virtual function that can be overriden by inheritors to provide logic for validating
+            the state of the View Model properties. Sets the IsValid flag before returning the result.
+            </summary>
+            <returns>A boolean value indicating if the validation was successful</returns>
+        </member>
+        <member name="T:ViewModelToolkit.ViewModels.IViewModelInit`2">
+            <summary>
+            Useful extension interface to provide a static Init method for simpler instantiation.
+            </summary>
+        </member>
+        <member name="T:ViewModelToolkit.ViewModels.ViewModelBase">
+            <summary>
+            Base class for all View Models. Provides initialization and manages the IsDirty flag.
+            </summary>
+        </member>
+        <member name="M:ViewModelToolkit.ViewModels.ViewModelBase.Initialize">
+            <inheritdoc/>
+        </member>
+        <member name="M:ViewModelToolkit.ViewModels.ViewModelBase.InitializeCleanly(System.Action)">
+            <inheritdoc/>
+        </member>
+        <member name="P:ViewModelToolkit.ViewModels.ViewModelBase.IsDirty">
+            <inheritdoc/>
+        </member>
+        <member name="M:ViewModelToolkit.ViewModels.ViewModelBase.IsDirtyChanged(System.Boolean)">
+            <summary>
+            Called in overrides to notified when the IsDirty flag changes
+            </summary>
+            <param name="isDirty">New state of the IsDirty flag</param>
+        </member>
+        <member name="M:ViewModelToolkit.ViewModels.ViewModelBase.Set``1(``0@,``0,System.Action{``0},System.Boolean,System.String)">
+            <summary>
+            Set the value of the backing store to the new value, optionally calling
+            a provided action and an optional flag whether to change the IsDirty property
+            </summary>
+            <typeparam name="T">The type of the property and backing store</typeparam>
+            <param name="field">Backing field</param>
+            <param name="newValue">New value to assign to property</param>
+            <param name="setAction">Optional action to invoke after property is set (default: <see langword="null"/>)</param>
+            <param name="setIsDirty">Optional to disable automatically setting the IsDirty flag (default: true)</param>
+            <param name="propertyName">Name of this property (for internal use, do not assign)</param>
+            <returns>Boolean indicating whether the property was set with a different value</returns>
+        </member>
+        <member name="T:ViewModelToolkit.ViewModels.ViewModelBase`1">
+            <summary>
+            Base class for View Model classes, providing a generic Source property, an Update <see langword="virtual"/> method to fetch the
+            current property values from the View Model, and an optional Validate <see langword="virtual"/> method that can be
+            overriden if validation is required.
+            </summary>
+            <typeparam name="T">Type for the Source property</typeparam>
+        </member>
+        <member name="M:ViewModelToolkit.ViewModels.ViewModelBase`1.Initialize(`0)">
+            <inheritdoc/>
+        </member>
+        <member name="P:ViewModelToolkit.ViewModels.ViewModelBase`1.Source">
+            <inheritdoc/>
+        </member>
+        <member name="M:ViewModelToolkit.ViewModels.ViewModelBase`1.Update">
+            <inheritdoc/>
+        </member>
+        <member name="P:ViewModelToolkit.ViewModels.ViewModelBase`1.IsValid">
+            <inheritdoc/>
+        </member>
+        <member name="M:ViewModelToolkit.ViewModels.ViewModelBase`1.Validate">
+            <inheritdoc/>
+        </member>
+        <member name="M:ViewModelToolkit.ViewModels.ViewModelBase`1.Validate(System.Boolean)">
+            <summary>
+            Sets and returns the value of the IsValid flag. Call this method at the end of the
+            Validate() function.
+            </summary>
+            <param name="isValid">A boolean indicating whether the validation was successful or not.</param>
+            <returns>The value passed in through the isValid parameter</returns>
+        </member>
+        <member name="M:ViewModelToolkit.ViewModels.ViewModelBase`1.Set``1(``0@,``0,System.Action{``0},System.Boolean,System.Boolean,System.String)">
+            <summary>
+            Set the value of the backing store to the new value, optionally calling
+            a provided action and an optional flag whether to change the IsDirty property
+            </summary>
+            <typeparam name="TResult">The type of the property and backing store</typeparam>
+            <param name="field">Backing field</param>
+            <param name="newValue">New value to assign to property</param>
+            <param name="setAction">Optional action to invoke after property is set</param>
+            <param name="setIsDirty">Optional to specify if the IsDirty flag is set (default: true)</param>
+            <param name="shouldValidate">Optional to specify if Validate() should be called after the backing store is set</param>
+            <param name="propertyName">Name of this property (for internal use, do not assign)</param>
+            <returns>Boolean indicating whether the property was set with a different value</returns>
+        </member>
+        <member name="M:ViewModelToolkit.ViewModels.ViewModelBase`1.Initialize">
+            <summary>
+            A <see langword="sealed"/> override of the base class method. This SHOULD NOT BE INVOKED as it
+            simply calls the <see langword="virtual"/> base Initialize<typeparamref name="T"/> method.
+            </summary>
+        </member>
+        <member name="T:ViewModelToolkit.ViewModels.ModalViewModelBase`1">
+            <summary>
+            Base class for modal View Model classes, implementing a <![CDATA[DialogManager<T>]]>
+            </summary>
+            <typeparam name="T">Type for the Source property</typeparam>
+        </member>
+    </members>
+</doc>

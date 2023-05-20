@@ -1,0 +1,55 @@
+﻿using ViewModelToolkit.Modals;
+using ViewModelToolkit.Views;
+using ViewModelToolkitSample.Models;
+using ViewModelToolkitSample.ViewModels;
+using ViewModelToolkitSample.Views;
+
+namespace ViewModelToolkitSample.Services;
+
+public static class NavigationService
+{
+    public static void GoToSimpleNavigationPage(string text) {
+        CoreNavigation.NavigateToPage<string, SimpleNavigationPage, SimpleNavigationPageViewModel>(text);
+    }
+
+    public static async Task<int> GoToPickANumberPageAsync() {
+        return await CoreNavigation.NavigateToModalPageAsync<int, PickANumberPage, PickANumberPageViewModel>
+            (-1, nullResultHandling: CoreNavigation.NullResultHandling.ReturnInput);
+    }
+
+    public static async Task<Customer> GoToEditCustomerStep1PageAsync(Customer customer) {
+        return await CoreNavigation.NavigateToModalPageAsync<Customer, EditCustomerStep1Page, EditCustomerStep1PageViewModel>
+            (customer);
+    }
+
+    public static async Task<Customer> GoToEditCustomerStep2PageAsync(Customer customer) {
+        return await CoreNavigation.NavigateToModalPageAsync<Customer, EditCustomerStep2Page, EditCustomerStep2PageViewModel>
+            (customer,
+             shouldSuppressReturnNavigationAnimation: p => !p.IsDefault());
+    }
+
+    public static async Task<Customer> GoToEditCustomerStep3PageAsync(Customer customer) {
+        return await CoreNavigation.NavigateToModalPageAsync<Customer, EditCustomerStep3Page, EditCustomerStep3PageViewModel>
+            (customer,
+             shouldSuppressReturnNavigationAnimation: p => !p.IsDefault());
+    }
+
+    public static async Task<Transaction> GoToComplicatedPageAsync(Transaction transaction, Person person) {
+        return await CoreNavigation.NavigateToModalPageAsync<Transaction, ComplicatedPage, ComplicatedPageViewModel>
+            (transaction,
+             initialization: (p, vm) => vm.Initialize(transaction, person),
+             saveBarInjector: SaveBarInjector);
+
+        static ISaveBarView SaveBarInjector(ComplicatedPage page) {
+            var saveBar = new CustomSaveBarView();
+
+            saveBar.HelpButton.Command = new Command(async () => await page.DisplayAlert("Help", "This is a help page.", "Close"));
+
+            if ( page.FindByName("SaveBarLayout") is Grid layout )
+                layout.Add(saveBar);
+            else
+                throw new NullReferenceException("Could not find a VerticalStackLayout named \"SaveBarLayout\")");
+            return saveBar;
+        }
+    }
+}

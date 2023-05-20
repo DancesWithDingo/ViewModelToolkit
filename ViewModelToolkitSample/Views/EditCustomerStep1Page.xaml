@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ViewModelToolkitSample.ViewModels"
+             xmlns:vmtc="clr-namespace:ViewModelToolkit.Converters;assembly=ViewModelToolkit"
+             x:Class="ViewModelToolkitSample.Views.EditCustomerStep1Page"
+             x:DataType="vm:EditCustomerStep1PageViewModel"
+             Title="Edit Customer">
+    <ContentPage.Resources>
+        <vmtc:DebugConverter x:Key="DebugConverter"/>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="40" Padding="30">
+            <Label Text="Step One: Personal Information" Style="{StaticResource TitleLabelStyle}"/>
+
+            <VerticalStackLayout Spacing="10" WidthRequest="{OnPlatform MacCatalyst=600}">
+                <Label Text="Enter the new customer's name:" Style="{StaticResource HeaderLabelStyle}"/>
+
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="First name:" Style="{StaticResource HeaderLabelStyle}"/>
+                    <Entry Text="{Binding FirstName}" Placeholder="Enter first name"/>
+                    <Label Text="{Binding FirstNameErrorText}" Style="{StaticResource ErrorLabelStyle}"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="Last name:" Style="{StaticResource HeaderLabelStyle}"/>
+                    <Entry Text="{Binding LastName}" Placeholder="Enter last name"/>
+                    <Label Text="{Binding LastNameErrorText}" Style="{StaticResource ErrorLabelStyle}"/>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="2">
+                <Label Text="Date of birth:" Style="{StaticResource HeaderLabelStyle}"/>
+                <VerticalStackLayout Spacing="10" VerticalOptions="Center">
+                    <DatePicker Date="{Binding BirthDate}" MaximumDate="{Binding MinimumBirthDate}" Format="D"/>
+                    <Label Text="{Binding BirthDateErrorText}" Style="{StaticResource ErrorLabelStyle}"/>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

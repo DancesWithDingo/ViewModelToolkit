@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1705.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModelToolkit", "ViewModelToolkit\ViewModelToolkit.csproj", "{09D253DF-1769-4F0C-BBB2-399C69FE4577}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BB92FBCC-30F3-4DC3-B726-89403F43792E}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModelToolkitSample", "ViewModelToolkitSample\ViewModelToolkitSample.csproj", "{72985E31-ED1A-459E-8CF1-E4173A4ECA41}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{09D253DF-1769-4F0C-BBB2-399C69FE4577}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09D253DF-1769-4F0C-BBB2-399C69FE4577}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09D253DF-1769-4F0C-BBB2-399C69FE4577}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09D253DF-1769-4F0C-BBB2-399C69FE4577}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72985E31-ED1A-459E-8CF1-E4173A4ECA41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72985E31-ED1A-459E-8CF1-E4173A4ECA41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72985E31-ED1A-459E-8CF1-E4173A4ECA41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72985E31-ED1A-459E-8CF1-E4173A4ECA41}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5C981C47-7052-43FC-B0A2-9C1D442E4E9D}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.inheritsSet = null
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.NewLinesForBracesInMethods = False
+		$2.NewLinesForBracesInProperties = False
+		$2.NewLinesForBracesInAccessors = False
+		$2.NewLinesForBracesInAnonymousMethods = False
+		$2.NewLinesForBracesInControlBlocks = False
+		$2.NewLinesForBracesInAnonymousTypes = False
+		$2.NewLinesForBracesInObjectCollectionArrayInitializers = False
+		$2.NewLinesForBracesInLambdaExpressionBody = False
+		$2.NewLineForElse = False
+		$2.NewLineForCatch = False
+		$2.NewLineForFinally = False
+		$2.SpaceWithinOtherParentheses = True
+		$2.scope = text/x-csharp
+	EndGlobalSection
+EndGlobal

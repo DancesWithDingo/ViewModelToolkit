@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ViewModelToolkitSample.ViewModels"
+             x:Class="ViewModelToolkitSample.Views.EditCustomerStep3Page"
+             x:DataType="vm:EditCustomerStep3PageViewModel"
+             Title="{Binding PageTitleText}">
+    <ScrollView>
+        <VerticalStackLayout Spacing="40" Padding="30">
+            <Label Text="Step Three: Review" Style="{StaticResource TitleLabelStyle}"/>
+
+            <VerticalStackLayout Spacing="10" WidthRequest="{OnPlatform MacCatalyst=600}">
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="Account Number:"/>
+                    <Label Text="{Binding AccountIdText}" FontSize="17" Style="{StaticResource FieldLabelStyle}"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="Customer Name:"/>
+                    <Label Text="{Binding FullName}" Style="{StaticResource FieldLabelStyle}"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="Date of Birth:"/>
+                    <Label Text="{Binding BirthDate, StringFormat='{0:D}'}" Style="{StaticResource FieldLabelStyle}"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="Account Anniversary:"/>
+                    <Label Text="{Binding AnniversaryDate, StringFormat='{0:D}'}" Style="{StaticResource FieldLabelStyle}"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="Loyalty Points:" Style="{StaticResource HeaderLabelStyle}"/>
+                    <Label Text="{Binding LoyaltyPoints, StringFormat='{0:N0} points'}" Style="{StaticResource FieldLabelStyle}"/>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
