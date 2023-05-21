@@ -5,10 +5,10 @@
              xmlns:vmtv="clr-namespace:ViewModelToolkit.Views;assembly=ViewModelToolkit"
              x:Class="ViewModelToolkitSample.Views.PickANumberPage"
              x:DataType="vm:PickANumberPageViewModel"
-             Title="Pick-A-Number">
+             Title="Pick-a-Number">
     <ScrollView>
-        <VerticalStackLayout Spacing="30" Padding="30" WidthRequest="{OnPlatform MacCatalyst=600}" HorizontalOptions="Center">
-            <Label Text="Pick-A-Number Page" Style="{StaticResource TitleLabelStyle}" />
+        <VerticalStackLayout Spacing="30" Padding="30" WidthRequest="{OnIdiom Desktop=600, Tablet=600}">
+            <Label Text="Pick-a-Number Page" Style="{StaticResource TitleLabelStyle}" />
 
             <Border Style="{StaticResource ContentBorderStyle}">
                 <VerticalStackLayout>

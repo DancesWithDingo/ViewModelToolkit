@@ -25,6 +25,7 @@ public class EditCustomerStep1PageViewModel : CustomerViewModelBase, IDialogSupp
 
         BirthDate = item.BirthDate == default ? DateTime.Today : item.BirthDate;
 
+        DialogManager.DisplayMode = SaveBarDisplayMode.SaveBarOnly;
         DialogManager.SaveButtonText = "Continue";
         DialogManager.SaveButtonCommand = ContinueCommand;
     }

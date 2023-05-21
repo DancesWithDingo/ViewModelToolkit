@@ -19,9 +19,11 @@ public class EditCustomerStep2PageViewModel : CustomerViewModelBase, IDialogSupp
         base.Initialize(item);
         IsLoyaltyPointsBarVisible = IsNewAccount;
 
+        DialogManager.DisplayMode = SaveBarDisplayMode.SaveBarOnly;
         DialogManager.CancelButtonText = "Back";
         DialogManager.SaveButtonText = "Continue";
         DialogManager.SaveButtonCommand = ContinueCommand;
+        DialogManager.ShouldCancelIgnoreIsDirty = true;
     }
 
     public override Customer Update() {

@@ -21,7 +21,6 @@ public partial class App : Application
         // Allows informing the engine to call into your dependency injection container:
         // CoreNavigation.ConfigureDependencyResolver(new MyCustomDependencyResolver());
 
-
         CoreNavigation.ConfigureExceptionHandler(new MyExceptionHander());
 
         var pg = new Views.MainPage();
@@ -35,7 +34,7 @@ public partial class App : Application
     {
         public T Resolve<T>() {
             // Call into your own container here. The default implementation
-            //   performs the following line:
+            //   simply performs the following statement:
             return Activator.CreateInstance<T>();
         }
     }
@@ -44,9 +43,9 @@ public partial class App : Application
     {
         public void HandleException(Exception exception) {
             Debug.WriteLine($"MyExceptionHandler => exception:");
-            Debug.WriteLine($"    Message: {exception.Message}");
-            Debug.WriteLine($"    StackTrace: {exception.StackTrace}");
-            Debug.WriteLine($"    InnerException: {exception.InnerException}");
+            Debug.WriteLine($"->  Message: {exception.Message}");
+            Debug.WriteLine($"->  StackTrace: {exception.StackTrace}");
+            Debug.WriteLine($"->  InnerException: {exception.InnerException}");
         }
     }
 }

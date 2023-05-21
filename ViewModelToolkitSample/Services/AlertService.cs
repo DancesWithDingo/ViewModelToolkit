@@ -14,6 +14,7 @@ public static class AlertService
             "Edit Loyalty Points",
             "Enter the new Loyalty Points total:",
             keyboard: Keyboard.Numeric,
+            maxLength: 8,
             initialValue: loyaltyPoints.ToString());
     }
 }

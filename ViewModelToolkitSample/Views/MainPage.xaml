@@ -2,11 +2,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:ViewModelToolkitSample.ViewModels"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:Class="ViewModelToolkitSample.Views.MainPage"
              x:DataType="vm:MainPageViewModel"
-             Title="ViewModelToolkit">
+             Title="ViewModelToolkit Sample"
+             ios:Page.UseSafeArea="False">
     <ScrollView>
-        <VerticalStackLayout Spacing="30" Padding="30" WidthRequest="{OnPlatform MacCatalyst=600}">
+        <VerticalStackLayout Spacing="30" Padding="30" WidthRequest="{OnIdiom Desktop=600, Tablet=600}">
             <VerticalStackLayout Spacing="20">
                 <Border Style="{StaticResource ContentBorderStyle}">
                     <VerticalStackLayout Spacing="10">
@@ -24,7 +26,7 @@
                     <VerticalStackLayout Spacing="10">
                         <Label Text="Basic Modal Navigation" Style="{StaticResource TitleLabelStyle}"/>
                         <Label Text="{Binding PickANumberDescription}"/>
-                        <Button Text="Go to the Pick A Number Page" Command="{Binding PickANumberCommand}"/>
+                        <Button Text="Go to the Pick-a-Number Page" Command="{Binding PickANumberCommand}"/>
                         <Label Text="{Binding PickANumberResultText}" HorizontalTextAlignment="Center"/>
                     </VerticalStackLayout>
                 </Border>
@@ -32,6 +34,7 @@
                 <Border Style="{StaticResource ContentBorderStyle}">
                     <VerticalStackLayout Spacing="10">
                         <Label Text="Customer Editor Dialog" Style="{StaticResource TitleLabelStyle}"/>
+                        <Label Text="{Binding CustomerEditorDescription}" />
                         <Button Text="Add a new Customer"
                                 Command="{Binding CustomerEditorPageCommand}"
                                 CommandParameter="new"/>
@@ -43,10 +46,11 @@
 
                 <Border Style="{StaticResource ContentBorderStyle}">
                     <VerticalStackLayout Spacing="10">
-                        <Label Text="More Complex Dialog" Style="{StaticResource TitleLabelStyle}"/>
+                        <Label Text="Custom Initialization" Style="{StaticResource TitleLabelStyle}"/>
+                        <Label Text="{Binding CustomFormPageDescription}" />
                         <Button Text="Go to the dialog with complicated initialization"
-                                Command="{Binding ComplicatedPageCommand}"/>
-                        <Label Text="{Binding ComplicatedPageResultText}" HorizontalTextAlignment="Center"/>
+                                Command="{Binding CustomFormPageCommand}"/>
+                        <Label Text="{Binding CustomFormPageResultText}" HorizontalTextAlignment="Center"/>
                     </VerticalStackLayout>
                 </Border>
             </VerticalStackLayout>

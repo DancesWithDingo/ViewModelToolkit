@@ -157,17 +157,17 @@ As discussed above, control will suspend within the ViewModel until the modal di
 
 ### `ModalViewModelBase<T>` class
 
-The abstract base class `ModalViewModelBase<T>`, in addition to providing the fuctionality of the `ViewModelBase<T>` class, adds `DialogManager` support to the mix. The `DialogManager` class will be discussed in next section. This base class is provided as a convenience, as it adds and implements the IDialogManager<T> interface, and its use removes the need to manually declare and initialize the `DialogManager<T>` ViewModel member. However if you need to implement ViewModel inheritance, you will need to use `ViewModelBase<T>` and implement `IDialogManager<T>` yourself. See **ViewModel Inheritance** later in this document.
+The abstract base class `ModalViewModelBase<T>`, in addition to providing the fuctionality of the `ViewModelBase<T>` class, adds `DialogManager` support to the mix. The `DialogManager` class will be discussed in next section. This base class is provided as a convenience, as it adds and implements the `IDialogSupport<T>` interface, and its use removes the need to manually declare and initialize the `DialogManager<T>` ViewModel member. However if you need to implement ViewModel inheritance, you will need to utilize `ViewModelBase<T>` and implement `IDialogSupport<T>` yourself. See **ViewModel Inheritance** later in this document.
 
 
 ## `DialogManager` class
 
 The purpose of the `DialogManager` class is to encapsulate all of the goodies we would expect from a modal dialog into an easy to reuse component. In addition to providing Save and Cancel buttons, there are bindable properties for each button's `Text`, `Command` and `CommandParameter` properties, as well as others to control visual aspects of the buttons. (And bindable properties mean the `DialogManager` component can participate in XAML-based data binding.)
 
-The `DialogManager` class is instantiated at the top of the ViewModel by adding and implementing the `IDialogManager<T>` interface as is shown here:
+The `DialogManager` class is instantiated at the top of the ViewModel by adding and implementing the `IDialogSupport<T>` interface as is shown here:
 
 ```cs
-public class ModalPageViewModel : ViewModelBase<Person>, IDialogManager<Person>
+public class ModalPageViewModel : ViewModelBase<Person>, IDialogSupport<Person>
 {
     public DialogManager<Person> DialogManager { get; init; }
 
@@ -179,7 +179,7 @@ public class ModalPageViewModel : ViewModelBase<Person>, IDialogManager<Person>
 }
 
 ```
-The `IDialogManager<TResult>` interface requires a read/init `DialogManager<TResult>` property. Once declared, the `DialogManager` will collaborate with the View to present a default `SaveBarView` view. Page designers can add the default `SaveBarView` control (or any view implementing the 'ISaveBarView' interface). Or not, and one will be added automagically. Control freaks can even override the save bar` injection entirely with their own implementation of the `ISaveBarView` interface.
+The `IDialogSupport<TResult>` interface requires a read/init `DialogManager<TResult>` property. Once declared, the `DialogManager` will collaborate with the View to present a default `SaveBarView` view. Page designers can add the default `SaveBarView` control (or any view implementing the 'ISaveBarView' interface). Or not, and one will be added automagically. Control freaks can even override the save bar` injection entirely with their own implementation of the `ISaveBarView` interface.
 
 
 ### The hidden `ToolbarManager` component

@@ -5,9 +5,10 @@ using ViewModelToolkit.Views;
 
 namespace ViewModelToolkit.Modals;
 
-public enum SaveBarDisplayMode { None, Default, ButtonBarOnly, ToolBarOnly, BothButtonBarAndToolBar }
+public enum SaveBarDisplayMode { None, Default, SaveBarOnly, ToolBarOnly, BothToolBarAndSaveBar }
 
-public sealed partial class DialogManager<TResult> : BindableObject {
+public sealed partial class DialogManager<TResult> : BindableObject
+{
     public DialogManager(ViewModelBase<TResult> vm) => ViewModel = vm;
 
     bool isConfigured = false;
@@ -108,6 +109,10 @@ public sealed partial class DialogManager<TResult> : BindableObject {
         o.ToolbarManager.SetSaveButtonText((string)newValue);
     }
 
+    public bool ShouldCancelIgnoreIsDirty { get => (bool)GetValue(ShouldButtonIgnoreIsDirtyProperty); set => SetValue(ShouldButtonIgnoreIsDirtyProperty, value); }
+    public static readonly BindableProperty ShouldButtonIgnoreIsDirtyProperty =
+        BindableProperty.Create(nameof(ShouldCancelIgnoreIsDirty), typeof(bool), typeof(DialogManager<TResult>));
+
     #endregion
 
     #region Public Methods
@@ -183,8 +188,12 @@ public sealed partial class DialogManager<TResult> : BindableObject {
 
     #region Commands
 
-    public Command DefaultCancelButtonCommand => _DefaultCancelButtonCommand ??= new Command(async p => {
-        if ( !ViewModel.IsDirty || (ViewModel.IsDirty && await ConfirmIsDirtyCancelAsync(CancelWhenDirtyAlertDetails)) )
+    public Command DefaultCancelButtonCommand => _DefaultCancelButtonCommand ??= new Command(async _ => {
+        if ( !ViewModel.IsDirty ||
+                (ViewModel.IsDirty &&
+                    (ShouldCancelIgnoreIsDirty ||
+                        await ConfirmIsDirtyCancelAsync(CancelWhenDirtyAlertDetails)))
+           )
             SetDialogResult(default);
     });
     Command _DefaultCancelButtonCommand;

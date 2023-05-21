@@ -4,7 +4,7 @@ using ViewModelToolkitSample.Models;
 
 namespace ViewModelToolkitSample.ViewModels;
 
-public class ComplicatedPageViewModel : ModalViewModelBase<Transaction>
+public class CustomFormPageViewModel : ModalViewModelBase<Transaction>
 {
     // Note: this is not an override of Initialize due to the additional argument
     public void Initialize(Transaction item, Person person) {
@@ -13,11 +13,11 @@ public class ComplicatedPageViewModel : ModalViewModelBase<Transaction>
         Description = item.Description;
         Person = person;
         
-        DialogManager.DisplayMode = SaveBarDisplayMode.ButtonBarOnly;
+        DialogManager.DisplayMode = SaveBarDisplayMode.SaveBarOnly;
         DialogManager.CancelWhenDirtyAlertDetails = new AlertDetails(
             "Are you certain?",
             "You seem unsure of yourself. Do you really want to cancel out of this dialog knowing that you will lose the changes you have made so far?",
-            "Nope", "Yup");
+            "No way", "Well, okay");
     }
 
     public override Transaction Update() {

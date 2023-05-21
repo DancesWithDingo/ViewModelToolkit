@@ -6,7 +6,7 @@
              x:DataType="vm:SimpleNavigationPageViewModel"
              Title="Simple Navigation Page">
     <ScrollView>
-        <VerticalStackLayout Spacing="30" Padding="30" WidthRequest="{OnPlatform MacCatalyst=600}">
+        <VerticalStackLayout Spacing="30" Padding="30" WidthRequest="{OnIdiom Desktop=600, Tablet=600}">
             <Label Text="Simple Navigation Page" Style="{StaticResource TitleLabelStyle}" />
 
             <Border Style="{StaticResource ContentBorderStyle}">

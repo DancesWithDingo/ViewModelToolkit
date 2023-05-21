@@ -1,8 +1,8 @@
 ﻿namespace ViewModelToolkitSample.Views;
 
-public partial class ComplicatedPage : ContentPage
+public partial class CustomFormPage : ContentPage
 {
-    public ComplicatedPage() {
+    public CustomFormPage() {
         InitializeComponent();
     }
 }

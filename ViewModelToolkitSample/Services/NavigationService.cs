@@ -12,35 +12,36 @@ public static class NavigationService
         CoreNavigation.NavigateToPage<string, SimpleNavigationPage, SimpleNavigationPageViewModel>(text);
     }
 
-    public static async Task<int> GoToPickANumberPageAsync() {
-        return await CoreNavigation.NavigateToModalPageAsync<int, PickANumberPage, PickANumberPageViewModel>
+
+    public static async Task<int> GoToPickANumberPageAsync() =>
+        await CoreNavigation.NavigateToModalPageAsync<int, PickANumberPage, PickANumberPageViewModel>
             (-1, nullResultHandling: CoreNavigation.NullResultHandling.ReturnInput);
-    }
 
-    public static async Task<Customer> GoToEditCustomerStep1PageAsync(Customer customer) {
-        return await CoreNavigation.NavigateToModalPageAsync<Customer, EditCustomerStep1Page, EditCustomerStep1PageViewModel>
+
+    public static async Task<Customer> GoToEditCustomerStep1PageAsync(Customer customer) =>
+        await CoreNavigation.NavigateToModalPageAsync<Customer, EditCustomerStep1Page, EditCustomerStep1PageViewModel>
             (customer);
-    }
 
-    public static async Task<Customer> GoToEditCustomerStep2PageAsync(Customer customer) {
-        return await CoreNavigation.NavigateToModalPageAsync<Customer, EditCustomerStep2Page, EditCustomerStep2PageViewModel>
+
+    public static async Task<Customer> GoToEditCustomerStep2PageAsync(Customer customer) =>
+        await CoreNavigation.NavigateToModalPageAsync<Customer, EditCustomerStep2Page, EditCustomerStep2PageViewModel>
             (customer,
              shouldSuppressReturnNavigationAnimation: p => !p.IsDefault());
-    }
 
-    public static async Task<Customer> GoToEditCustomerStep3PageAsync(Customer customer) {
-        return await CoreNavigation.NavigateToModalPageAsync<Customer, EditCustomerStep3Page, EditCustomerStep3PageViewModel>
+
+    public static async Task<Customer> GoToEditCustomerStep3PageAsync(Customer customer) =>
+        await CoreNavigation.NavigateToModalPageAsync<Customer, EditCustomerStep3Page, EditCustomerStep3PageViewModel>
             (customer,
              shouldSuppressReturnNavigationAnimation: p => !p.IsDefault());
-    }
 
-    public static async Task<Transaction> GoToComplicatedPageAsync(Transaction transaction, Person person) {
-        return await CoreNavigation.NavigateToModalPageAsync<Transaction, ComplicatedPage, ComplicatedPageViewModel>
+
+    public static async Task<Transaction> GoToCustomFormPageAsync(Transaction transaction, Person person) {
+        return await CoreNavigation.NavigateToModalPageAsync<Transaction, CustomFormPage, CustomFormPageViewModel>
             (transaction,
              initialization: (p, vm) => vm.Initialize(transaction, person),
              saveBarInjector: SaveBarInjector);
 
-        static ISaveBarView SaveBarInjector(ComplicatedPage page) {
+        static ISaveBarView SaveBarInjector(CustomFormPage page) {
             var saveBar = new CustomSaveBarView();
 
             saveBar.HelpButton.Command = new Command(async () => await page.DisplayAlert("Help", "This is a help page.", "Close"));

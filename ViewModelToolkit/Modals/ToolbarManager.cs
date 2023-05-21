@@ -3,7 +3,7 @@ using ViewModelToolkit.Views;
 
 namespace ViewModelToolkit.Modals;
 
-public class ToolbarManager : BindableObject
+sealed class ToolbarManager : BindableObject
 {
     const string CANCEL_BUTTON_TEXT = "Cancel";
     const string SAVE_BUTTON_TEXT = "Save";
@@ -160,13 +160,13 @@ public class ToolbarManager : BindableObject
     }
 
     static bool ShouldDisplaySaveToolbar(SaveBarDisplayMode mode) =>
-        mode == SaveBarDisplayMode.ButtonBarOnly ||
-        mode == SaveBarDisplayMode.BothButtonBarAndToolBar ||
+        mode == SaveBarDisplayMode.SaveBarOnly ||
+        mode == SaveBarDisplayMode.BothToolBarAndSaveBar ||
        (mode == SaveBarDisplayMode.Default && DeviceInfo.Idiom == DeviceIdiom.Desktop);
 
     static bool ShouldDisplayToolbar(SaveBarDisplayMode mode) =>
         mode == SaveBarDisplayMode.ToolBarOnly ||
-        mode == SaveBarDisplayMode.BothButtonBarAndToolBar ||
+        mode == SaveBarDisplayMode.BothToolBarAndSaveBar ||
        (mode == SaveBarDisplayMode.Default && DeviceInfo.Idiom != DeviceIdiom.Desktop);
 
     #endregion

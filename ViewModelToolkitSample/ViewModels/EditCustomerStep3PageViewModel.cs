@@ -18,9 +18,11 @@ public class EditCustomerStep3PageViewModel : CustomerViewModelBase, IDialogSupp
 
         PageTitleText = $"{(IsNewAccount ? "Add new" : "Edit")} Customer";
 
+        DialogManager.DisplayMode = SaveBarDisplayMode.SaveBarOnly;
         DialogManager.CancelButtonText = "Back";
-        DialogManager.SaveButtonText = IsNewAccount ? "Add New Account" : "Update";
+        DialogManager.SaveButtonText = IsNewAccount ? "Add Account" : "Update Account";
         DialogManager.IsSaveButtonAlwaysEnabled = true;
+        DialogManager.ShouldCancelIgnoreIsDirty = true;
     }
 
     public string PageTitleText { get; private set; }

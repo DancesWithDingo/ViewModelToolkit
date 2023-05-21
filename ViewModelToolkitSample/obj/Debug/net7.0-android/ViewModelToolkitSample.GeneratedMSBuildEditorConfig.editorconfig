@@ -38,11 +38,11 @@ build_metadata.AdditionalFiles.ManifestResourceName = ViewModelToolkitSample.Sty
 build_metadata.AdditionalFiles.TargetPath = Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Styles.xaml
 
-[/Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/Views/ComplicatedPage.xaml]
+[/Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/Views/CustomFormPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = ViewModelToolkitSample.Views.ComplicatedPage.xaml
-build_metadata.AdditionalFiles.TargetPath = Views/ComplicatedPage.xaml
-build_metadata.AdditionalFiles.RelativePath = Views/ComplicatedPage.xaml
+build_metadata.AdditionalFiles.ManifestResourceName = ViewModelToolkitSample.Views.CustomFormPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/CustomFormPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/CustomFormPage.xaml
 
 [/Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/Views/EditCustomerStep1Page.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
