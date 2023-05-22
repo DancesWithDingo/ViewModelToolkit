@@ -8,7 +8,7 @@
              Title="ViewModelToolkit Sample"
              ios:Page.UseSafeArea="False">
     <ScrollView>
-        <VerticalStackLayout Spacing="30" Padding="30" WidthRequest="{OnIdiom Desktop=600, Tablet=600}">
+        <VerticalStackLayout Spacing="30" Padding="10,20" WidthRequest="{OnIdiom Default=-1, Desktop=600, Tablet=600}">
             <VerticalStackLayout Spacing="20">
                 <Border Style="{StaticResource ContentBorderStyle}">
                     <VerticalStackLayout Spacing="10">

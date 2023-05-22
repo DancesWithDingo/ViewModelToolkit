@@ -4,7 +4,7 @@
         <name>ViewModelToolkit</name>
     </assembly>
     <members>
-        <member name="M:ViewModelToolkit.Modals.CoreNavigation.NavigateToPage``2(System.Boolean,System.Action{``0,``1})">
+        <member name="M:ViewModelToolkit.Dialogs.CoreNavigation.NavigateToPage``2(System.Boolean,System.Action{``0,``1})">
             <summary>
             Provides navigation to a ContentPage of type TPage, with a non-generic View Model of type ViewModelBase
             initialized using either the default Initialize() method or the optional <paramref name="initialization"/> action.
@@ -15,7 +15,7 @@
             <param name="initialization">An optional <![CDATA[Action<TPage, TViewModel>]]> initializer</param>
             <exception cref="T:System.NullReferenceException">Thrown if the DependencyResolver couldn't resolve the View Model type.</exception>
         </member>
-        <member name="M:ViewModelToolkit.Modals.CoreNavigation.NavigateToPage``3(``0,System.Boolean,System.Action{``1,``2})">
+        <member name="M:ViewModelToolkit.Dialogs.CoreNavigation.NavigateToPage``3(``0,System.Boolean,System.Action{``1,``2})">
             <summary>
             Provides navigation to a ContentPage of type <typeparamref name="TPage"/>, with a generic View Model of type ViewModelBase<typeparamref name="TResult"/>
             initialized using either the default Initialize() method or the optional <paramref name="initialization"/> action.
@@ -28,7 +28,7 @@
             <param name="initialization">An optional <![CDATA[Action<TPage, TViewModel>]]> initializer</param>
             <exception cref="T:System.NullReferenceException">Thown if the DependencyResolver couldn't resolve the View Model type.</exception>
         </member>
-        <member name="M:ViewModelToolkit.Modals.CoreNavigation.NavigateToModalPageAsync``3(``0,System.Boolean,ViewModelToolkit.Modals.CoreNavigation.NullResultHandling,System.Action{``1,``2},System.Func{``1,ViewModelToolkit.Views.ISaveBarView},System.Func{``0,System.Boolean})">
+        <member name="M:ViewModelToolkit.Dialogs.CoreNavigation.NavigateToModalPageAsync``3(``0,System.Boolean,ViewModelToolkit.Dialogs.CoreNavigation.NullResultHandling,System.Action{``1,``2},System.Func{``1,ViewModelToolkit.Views.ISaveBarView},System.Func{``0,System.Boolean})">
             <summary>
             Provides navigation to a ContentPage of type <typeparamref name="TPage"/>, with a generic View Model of type
             ViewModelBase<typeparamref name="TResult"/> initialized using either the default Initialize() method or the
@@ -46,18 +46,18 @@
             <returns>Result of the modal action of type <typeparamref name="TResult"/></returns>
             <exception cref="T:System.NullReferenceException">Thown if the DependencyResolver couldn't resolve the View Model type.</exception>
         </member>
-        <member name="M:ViewModelToolkit.Modals.DialogManager`1.ChangeCommandsCanExecute">
+        <member name="M:ViewModelToolkit.Dialogs.DialogManager`1.ChangeCommandsCanExecute">
             <summary>
             Call ChangeCanExecute() on SaveButtonCommand and CancelButtonCommand.
             </summary>
         </member>
-        <member name="M:ViewModelToolkit.Modals.DialogManager`1.ExecuteDefaultCancelButtonCommand(System.Boolean)">
+        <member name="M:ViewModelToolkit.Dialogs.DialogManager`1.ExecuteDefaultCancelButtonCommand(System.Boolean)">
             <summary>
             Executes the DefaultCancelButtonCommand
             </summary>
             <param name="forceIfDirty">An optional boolean value indicating whether to set the IsDirty flag to true before execution. (default: <see langword="false"/>)</param>
         </member>
-        <member name="M:ViewModelToolkit.Modals.DialogManager`1.ExecuteDefaultSaveButtonCommand(System.Object,System.Boolean)">
+        <member name="M:ViewModelToolkit.Dialogs.DialogManager`1.ExecuteDefaultSaveButtonCommand(System.Object,System.Boolean)">
             <summary>
             Executes the DefaultSaveButtonCommand
             </summary>

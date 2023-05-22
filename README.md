@@ -230,9 +230,9 @@ The ViewModelToolkitSample also contains an example of this usage in the functio
 
 ## ViewModel Customization
 
-Since "Save" and "Cancel" are not always the most suitable strings for the buttons, `DialogManager` allows the developer to customize the text and commands used on a per-ViewModel basis. While these changes can be declared in XAML as mentioned above, this allows customization to be made in the ViewModel (where some could argue it belongs in MVVM).
+Since "Save" and "Cancel" are not always the most suitable strings for the buttons and default button actions often need to be replaced, `DialogManager` allows the developer to customize these features on a per-ViewModel basis. While these changes can be declared in XAML as mentioned above, this allows customization to be made in the ViewModel (where some could argue it belongs in MVVM).
 
-For example, a "wizard-style" multi-page dialog would need to provide a custom `SaveButtonCommand` to provide navigation to the next page of the wizard. Here's what that could look like:
+For example, a "wizard-style" multi-page dialog would need to provide a custom experience. Here's what that could look like:
 
 ```cs
 public override void Initialize(Person item) {
@@ -241,31 +241,17 @@ public override void Initialize(Person item) {
 
     DialogManager.DisplayMode = SaveBarDisplayMode.BothButtonBarAndToolBar;
     DialogManager.SaveButtonText = "Continue";
-    DialogManager.SaveButtonCommand = ContinueCommand;
 }
 ```
-where `ContinueCommand` is declared as:
 
-```cs
-public Command ContinueCommand => _ContinueCommand ??= new Command(async p => {
-    if ( Validate() ) {
-        Person result = await NavigationService.GoToMultipleStepTwoPageAsync(Update());
-        if ( !result.IsDefault() ) {
-            InitializeCleanly(() => Initialize(result));
-            DialogManager.ExecuteDefaultSaveButtonCommand();
-        }
-    }
-}, _ => IsDirty && IsValid);
-Command _ContinueCommand;
-```
-
-This example can also be found in project ViewModelToolkitSample class `MultipleStepOnePageViewModel`. 
+See the next section **ViewModel Inheritance** for an example of how to replace a save commands with a custom action for forward navigation scenarios. 
 
 
 ## ViewModel Inheritance
 
-More complex applications can require higher levels of inheritence among ViewModels. This can easily be accomplished using `ViewModelBase<T>`. See the Customer Editor sample for an illustration 
+More complex applications can require higher levels of inheritence among ViewModels. This can easily be accomplished using `ViewModelBase<T>`. See the Customer Editor sample for an illustration. Each of the three pages of that dialog inherit from a common `CustomerViewModelBase` class, which contains a `Source` property of type `Customer`, the notification properties, a base `Initialize(T item)` method, an `Update()` override, and other members common to all three pages.
 
+Each of the edit customer pages need only declare the specific notification properties and save commands needed to provide the forward navigation. 
 
 
 ```

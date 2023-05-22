@@ -6,7 +6,7 @@
              x:DataType="vm:EditCustomerStep3PageViewModel"
              Title="{Binding PageTitleText}">
     <ScrollView>
-        <VerticalStackLayout Spacing="40" Padding="30" WidthRequest="{OnIdiom Desktop=600, Tablet=600}">
+        <VerticalStackLayout Spacing="40" Padding="10,20" WidthRequest="{OnIdiom Default=-1, Desktop=600, Tablet=600}">
             <Label Text="Step Three: Review" Style="{StaticResource TitleLabelStyle}"/>
 
             <Border Style="{StaticResource ContentBorderStyle}">

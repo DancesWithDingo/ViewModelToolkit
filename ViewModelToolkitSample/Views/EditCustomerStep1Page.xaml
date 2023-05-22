@@ -6,7 +6,7 @@
              x:DataType="vm:EditCustomerStep1PageViewModel"
              Title="Edit Customer">
     <ScrollView>
-        <VerticalStackLayout Spacing="40" Padding="30" WidthRequest="{OnIdiom Desktop=600, Tablet=600}">
+        <VerticalStackLayout Spacing="40" Padding="10,20" WidthRequest="{OnIdiom Default=-1, Desktop=600, Tablet=600}">
             <Label Text="Step One: Personal Information" Style="{StaticResource TitleLabelStyle}"/>
 
             <Border Style="{StaticResource ContentBorderStyle}">

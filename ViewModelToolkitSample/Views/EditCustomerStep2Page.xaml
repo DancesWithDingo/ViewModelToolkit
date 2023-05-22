@@ -6,7 +6,7 @@
              x:DataType="vm:EditCustomerStep2PageViewModel"
              Title="{Binding PageTitleText}">
     <ScrollView>
-        <VerticalStackLayout Spacing="40" Padding="30" WidthRequest="{OnIdiom Desktop=600, Tablet=600}">
+        <VerticalStackLayout Spacing="40" Padding="10,20" WidthRequest="{OnIdiom Default=-1, Desktop=600, Tablet=600}">
             <Label Text="Step Two: Account Information" Style="{StaticResource TitleLabelStyle}"/>
 
             <Border Style="{StaticResource ContentBorderStyle}">
@@ -37,7 +37,7 @@
 
                     <VerticalStackLayout Spacing="6" IsVisible="{Binding IsLoyaltyPointsBarVisible}" Margin="0,20,0,0">
                         <Label Text="Select starting account loyalty points:"/>
-                        <HorizontalStackLayout Spacing="6" HeightRequest="32">
+                        <HorizontalStackLayout Spacing="6">
                             <Button Text="1,000 points" Command="{Binding RewardPointsCommand}" CommandParameter="1000"/>
                             <Button Text="5,000 points" Command="{Binding RewardPointsCommand}" CommandParameter="5000"/>
                             <Button Text="10,000 points" Command="{Binding RewardPointsCommand}" CommandParameter="10000"/>

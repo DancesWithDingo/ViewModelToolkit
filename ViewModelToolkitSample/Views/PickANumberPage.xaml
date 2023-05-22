@@ -7,7 +7,7 @@
              x:DataType="vm:PickANumberPageViewModel"
              Title="Pick-a-Number">
     <ScrollView>
-        <VerticalStackLayout Spacing="30" Padding="30" WidthRequest="{OnIdiom Desktop=600, Tablet=600}">
+        <VerticalStackLayout Spacing="30" Padding="10,20" WidthRequest="{OnIdiom Default=-1, Desktop=600, Tablet=600}">
             <Label Text="Pick-a-Number Page" Style="{StaticResource TitleLabelStyle}" />
 
             <Border Style="{StaticResource ContentBorderStyle}">

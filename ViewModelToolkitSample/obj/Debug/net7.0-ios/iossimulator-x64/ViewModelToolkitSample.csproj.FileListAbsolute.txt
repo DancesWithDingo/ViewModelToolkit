@@ -269,4 +269,3 @@
 /Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/obj/Debug/net7.0-ios/iossimulator-x64/ViewModelToolkitSample.pdb
 /Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/obj/Debug/net7.0-ios/iossimulator-x64/ViewModelToolkitSample.genruntimeconfig.cache
 /Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/obj/Debug/net7.0-ios/iossimulator-x64/ref/ViewModelToolkitSample.dll
-/Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/obj/Debug/net7.0-ios/iossimulator-x64/resourcestamps/ViewModelToolkit.stamp

@@ -41,27 +41,6 @@ public class CustomerViewModelBase : ViewModelBase<Customer>, IDialogSupport<Cus
         };
     }
 
-    public override bool Validate() {
-        var result = Update();
-
-        FirstNameErrorText = string.IsNullOrEmpty(result.FirstName) ? FirstNameErrorText = "First name is required." : string.Empty;
-        LastNameErrorText = string.IsNullOrEmpty(result.LastName) ? LastNameErrorText = "Last name is required." : string.Empty;
-
-        BirthDateErrorText = BirthDate == defaultPickerDateTime ? "Date of birth is required." : string.Empty;
-        AnniversaryDateErrorText = BirthDate == defaultPickerDateTime ? "Anniverary date is required." : string.Empty;
-
-        LoyaltyPointsErrorText = string.IsNullOrEmpty(LoyaltyPointsText)
-            ? "This field is required!"
-            : result.LoyaltyPoints < 0
-                ? "Loyalty points must be 0 or greater!"
-                : string.Empty;
-
-        bool noErrors = FirstNameErrorText + LastNameErrorText + BirthDateErrorText
-                      + AnniversaryDateErrorText + LoyaltyPointsErrorText == string.Empty;
-
-        return base.Validate(noErrors);
-    }
-
     #region Properties
 
     public Guid AccountId { get; private set; }

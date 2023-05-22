@@ -9,7 +9,12 @@ public enum SaveBarDisplayMode { None, Default, SaveBarOnly, ToolBarOnly, BothTo
 
 public sealed partial class DialogManager<TResult> : BindableObject
 {
-    public DialogManager(ViewModelBase<TResult> vm) => ViewModel = vm;
+    public DialogManager(ViewModelBase<TResult> vm) {
+        ViewModel = vm;
+
+        if ( OperatingSystem.IsAndroid() )
+            IsCancelToolbarItemVisible = false;
+    }
 
     bool isConfigured = false;
 
@@ -69,6 +74,14 @@ public sealed partial class DialogManager<TResult> : BindableObject
     static void OnIsCancelButtonVisiblePropertyChanged(BindableObject bindable, object oldValue, object newValue) {
         var o = bindable as DialogManager<TResult>;
         o.ToolbarManager.IsCancelButtonVisible = (bool)newValue;
+    }
+
+    public bool IsCancelToolbarItemVisible { get => (bool)GetValue(IsCancelToolbarItemVisibleProperty); set => SetValue(IsCancelToolbarItemVisibleProperty, value); }
+    public static readonly BindableProperty IsCancelToolbarItemVisibleProperty =
+        BindableProperty.Create(nameof(IsCancelToolbarItemVisible), typeof(bool), typeof(DialogManager<TResult>), true, propertyChanged: OnIsCancelToolbarItemVisiblePropertyChanged);
+    static void OnIsCancelToolbarItemVisiblePropertyChanged(BindableObject bindable, object oldValue, object newValue) {
+        var o = bindable as DialogManager<TResult>;
+        o.ToolbarManager.IsCancelToolbarItemVisible = (bool)newValue;
     }
 
     public bool IsSaveButtonVisible { get => (bool)GetValue(IsSaveButtonVisibleProperty); set => SetValue(IsSaveButtonVisibleProperty, value); }

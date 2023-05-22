@@ -37,6 +37,8 @@ sealed class ToolbarManager : BindableObject
     }
 
     public bool IsSaveButtonVisible { get => (bool)GetValue(IsSaveButtonVisibleProperty); set => SetValue(IsSaveButtonVisibleProperty, value); }
+    public bool IsCancelToolbarItemVisible { get; set; } = true;
+
     public static readonly BindableProperty IsSaveButtonVisibleProperty =
         BindableProperty.Create(nameof(IsSaveButtonVisible), typeof(bool), typeof(ToolbarManager), true, propertyChanged: OnIsSaveButtonVisiblePropertyChanged);
     static void OnIsSaveButtonVisiblePropertyChanged(BindableObject bindable, object oldValue, object newValue) {
@@ -149,25 +151,31 @@ sealed class ToolbarManager : BindableObject
         ToolbarItems.Remove(SaveToolbarItem);
 
         if ( ShouldDisplayToolbar(DisplayMode) ) {
-            if ( IsCancelButtonVisible ) ToolbarItems.Add(CancelToolbarItem);
+            if ( IsCancelButtonVisible && IsCancelToolbarItemVisible ) ToolbarItems.Add(CancelToolbarItem);
             if ( IsSaveButtonVisible ) ToolbarItems.Add(SaveToolbarItem);
         }
 
-        SaveBar.IsVisible = ShouldDisplaySaveToolbar(DisplayMode);
-
+        SaveBar.IsVisible = ShouldDisplaySaveBar(DisplayMode);
         SaveBar.IsCancelButtonVisible = IsCancelButtonVisible;
         SaveBar.IsSaveButtonVisible = IsSaveButtonVisible;
     }
 
-    static bool ShouldDisplaySaveToolbar(SaveBarDisplayMode mode) =>
+    static bool ShouldDisplaySaveBar(SaveBarDisplayMode mode) =>
         mode == SaveBarDisplayMode.SaveBarOnly ||
         mode == SaveBarDisplayMode.BothToolBarAndSaveBar ||
        (mode == SaveBarDisplayMode.Default && DeviceInfo.Idiom == DeviceIdiom.Desktop);
+    //(mode == SaveBarDisplayMode.Default &&
+    //     (DeviceInfo.Idiom == DeviceIdiom.Desktop ||
+    //         OperatingSystem.IsAndroid()));
 
     static bool ShouldDisplayToolbar(SaveBarDisplayMode mode) =>
         mode == SaveBarDisplayMode.ToolBarOnly ||
         mode == SaveBarDisplayMode.BothToolBarAndSaveBar ||
        (mode == SaveBarDisplayMode.Default && DeviceInfo.Idiom != DeviceIdiom.Desktop);
+    //(mode == SaveBarDisplayMode.Default &&
+    //     (DeviceInfo.Idiom != DeviceIdiom.Desktop &&
+    //         !OperatingSystem.IsAndroid())
+    // );
 
     #endregion
 }
