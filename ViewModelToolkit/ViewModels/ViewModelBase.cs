@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using ViewModelToolkit.Modals;
-using static System.Collections.Specialized.BitVector32;
+using ViewModelToolkit.Dialogs;
 
 namespace ViewModelToolkit.ViewModels;
 

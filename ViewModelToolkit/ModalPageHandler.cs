@@ -1,6 +1,5 @@
 ﻿using Microsoft.Maui.Handlers;
-using ViewModelToolkit.Modals;
-using ViewModelToolkit.ViewModels;
+using ViewModelToolkit.Dialogs;
 
 namespace ViewModelToolkit;
 

@@ -1,11 +1,18 @@
-﻿using ViewModelToolkit.ViewModels;
+﻿using ViewModelToolkit.Dialogs;
+using ViewModelToolkit.ViewModels;
 using ViewModelToolkitSample.Models;
 
 namespace ViewModelToolkitSample.ViewModels;
 
-public class CustomerViewModelBase : ViewModelBase<Customer>
+public class CustomerViewModelBase : ViewModelBase<Customer>, IDialogSupport<Customer>
 {
+    public DialogManager<Customer> DialogManager { get; init; }
+
     readonly DateTime defaultPickerDateTime = new(1900, 1, 1);
+
+    public CustomerViewModelBase() {
+        DialogManager = new(this);
+    }
 
     public override void Initialize(Customer item) {
         base.Initialize(item);
@@ -19,6 +26,8 @@ public class CustomerViewModelBase : ViewModelBase<Customer>
         BirthDate = item.BirthDate == DateTime.MinValue ? defaultPickerDateTime : item.BirthDate;
         AnniversaryDate = item.AnniversaryDate;
         LoyaltyPoints = item.LoyaltyPoints;
+
+        PageTitleText = $"{(IsNewAccount ? "Add new" : "Edit")} Customer";
     }
 
     public override Customer Update() {
@@ -58,6 +67,7 @@ public class CustomerViewModelBase : ViewModelBase<Customer>
     public Guid AccountId { get; private set; }
     public string AccountIdText { get; set; }
     public bool IsNewAccount { get; private set; }
+    public string PageTitleText { get; private set; }
 
     #endregion
 

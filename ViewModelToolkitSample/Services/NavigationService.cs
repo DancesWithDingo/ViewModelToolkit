@@ -1,4 +1,4 @@
-﻿using ViewModelToolkit.Modals;
+﻿using ViewModelToolkit.Dialogs;
 using ViewModelToolkit.Views;
 using ViewModelToolkitSample.Models;
 using ViewModelToolkitSample.ViewModels;

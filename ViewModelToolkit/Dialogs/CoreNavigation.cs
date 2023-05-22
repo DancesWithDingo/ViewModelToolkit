@@ -2,7 +2,7 @@
 using ViewModelToolkit.ViewModels;
 using ViewModelToolkit.Views;
 
-namespace ViewModelToolkit.Modals;
+namespace ViewModelToolkit.Dialogs;
 
 public static partial class CoreNavigation
 {

@@ -1,4 +1,4 @@
-﻿using ViewModelToolkit.Modals;
+﻿using ViewModelToolkit.Dialogs;
 using ViewModelToolkit.ViewModels;
 using ViewModelToolkitSample.Models;
 using ViewModelToolkitSample.Services;
@@ -6,15 +6,8 @@ using ViewModelToolkitSample.ViewModels;
 
 namespace ViewModelToolkitSample.ViewModels;
 
-public class EditCustomerStep2PageViewModel : CustomerViewModelBase, IDialogSupport<Customer>
+public class EditCustomerStep2PageViewModel : CustomerViewModelBase
 {
-    public DialogManager<Customer> DialogManager { get; init; }
-
-    public EditCustomerStep2PageViewModel() {
-        DialogManager = new(this);
-        PageTitleText = $"{(IsNewAccount ? "Add new" : "Edit")} Customer";
-    }
-
     public override void Initialize(Customer item) {
         base.Initialize(item);
         IsLoyaltyPointsBarVisible = IsNewAccount;
@@ -34,8 +27,6 @@ public class EditCustomerStep2PageViewModel : CustomerViewModelBase, IDialogSupp
     }
 
     public override bool Validate() => base.Validate(true);
-
-    public string PageTitleText { get; private set; }
 
     public bool IsExistingAccount => !IsNewAccount;
     public bool IsLoyaltyPointsBarVisible { get => _IsLoyaltyPointsBarVisible; set => Set(ref _IsLoyaltyPointsBarVisible, value); }

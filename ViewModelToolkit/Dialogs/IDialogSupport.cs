@@ -1,4 +1,4 @@
-﻿namespace ViewModelToolkit.Modals;
+﻿namespace ViewModelToolkit.Dialogs;
 
 public interface IDialogSupport { }
 

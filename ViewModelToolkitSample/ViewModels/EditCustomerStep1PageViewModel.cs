@@ -1,17 +1,14 @@
-﻿using ViewModelToolkit.Modals;
+﻿using ViewModelToolkit.Dialogs;
 using ViewModelToolkitSample.Models;
 using ViewModelToolkitSample.Services;
-using ViewModelToolkitSample.ViewModels;
 
 namespace ViewModelToolkitSample.ViewModels;
 
-public class EditCustomerStep1PageViewModel : CustomerViewModelBase, IDialogSupport<Customer>
+public class EditCustomerStep1PageViewModel : CustomerViewModelBase
 {
     const int MINIMUM_ACCOUNT_HOLDER_AGE = 18;
 
     readonly DateTime defaultPickerDateTime = DateTime.Today.AddYears(-MINIMUM_ACCOUNT_HOLDER_AGE);
-
-    public DialogManager<Customer> DialogManager { get; init; }
 
     public EditCustomerStep1PageViewModel() {
         DialogManager = new(this);
@@ -20,8 +17,6 @@ public class EditCustomerStep1PageViewModel : CustomerViewModelBase, IDialogSupp
 
     public override void Initialize(Customer item) {
         base.Initialize(item);
-
-        PageTitleText = $"{(IsNewAccount ? "Add new" : "Edit")} Customer";
 
         BirthDate = item.BirthDate == default ? DateTime.Today : item.BirthDate;
 
@@ -45,7 +40,6 @@ public class EditCustomerStep1PageViewModel : CustomerViewModelBase, IDialogSupp
     }
 
     public DateTime MinimumBirthDate { get; init; }
-    public string PageTitleText { get; private set; }
 
     public Command ContinueCommand => _ContinueCommand ??= new Command(async p => {
         if ( Validate() ) {

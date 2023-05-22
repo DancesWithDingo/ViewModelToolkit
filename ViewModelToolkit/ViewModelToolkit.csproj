@@ -42,7 +42,6 @@
 	  <None Remove="Views\" />
 	  <None Remove="Extensions\" />
 	  <None Remove="ViewModels\" />
-	  <None Remove="Modals\" />
 	  <None Remove="Services\" />
 	  <None Remove="Converters\" />
 	</ItemGroup>
@@ -55,7 +54,6 @@
 	  <Folder Include="Views\" />
 	  <Folder Include="Extensions\" />
 	  <Folder Include="ViewModels\" />
-	  <Folder Include="Modals\" />
 	  <Folder Include="Services\" />
 	  <Folder Include="Converters\" />
 	</ItemGroup>

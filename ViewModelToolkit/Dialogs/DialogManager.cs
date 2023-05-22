@@ -3,7 +3,7 @@ using ViewModelToolkit.Services;
 using ViewModelToolkit.ViewModels;
 using ViewModelToolkit.Views;
 
-namespace ViewModelToolkit.Modals;
+namespace ViewModelToolkit.Dialogs;
 
 public enum SaveBarDisplayMode { None, Default, SaveBarOnly, ToolBarOnly, BothToolBarAndSaveBar }
 

@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using ViewModelToolkit.Views;
 
-namespace ViewModelToolkit.Modals;
+namespace ViewModelToolkit.Dialogs;
 
 sealed class ToolbarManager : BindableObject
 {

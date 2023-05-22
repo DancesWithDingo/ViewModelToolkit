@@ -106,7 +106,7 @@ public class MainPageViewModel : ViewModelBase
         "This example is a three-page \"wizard\"-like dialog. It shows how to provide your own "
         + "command to provide the forward navigation required in a multiple-page dialog. "
         + "It also illustrates how to use ViewModel inheritance to simplify the design and reduce "
-        + "the need for redundant code.";
+        + "redundant code.";
 
     static string GetPickANumberDescription() =>
         "This example represents a common but difficult task: that of prompting the user "

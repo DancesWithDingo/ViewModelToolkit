@@ -264,7 +264,7 @@ This example can also be found in project ViewModelToolkitSample class `Multiple
 
 ## ViewModel Inheritance
 
-More complex applications can require higher levels of inheritence among ViewModels. 
+More complex applications can require higher levels of inheritence among ViewModels. This can easily be accomplished using `ViewModelBase<T>`. See the Customer Editor sample for an illustration 
 
 
 

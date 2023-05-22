@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using ViewModelToolkit;
-using ViewModelToolkit.Modals;
+using ViewModelToolkit.Dialogs;
 using ViewModelToolkit.Services;
 
 namespace ViewModelToolkitSample;
@@ -15,8 +15,7 @@ public partial class App : Application
 
         // Allows setting an application-wide default for details of the
         //   alert window presented when cancelling out of a dialog with changes:
-        CoreNavigation.ConfigureDefaultCancelWhenDirtyAlertDetails(new AlertDetails(title: "Forget your changes?"));
-
+        CoreNavigation.ConfigureDefaultCancelWhenDirtyAlertDetails(new AlertDetails(title: "Forget your changes?", yesText: "Continue"));
 
         // Allows informing the engine to call into your dependency injection container:
         // CoreNavigation.ConfigureDependencyResolver(new MyCustomDependencyResolver());
