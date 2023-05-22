@@ -36,9 +36,15 @@ sealed class ToolbarManager : BindableObject
         o.SaveBar.IsCancelButtonVisible = (bool)newValue;
     }
 
-    public bool IsSaveButtonVisible { get => (bool)GetValue(IsSaveButtonVisibleProperty); set => SetValue(IsSaveButtonVisibleProperty, value); }
-    public bool IsCancelToolbarItemVisible { get; set; } = true;
+    public bool IsCancelToolbarItemVisible { get => (bool)GetValue(IsCancelToolbarItemVisibleProperty); set => SetValue(IsCancelToolbarItemVisibleProperty, value); }
+    public static readonly BindableProperty IsCancelToolbarItemVisibleProperty =
+        BindableProperty.Create(nameof(IsCancelToolbarItemVisible), typeof(bool), typeof(ToolbarManager), true, propertyChanged: OnIsCancelToolbarItemVisiblePropertyChanged);
+    static void OnIsCancelToolbarItemVisiblePropertyChanged(BindableObject bindable, object oldValue, object newValue) {
+        var o = bindable as ToolbarManager;
+        o.UpdateButtons();
+    }
 
+    public bool IsSaveButtonVisible { get => (bool)GetValue(IsSaveButtonVisibleProperty); set => SetValue(IsSaveButtonVisibleProperty, value); }
     public static readonly BindableProperty IsSaveButtonVisibleProperty =
         BindableProperty.Create(nameof(IsSaveButtonVisible), typeof(bool), typeof(ToolbarManager), true, propertyChanged: OnIsSaveButtonVisiblePropertyChanged);
     static void OnIsSaveButtonVisiblePropertyChanged(BindableObject bindable, object oldValue, object newValue) {

@@ -7,7 +7,6 @@ public class PickANumberPageViewModel : ModalViewModelBase<int>
     public override void Initialize(int item) {
         base.Initialize(item);
         NumberString = string.Empty;
-        DialogManager.ShouldCancelIgnoreIsDirty = true;
     }
 
     public override int Update() {

@@ -9,12 +9,7 @@ public enum SaveBarDisplayMode { None, Default, SaveBarOnly, ToolBarOnly, BothTo
 
 public sealed partial class DialogManager<TResult> : BindableObject
 {
-    public DialogManager(ViewModelBase<TResult> vm) {
-        ViewModel = vm;
-
-        if ( OperatingSystem.IsAndroid() )
-            IsCancelToolbarItemVisible = false;
-    }
+    public DialogManager(ViewModelBase<TResult> vm) => ViewModel = vm;
 
     bool isConfigured = false;
 
@@ -157,6 +152,9 @@ public sealed partial class DialogManager<TResult> : BindableObject
         ViewModel.PropertyChanged += ViewModelIsDirtyChangedHandler;
 
         isConfigured = true;
+
+        if ( OperatingSystem.IsAndroid() )
+            IsCancelToolbarItemVisible = false;
 
         void ViewModelIsDirtyChangedHandler(object sender, PropertyChangedEventArgs e) {
             if ( e.PropertyName == ViewModelBase.IsDirtyProperty.PropertyName )
