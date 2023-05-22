@@ -2,7 +2,7 @@
 using ViewModelToolkit.ViewModels;
 using ViewModelToolkitSample.Models;
 using ViewModelToolkitSample.Services;
-using ViewModelToolkitSample.ViewModels.Base;
+using ViewModelToolkitSample.ViewModels;
 
 namespace ViewModelToolkitSample.ViewModels;
 

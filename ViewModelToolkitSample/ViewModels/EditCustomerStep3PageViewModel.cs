@@ -1,7 +1,7 @@
 ﻿using ViewModelToolkit.Modals;
 using ViewModelToolkit.ViewModels;
 using ViewModelToolkitSample.Models;
-using ViewModelToolkitSample.ViewModels.Base;
+using ViewModelToolkitSample.ViewModels;
 
 namespace ViewModelToolkitSample.ViewModels;
 

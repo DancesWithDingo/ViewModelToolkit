@@ -10,10 +10,12 @@ public class MainPageViewModel : ViewModelBase
         base.Initialize();
     }
 
+#pragma warning disable CA1822 // Mark members as static
     public string CustomFormPageDescription => GetCustomFormDescription();
     public string CustomerEditorDescription => GetCustomerEditorDescription();
     public string PickANumberDescription => GetPickANumberDescription();
     public string SimpleNavigationDescription => GetSimpleNavigationDescription();
+#pragma warning restore CA1822 // Mark members as static
 
     #region Notification Properties
 

@@ -1,7 +1,7 @@
 ﻿using ViewModelToolkit.ViewModels;
 using ViewModelToolkitSample.Models;
 
-namespace ViewModelToolkitSample.ViewModels.Base;
+namespace ViewModelToolkitSample.ViewModels;
 
 public class CustomerViewModelBase : ViewModelBase<Customer>
 {
