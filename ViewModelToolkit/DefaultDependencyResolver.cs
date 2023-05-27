@@ -2,11 +2,11 @@
 
 public interface IDependencyResolver
 {
-    T Resolve<T>();
+    T Resolve<T>() where T : class;
 }
 
 
 public class DefaultDependencyResolver : IDependencyResolver
 {
-    public T Resolve<T>() => (T)Activator.CreateInstance<T>();
+    public T Resolve<T>() where T : class => (T)Activator.CreateInstance<T>();
 }

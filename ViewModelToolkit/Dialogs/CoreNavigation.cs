@@ -4,12 +4,16 @@ using ViewModelToolkit.Views;
 
 namespace ViewModelToolkit.Dialogs;
 
+public enum NullResultHandling { ReturnDefault, ReturnInput }
+
 public static partial class CoreNavigation
 {
-    public enum NullResultHandling { ReturnDefault, ReturnInput }
+    static CoreNavigation() {
+       Application.Current.Resources.MergedDictionaries.Add(new Styles());
+    }
 
     static INavigation Navigation => Application.Current.MainPage?.Navigation;
-    static IDependencyResolver CurrentDependencyResolver { get; set; } = new DefaultDependencyResolver();
+    public static IDependencyResolver CurrentDependencyResolver { get; private set; } = new DefaultDependencyResolver();
     static SaveBarDisplayMode DefaultSaveBarDisplayMode { get; set; } = SaveBarDisplayMode.Default;
 
     public static void ConfigureDefaultButtonBarDisplayMode(SaveBarDisplayMode mode) => DefaultSaveBarDisplayMode = mode;
@@ -18,7 +22,7 @@ public static partial class CoreNavigation
     public static void ConfigureDependencyResolver(IDependencyResolver resolver) => CurrentDependencyResolver = resolver;
 
     internal static AlertDetails DefaultCancelWhenDirtyAlertDetails { get; set; } = new();
-    internal static IExceptionService CurrentExceptionService { get; set; } = new ExceptionService();
+    public static IExceptionService CurrentExceptionService { get; set; } = new DefaultExceptionService();
 
     /// <summary>
     /// Provides navigation to a ContentPage of type TPage, with a non-generic View Model of type ViewModelBase
@@ -161,7 +165,6 @@ public static partial class CoreNavigation
             return default;
         }
     }
-
 }
 
 

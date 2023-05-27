@@ -34,6 +34,7 @@ sealed class ToolbarManager : BindableObject
     static void OnIsCancelButtonVisiblePropertyChanged(BindableObject bindable, object oldValue, object newValue) {
         var o = bindable as ToolbarManager;
         o.SaveBar.IsCancelButtonVisible = (bool)newValue;
+        o.UpdateButtons();
     }
 
     public bool IsCancelToolbarItemVisible { get => (bool)GetValue(IsCancelToolbarItemVisibleProperty); set => SetValue(IsCancelToolbarItemVisibleProperty, value); }
@@ -50,6 +51,7 @@ sealed class ToolbarManager : BindableObject
     static void OnIsSaveButtonVisiblePropertyChanged(BindableObject bindable, object oldValue, object newValue) {
         var o = bindable as ToolbarManager;
         o.SaveBar.IsSaveButtonVisible = (bool)newValue;
+        o.UpdateButtons();
     }
 
     #endregion
@@ -170,18 +172,11 @@ sealed class ToolbarManager : BindableObject
         mode == SaveBarDisplayMode.SaveBarOnly ||
         mode == SaveBarDisplayMode.BothToolBarAndSaveBar ||
        (mode == SaveBarDisplayMode.Default && DeviceInfo.Idiom == DeviceIdiom.Desktop);
-    //(mode == SaveBarDisplayMode.Default &&
-    //     (DeviceInfo.Idiom == DeviceIdiom.Desktop ||
-    //         OperatingSystem.IsAndroid()));
 
     static bool ShouldDisplayToolbar(SaveBarDisplayMode mode) =>
         mode == SaveBarDisplayMode.ToolBarOnly ||
         mode == SaveBarDisplayMode.BothToolBarAndSaveBar ||
        (mode == SaveBarDisplayMode.Default && DeviceInfo.Idiom != DeviceIdiom.Desktop);
-    //(mode == SaveBarDisplayMode.Default &&
-    //     (DeviceInfo.Idiom != DeviceIdiom.Desktop &&
-    //         !OperatingSystem.IsAndroid())
-    // );
 
     #endregion
 }

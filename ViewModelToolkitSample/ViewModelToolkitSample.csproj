@@ -32,7 +32,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
-	  <MtouchLink>SdkOnly</MtouchLink>
+	  <MtouchLink>None</MtouchLink>
 	</PropertyGroup>
 	<ItemGroup>
 		<!-- App Icon -->

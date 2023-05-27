@@ -62,9 +62,10 @@ public class SaveBarView : ContentView, ISaveBarView
         BindableProperty.Create(nameof(ButtonStyle), typeof(Style), typeof(SaveBarView), propertyChanged: OnButtonStylePropertyChanged);
     static void OnButtonStylePropertyChanged(BindableObject bindable, object oldValue, object newValue) {
         var o = bindable as SaveBarView;
-        var style = (Style)newValue;
-        if ( o.CancelButton is not null ) o.CancelButton.Style = style;
-        if ( o.SaveButton is not null ) o.SaveButton.Style = style;
+        if ( newValue is Style style ) {
+            if ( o.CancelButton is not null ) o.CancelButton.Style = style;
+            if ( o.SaveButton is not null ) o.SaveButton.Style = style;
+        }
     }
 
     public bool IsCancelButtonVisible { get => (bool)GetValue(IsCancelButtonVisibleProperty); set => SetValue(IsCancelButtonVisibleProperty, value); }

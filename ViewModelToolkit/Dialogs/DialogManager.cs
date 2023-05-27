@@ -7,8 +7,10 @@ namespace ViewModelToolkit.Dialogs;
 
 public enum SaveBarDisplayMode { None, Default, SaveBarOnly, ToolBarOnly, BothToolBarAndSaveBar }
 
+
 public sealed partial class DialogManager<TResult> : BindableObject
 {
+    public DialogManager() { }
     public DialogManager(ViewModelBase<TResult> vm) => ViewModel = vm;
 
     bool isConfigured = false;
@@ -89,7 +91,11 @@ public sealed partial class DialogManager<TResult> : BindableObject
 
     public bool IsSaveButtonAlwaysEnabled { get => (bool)GetValue(IsSaveButtonAlwaysEnabledProperty); set => SetValue(IsSaveButtonAlwaysEnabledProperty, value); }
     public static readonly BindableProperty IsSaveButtonAlwaysEnabledProperty =
-        BindableProperty.Create(nameof(IsSaveButtonAlwaysEnabled), typeof(bool), typeof(DialogManager<TResult>));
+        BindableProperty.Create(nameof(IsSaveButtonAlwaysEnabled), typeof(bool), typeof(DialogManager<TResult>), propertyChanged: OnIsSaveButtonAlwaysEnabledPropertyChanged);
+    static void OnIsSaveButtonAlwaysEnabledPropertyChanged(BindableObject bindable, object oldValue, object newValue) {
+        var o = bindable as DialogManager<TResult>;
+        o.ChangeCommandsCanExecute();
+    }
 
     public Command SaveButtonCommand { get => (Command)GetValue(SaveButtonCommandProperty); set => SetValue(SaveButtonCommandProperty, value); }
     public static readonly BindableProperty SaveButtonCommandProperty =
@@ -146,7 +152,7 @@ public sealed partial class DialogManager<TResult> : BindableObject
         ToolbarManager.Configure<TResult, TPage>(page, displayMode, saveBarInjector);
 
         CancelWhenDirtyAlertDetails = cancelWhenDirtyAlertDetails;
-        ExceptionService = exceptionService ?? new ExceptionService();
+        ExceptionService = exceptionService ?? new DefaultExceptionService();
 
         ViewModel.PropertyChanged -= ViewModelIsDirtyChangedHandler;
         ViewModel.PropertyChanged += ViewModelIsDirtyChangedHandler;

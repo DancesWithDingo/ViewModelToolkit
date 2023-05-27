@@ -62,6 +62,8 @@ public abstract class ViewModelBase : BindableObject, IViewModelBase
 
         return true;
     }
+
+    protected virtual bool OnBackButtonPressed() => false;
 }
 
 

@@ -15,7 +15,7 @@ public static class NavigationService
 
     public static async Task<int> GoToPickANumberPageAsync() =>
         await CoreNavigation.NavigateToModalPageAsync<int, PickANumberPage, PickANumberPageViewModel>
-            (-1, nullResultHandling: CoreNavigation.NullResultHandling.ReturnInput);
+            (-1, nullResultHandling: NullResultHandling.ReturnInput);
 
 
     public static async Task<Customer> GoToEditCustomerStep1PageAsync(Customer customer) =>

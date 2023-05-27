@@ -42,8 +42,9 @@ public class EditCustomerStep1PageViewModel : CustomerViewModelBase
     public DateTime MinimumBirthDate { get; init; }
 
     public Command ContinueCommand => _ContinueCommand ??= new Command(async p => {
-        if ( Validate() ) {
-            Customer result = await NavigationService.GoToEditCustomerStep2PageAsync(Update());
+        if (Validate() ) {
+            Customer input = Update();
+            Customer result = await NavigationService.GoToEditCustomerStep2PageAsync(input);
             if ( !result.IsDefault() ) {
                 InitializeCleanly(() => Initialize(result));
                 DialogManager.ExecuteDefaultSaveButtonCommand();

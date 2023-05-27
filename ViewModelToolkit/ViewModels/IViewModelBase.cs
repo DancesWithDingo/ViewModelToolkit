@@ -65,8 +65,8 @@ public interface IModalViewModelBase<T> : IViewModelBase<T>, IDialogSupport<T> {
 /// <summary>
 /// Useful extension interface to provide a static Init method for simpler instantiation.
 /// </summary>
-public interface IViewModelInit<T, VM> : IViewModelInit
-{
-    static abstract VM Init(T item);
-}
-public interface IViewModelInit { }
+//public interface IViewModelInit<T, VM> : IViewModelInit
+//{
+//    static abstract VM Init(T item);
+//}
+//public interface IViewModelInit { }
