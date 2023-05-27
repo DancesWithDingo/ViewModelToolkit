@@ -12,12 +12,13 @@ public class SaveBarView : ContentView, ISaveBarView
     readonly Grid buttonBar;
 
     public SaveBarView() {
-        WidthRequest = 300;
+        HorizontalOptions = LayoutOptions.End;
+
         Content = new Grid {
             HeightRequest = isMacOS ? 36 : isWindows ? 36 : 60,
             Children = {
                 (buttonBar = new Grid {
-                    HorizontalOptions = LayoutOptions.End,
+                    HorizontalOptions = LayoutOptions.Start,
                     VerticalOptions = LayoutOptions.Center,
                     ColumnSpacing = 6,
                     Margin = OperatingSystem.IsWindows() ? 2 : 0,
@@ -50,6 +51,11 @@ public class SaveBarView : ContentView, ISaveBarView
 
         buttonBar.SetColumn(SaveButton, OperatingSystem.IsWindows() ? 0 : 1);
         buttonBar.SetColumn(CancelButton, OperatingSystem.IsWindows() ? 1 : 0);
+
+        PropertyChanged += (s, e) => {
+            if ( e.PropertyName == Grid.HorizontalOptionsProperty.PropertyName )
+                buttonBar.HorizontalOptions = HorizontalOptions;
+        };
     }
 
     ISaveBarButtonView CancelButton { get; init; }

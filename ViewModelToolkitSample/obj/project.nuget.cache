@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Yr6nhcb3rTeB2FBNNuUIPDfEi6GmcD53tHFuPreIo/dKx3ER5DXFIzwKRsugDHNZgrEp2qnsHaPY4qH23+/wxA==",
+  "dgSpecHash": "J+hX2K4wkeaR2eKHujR44MxjTcI2FNXgQVNz+yjWgVCiRpaiIcYxIEABf9EmnnhKf1g06cnKW68oljZc4eGonQ==",
   "success": true,
   "projectFilePath": "/Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/ViewModelToolkitSample.csproj",
   "expectedPackageFiles": [
@@ -15,6 +15,7 @@
     "/Users/jimm/.nuget/packages/microsoft.extensions.options/7.0.0/microsoft.extensions.options.7.0.0.nupkg.sha512",
     "/Users/jimm/.nuget/packages/microsoft.extensions.primitives/7.0.0/microsoft.extensions.primitives.7.0.0.nupkg.sha512",
     "/Users/jimm/.nuget/packages/microsoft.maui.graphics/7.0.86/microsoft.maui.graphics.7.0.86.nupkg.sha512",
+    "/Users/jimm/.nuget/packages/system.runtime.interopservices.nfloat.internal/6.0.1/system.runtime.interopservices.nfloat.internal.6.0.1.nupkg.sha512",
     "/Users/jimm/.nuget/packages/xamarin.android.glide/4.13.2.2/xamarin.android.glide.4.13.2.2.nupkg.sha512",
     "/Users/jimm/.nuget/packages/xamarin.android.glide.annotations/4.13.2.2/xamarin.android.glide.annotations.4.13.2.2.nupkg.sha512",
     "/Users/jimm/.nuget/packages/xamarin.android.glide.disklrucache/4.13.2.2/xamarin.android.glide.disklrucache.4.13.2.2.nupkg.sha512",

@@ -28,7 +28,7 @@
             <param name="initialization">An optional <![CDATA[Action<TPage, TViewModel>]]> initializer</param>
             <exception cref="T:System.NullReferenceException">Thown if the DependencyResolver couldn't resolve the View Model type.</exception>
         </member>
-        <member name="M:ViewModelToolkit.Dialogs.CoreNavigation.NavigateToModalPageAsync``3(``0,System.Boolean,ViewModelToolkit.Dialogs.CoreNavigation.NullResultHandling,System.Action{``1,``2},System.Func{``1,ViewModelToolkit.Views.ISaveBarView},System.Func{``0,System.Boolean})">
+        <member name="M:ViewModelToolkit.Dialogs.CoreNavigation.NavigateToModalPageAsync``3(``0,System.Boolean,ViewModelToolkit.Dialogs.NullResultHandling,System.Action{``1,``2},System.Func{``1,ViewModelToolkit.Views.ISaveBarView},System.Func{``0,System.Boolean})">
             <summary>
             Provides navigation to a ContentPage of type <typeparamref name="TPage"/>, with a generic View Model of type
             ViewModelBase<typeparamref name="TResult"/> initialized using either the default Initialize() method or the
@@ -111,11 +111,6 @@
             the state of the View Model properties. Sets the IsValid flag before returning the result.
             </summary>
             <returns>A boolean value indicating if the validation was successful</returns>
-        </member>
-        <member name="T:ViewModelToolkit.ViewModels.IViewModelInit`2">
-            <summary>
-            Useful extension interface to provide a static Init method for simpler instantiation.
-            </summary>
         </member>
         <member name="T:ViewModelToolkit.ViewModels.ViewModelBase">
             <summary>

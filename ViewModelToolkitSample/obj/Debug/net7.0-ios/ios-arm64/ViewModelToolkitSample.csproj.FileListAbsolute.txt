@@ -255,7 +255,6 @@
 /Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/obj/Debug/net7.0-ios/ios-arm64/_ProcessedBundleResourcesPath.items
 /Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/obj/Debug/net7.0-ios/ios-arm64/_ProcessedContentPath.items
 /Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/obj/Debug/net7.0-ios/ios-arm64/ViewModelToolkitSample.csproj.AssemblyReference.cache
-/Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/obj/Debug/net7.0-ios/ios-arm64/resourcestamps/ViewModelToolkit.stamp
 /Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/obj/Debug/net7.0-ios/ios-arm64/ViewModelToolkitSample.GeneratedMSBuildEditorConfig.editorconfig
 /Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/obj/Debug/net7.0-ios/ios-arm64/ViewModelToolkitSample.AssemblyInfoInputs.cache
 /Users/jimm/Projects/ViewModelToolkit/ViewModelToolkitSample/obj/Debug/net7.0-ios/ios-arm64/ViewModelToolkitSample.AssemblyInfo.cs

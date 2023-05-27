@@ -1,4 +1,4 @@
-AreAnyAssembliesTrimmed=false
+AreAnyAssembliesTrimmed=true
 				AssemblyName=ViewModelToolkitSample.dll
 				
 				AOTCompiler=/usr/local/share/dotnet/packs/Microsoft.NETCore.App.Runtime.AOT.osx-x64.Cross.ios-arm64/7.0.5/Sdk/../tools/mono-aot-cross
@@ -206,7 +206,7 @@ MonoLibrary=/usr/local/share/dotnet/packs/Microsoft.NETCore.App.Runtime.Mono.ios
 MonoLibrary=/usr/local/share/dotnet/packs/Microsoft.NETCore.App.Runtime.Mono.ios-arm64/7.0.5/runtimes/ios-arm64/native/libmono-component-hot_reload-stub-static.a
 				MtouchFloat32=
 				Optimize=
-				PartialStaticRegistrarLibrary=/usr/local/share/dotnet/packs/Microsoft.iOS.Runtime.ios-arm64/16.2.2054/runtimes/ios-arm64/native/Microsoft.iOS.registrar.a
+				PartialStaticRegistrarLibrary=/usr/local/share/dotnet/packs/Microsoft.iOS.Runtime.ios-arm64/16.4.7060/runtimes/ios-arm64/native/Microsoft.iOS.registrar.a
 				Platform=iOS
 				PlatformAssembly=Microsoft.iOS.dll
 				RelativeAppBundlePath=../ViewModelToolkitSample.app/
@@ -214,11 +214,11 @@ MonoLibrary=/usr/local/share/dotnet/packs/Microsoft.NETCore.App.Runtime.Mono.ios
 				RequirePInvokeWrappers=
 				RuntimeConfigurationFile=runtimeconfig.bin
 				SdkDevPath=/Applications/Xcode.app/Contents/Developer
-				SdkRootDirectory=/usr/local/share/dotnet/packs/Microsoft.iOS.Sdk/16.2.2054/
+				SdkRootDirectory=/usr/local/share/dotnet/packs/Microsoft.iOS.Sdk/16.4.7060/
 				SdkVersion=16.2
 				TargetArchitectures=ARM64
 				TargetFramework=.NETCoreApp,Version=v7.0,Profile=ios
 				UseLlvm=False
 				Verbosity=0
-				XamarinNativeLibraryDirectory=/usr/local/share/dotnet/packs/Microsoft.iOS.Runtime.ios-arm64/16.2.2054/runtimes/ios-arm64/native
+				XamarinNativeLibraryDirectory=/usr/local/share/dotnet/packs/Microsoft.iOS.Runtime.ios-arm64/16.4.7060/runtimes/ios-arm64/native
 				XamarinRuntime=MonoVM

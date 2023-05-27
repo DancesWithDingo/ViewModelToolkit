@@ -206,7 +206,7 @@ MonoLibrary=/usr/local/share/dotnet/packs/Microsoft.NETCore.App.Runtime.Mono.mac
 				RuntimeConfigurationFile=runtimeconfig.bin
 				SdkDevPath=/Applications/Xcode.app/Contents/Developer
 				SdkRootDirectory=/usr/local/share/dotnet/packs/Microsoft.MacCatalyst.Sdk/16.4.7060/
-				SdkVersion=13.1
+				SdkVersion=13.3
 				TargetArchitectures=x86_64
 				TargetFramework=.NETCoreApp,Version=v7.0,Profile=maccatalyst
 				UseLlvm=False
