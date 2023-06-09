@@ -9,7 +9,12 @@ public enum NullResultHandling { ReturnDefault, ReturnInput }
 public static partial class CoreNavigation
 {
     static CoreNavigation() {
-       Application.Current.Resources.MergedDictionaries.Add(new Styles());
+        var resources = Application.Current.Resources;
+        var list = resources.MergedDictionaries.ToList();
+        resources.MergedDictionaries.Clear();
+        resources.MergedDictionaries.Add(new Styles());
+        list.ForEach(d =>
+            resources.MergedDictionaries.Add(d));
     }
 
     static INavigation Navigation => Application.Current.MainPage?.Navigation;

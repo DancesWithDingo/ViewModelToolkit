@@ -35,13 +35,13 @@
         </Setter>
     </Style>
 
-    <Style TargetType="vmtv:SaveBarButton" ApplyToDerivedTypes="True">
+    <Style TargetType="vmtv:SaveBarButton">
         <Setter Property="TextColor" Value="{StaticResource White}" />
         <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
         <Setter Property="FontFamily" Value="OpenSansRegular"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="CornerRadius" Value="8"/>
-        <Setter Property="Padding" Value="14,10"/>
+        <Setter Property="Padding" Value="{OnPlatform Default=0,iOS='14,10'}"/>
         <Setter Property="MinimumHeightRequest" Value="44"/>
         <Setter Property="MinimumWidthRequest" Value="44"/>
         <Setter Property="VisualStateManager.VisualStateGroups">

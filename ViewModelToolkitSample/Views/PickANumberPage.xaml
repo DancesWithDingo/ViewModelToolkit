@@ -13,7 +13,10 @@
             <Border Style="{StaticResource ContentBorderStyle}">
                 <VerticalStackLayout>
                     <Label Text="Enter an integer number between 1 and 10:" Style="{StaticResource HeaderLabelStyle}"/>
-                    <Entry Text="{Binding NumberString}" Placeholder="Enter your choice here" Keyboard="Numeric"/>
+                    <Entry x:Name="NumberEntry"
+                           Text="{Binding NumberString}"
+                           ReturnCommand="{Binding DialogManager.SaveButtonCommand}"
+                           Placeholder="Enter your choice here" Keyboard="Numeric"/>
                     <Label Text="{Binding NumberStringErrorText}" Style="{StaticResource ErrorLabelStyle}"/>
                 </VerticalStackLayout>
             </Border>

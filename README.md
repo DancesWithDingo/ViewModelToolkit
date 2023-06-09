@@ -2,11 +2,11 @@
 
 ViewModelToolkit is a .NET MAUI toolkit for users of the Model-View-ViewModel (MVVM) pattern. The package includes ViewModelBase, DialogManager and CoreNavigation, three components that can make a programmer's job much easier while providing a (relatively) simple, clean and consise codebase.
 
-In addition to providing the abstract `ViewModelBase` class, the additional components make it easier to navigate to your own pages *modally*, treating each navigation as an atomic awaitable task. Gone are the days tracking whether the user hit the cancel button, back button or the device hardware button. No matter how the user closes the dialog, control returns to the statement *after* the navigation call, returning the result of the dialog.
+In addition to providing the abstract `ViewModelBase` class, the additional components make it easier to navigate to pages *modally*, treating each navigation as an atomic awaitable task. Gone are the days tracking whether the user hit the cancel button, back button or the device hardware button. No matter how the user closes the dialog, control returns to the statement *after* the navigation call, returning the result of the dialog.
 
 ## ViewModelBase
 
-At its most basic, VMT provides three ViewModelBase classes:
+At its most basic, VMT provides three ViewModelBase base classes:
 
 1. `ViewModelBase`, used for simple navigation to another page,
 2. `ViewModelBase<T>`, used for task-based modal and modeless navigation to another page with a strongly typed ViewModel.
@@ -14,7 +14,7 @@ At its most basic, VMT provides three ViewModelBase classes:
 
 ### `ViewModelBase` class
 
-At the root of the hierarchy is `ViewModelBase`, which provides the basic functionality. An `IsDirty` property is managed by a `Set<T>` function that handles the `INotifyPropertyChanged` calls and sets the `IsDirty` flag automatically.
+At the root of the hierarchy is `ViewModelBase`, which provides the basic functionality. An `IsDirty` property is managed by the `Set<T>` function that handles the `INotifyPropertyChanged` calls and sets the `IsDirty` flag automatically.
 
 Basic usage of `ViewModel.Set<T>` within a property setter is illustrated here:
 
@@ -53,7 +53,7 @@ Or you can simply use `NavigateToPage()`, which does all of that under the cover
 CoreNavigation.NavigateToPage<SimplePage, SimplePageViewModel>();
 ```
 
-Either method works, but the latter is more consise, and it will allow for dependency injection when used for ViewModel instantiation. See **Dependency Injection** later in this document.
+Either method works, but the latter is more consise, and it will allow for dependency injection when used for ViewModel instantiation. See [**Dependency Injection**](#dependency-injection) later in this document.
 
 To stay in compliance with the MVVM design pattern, best practices would mandate that navigation methods such as the above be placed in a static navigation service class. Under MVVM, the ViewModel should not know anything about the View class, so we would do something like the following:
 
@@ -255,4 +255,9 @@ See the next section **ViewModel Inheritance** for the declaration of `ContinueC
 More complex applications can require higher levels of inheritence among ViewModels. This can easily be accomplished using `ViewModelBase<T>`. See the Customer Editor sample for an illustration. Each of the three pages of that dialog inherit from a common `CustomerViewModelBase` class, which contains a `Source` property of type `Customer`, the notification properties, a base `Initialize(T item)` method, an `Update()` override, and other members common to all three pages.
 
 Each of the edit customer pages need only declare the specific notification properties and save commands needed to provide the forward navigation. 
+
+
+## Dependency Injection
+
+To be continued...
 
