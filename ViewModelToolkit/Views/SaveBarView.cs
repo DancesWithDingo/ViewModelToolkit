@@ -69,6 +69,7 @@ public class SaveBarView : ContentView, ISaveBarView
     static void OnButtonStylePropertyChanged(BindableObject bindable, object oldValue, object newValue) {
         var o = bindable as SaveBarView;
         if ( newValue is Style style ) {
+            System.Diagnostics.Debug.WriteLine($"ButtonStyle set: {style.Setters.Count()}");
             if ( o.CancelButton is not null ) o.CancelButton.Style = style;
             if ( o.SaveButton is not null ) o.SaveButton.Style = style;
         }

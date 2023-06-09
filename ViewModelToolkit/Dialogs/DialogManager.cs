@@ -10,7 +10,6 @@ public enum SaveBarDisplayMode { None, Default, SaveBarOnly, ToolBarOnly, BothTo
 
 public sealed partial class DialogManager<TResult> : BindableObject
 {
-    public DialogManager() { }
     public DialogManager(ViewModelBase<TResult> vm) => ViewModel = vm;
 
     bool isConfigured = false;
@@ -221,7 +220,7 @@ public sealed partial class DialogManager<TResult> : BindableObject
         try {
             TResult result = ViewModel.Update();
             SetDialogResult(result);
-            if ( result != null )
+            if ( result is not null )
                 ViewModel.IsDirty = false;
 
         } catch ( Exception ex ) {

@@ -24,8 +24,8 @@ public class PickANumberPageViewModel : ModalViewModelBase<int>
                 NumberStringErrorText = $"{NumberString} is not an integer between 1 and 10.";
         }
 
-        bool hasError = !string.IsNullOrEmpty(NumberStringErrorText);
-        return base.Validate(!hasError);
+        bool noErrors = string.IsNullOrEmpty(NumberStringErrorText);
+        return base.Validate(noErrors);
     }
 
     public string NumberString { get => _NumberString; set => Set(ref _NumberString, value, shouldValidate: true); }

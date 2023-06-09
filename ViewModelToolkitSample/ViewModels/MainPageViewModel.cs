@@ -96,17 +96,17 @@ public class MainPageViewModel : ViewModelBase
     static string GetCustomFormDescription() =>
         "The final example shows how to make use of custom ViewModel initialization to pass additional "
         + "data to a ViewModel, in this case a Person object. The Source item for the ViewModel is of "
-        + "type Transaction, and the Person is passed to a new virtual Initialize method. Additionally, "
+        + "type Transaction, and the Person is passed to a custom Initialize method. Additionally, "
         + "it shows how to create and inject a custom SaveBarView instance with vertical buttons and "
         + "an additional help button. (Note that this is merely demonstrating how to inject a view "
         + "into the page. In a real world application, the custom save bar would more likely be declared "
-        + "in XAML.";
+        + "in XAML.)";
 
     static string GetCustomerEditorDescription() =>
         "This example is a three-page \"wizard\"-like dialog. It shows how to provide your own "
         + "command to provide the forward navigation required in a multiple-page dialog. "
         + "It also illustrates how to use ViewModel inheritance to simplify the design and reduce "
-        + "redundant code.";
+        + "repeated code.";
 
     static string GetPickANumberDescription() =>
         "This example represents a common but difficult task: that of prompting the user "
@@ -118,7 +118,7 @@ public class MainPageViewModel : ViewModelBase
     static string GetSimpleNavigationDescription() =>
         "This example shows a simple push to a receiving ContentPage. The receiving ViewModel derives from "
         + "ViewModelBase<string>, and the string value you enter will be passed to the second page Source "
-        + "property via Initialize(string) method. Note that type of ViewModelBase<T> can be string, int "
+        + "property via Initialize(string) method. Note that core type of ViewModelBase<T> can be string, int "
         + $"or even class objects.";
 
     #endregion

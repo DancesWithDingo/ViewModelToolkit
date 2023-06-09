@@ -115,7 +115,8 @@ public abstract class ViewModelBase<T> : ViewModelBase, IViewModelBase<T>
     /// <returns>Boolean indicating whether the property was set with a different value</returns>
     protected virtual bool Set<TResult>(ref TResult field, TResult newValue, Action<TResult> setAction = null, bool setIsDirty = true, bool shouldValidate = false, [CallerMemberName] string propertyName = null) {
         var wasSet = base.Set<TResult>(ref field, newValue, setAction, setIsDirty, propertyName);
-        if ( !isInitializing && shouldValidate ) Validate();
+        if ( !isInitializing && shouldValidate )
+            Validate();
         return wasSet;
     }
 

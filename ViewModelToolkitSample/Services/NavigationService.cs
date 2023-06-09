@@ -49,7 +49,8 @@ public static class NavigationService
             if ( page.FindByName("SaveBarLayout") is Grid layout )
                 layout.Add(saveBar);
             else
-                throw new NullReferenceException("Could not find a VerticalStackLayout named \"SaveBarLayout\")");
+                throw new NullReferenceException("Could not find a Grid named \"SaveBarLayout\")");
+
             return saveBar;
         }
     }

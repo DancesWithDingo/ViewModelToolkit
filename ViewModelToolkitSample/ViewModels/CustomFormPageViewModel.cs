@@ -8,11 +8,12 @@ public class CustomFormPageViewModel : ModalViewModelBase<Transaction>
 {
     // Note: this is not an override of Initialize due to the additional argument
     public void Initialize(Transaction item, Person person) {
+        // But still call the base initializer:
         base.Initialize(item);
 
         Description = item.Description;
         Person = person;
-        
+
         DialogManager.DisplayMode = SaveBarDisplayMode.SaveBarOnly;
         DialogManager.CancelWhenDirtyAlertDetails = new AlertDetails(
             "Are you certain?",
@@ -29,13 +30,10 @@ public class CustomFormPageViewModel : ModalViewModelBase<Transaction>
     }
 
     public override bool Validate() {
-        DescriptionErrorText = string.Empty;
+        DescriptionErrorText = string.IsNullOrEmpty(Description) ? "This field is required!" : string.Empty;
 
-        if ( string.IsNullOrEmpty(Description) )
-            DescriptionErrorText = "This field is required!";
-
-        bool hasError = DescriptionErrorText != string.Empty;
-        return base.Validate(!hasError);
+        bool noErrors = DescriptionErrorText == string.Empty;
+        return base.Validate(noErrors);
     }
 
     public Person Person { get; private set; }

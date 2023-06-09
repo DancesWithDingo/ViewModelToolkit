@@ -79,7 +79,7 @@ public static partial class CoreNavigation
         try {
             var page = new TPage();
             var vm = CurrentDependencyResolver.Resolve<TViewModel>()
-                ?? throw new NullReferenceException($"Could not resolve and construct the type specified by TViewModel");
+                ?? throw new NullReferenceException($"Could not resolve and construct the type specified by TViewModel ({typeof(TViewModel).FullName})");
 
             vm.InitializeCleanly(() => {
                 if ( initialization == null )
@@ -151,6 +151,7 @@ public static partial class CoreNavigation
             await Navigation.PushModalAsync(navPage, useTransitionAnimation);
 
             TResult result = await vm.DialogManager.ExecuteModalTaskAsync();
+
             bool shouldAnimate = useTransitionAnimation
                 && !(shouldSuppressReturnNavigationAnimation?.Invoke(result) ?? false);
 

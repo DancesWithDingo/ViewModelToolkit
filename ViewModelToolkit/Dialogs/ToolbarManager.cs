@@ -72,7 +72,7 @@ sealed class ToolbarManager : BindableObject
         ToolbarItems = page.ToolbarItems;
 
         DisplayMode = displayMode;
-
+        
         ConfigureButtons(CancelToolbarItem, SaveBar, false);
         ConfigureButtons(SaveToolbarItem, SaveBar, true);
         UpdateButtons();
