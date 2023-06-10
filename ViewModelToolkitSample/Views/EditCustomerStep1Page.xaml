@@ -29,7 +29,6 @@
                         <Label Text="Date of birth:" Style="{StaticResource HeaderLabelStyle}"/>
                         <VerticalStackLayout Spacing="10" VerticalOptions="Center">
                             <DatePicker Date="{Binding BirthDate}" Format="D" MaximumDate="{Binding MinimumBirthDate}"/>
-                            <Label Text="{Binding BirthDateErrorText}" Style="{StaticResource ErrorLabelStyle}"/>
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                 </VerticalStackLayout>

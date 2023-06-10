@@ -6,7 +6,7 @@ using ViewModelToolkit.Dialogs;
 namespace ViewModelToolkit.ViewModels;
 
 /// <summary>
-/// Base class for all View Models. Provides initialization and manages the IsDirty flag.
+/// Base class for all ViewModels. Provides initialization and manages the IsDirty flag.
 /// </summary>
 public abstract class ViewModelBase : BindableObject, IViewModelBase
 {
@@ -17,7 +17,7 @@ public abstract class ViewModelBase : BindableObject, IViewModelBase
 
     /// <inheritdoc/>
     [DebuggerNonUserCode]
-    public void InitializeCleanly(Action action) {
+    public void ExecuteCleanly(Action action) {
         isInitializing = true;
         action?.Invoke();
         isInitializing = false;
@@ -66,8 +66,8 @@ public abstract class ViewModelBase : BindableObject, IViewModelBase
 
 
 /// <summary>
-/// Base class for View Model classes, providing a generic Source property, an Update <see langword="virtual"/> method to fetch the
-/// current property values from the View Model, and an optional Validate <see langword="virtual"/> method that can be
+/// Base class for ViewModel classes, providing a generic Source property, an Update <see langword="virtual"/> method to fetch the
+/// current property values from the ViewModel, and an optional Validate <see langword="virtual"/> method that can be
 /// overriden if validation is required.
 /// </summary>
 /// <typeparam name="T">Type for the Source property</typeparam>
@@ -133,7 +133,7 @@ public abstract class ViewModelBase<T> : ViewModelBase, IViewModelBase<T>
 
 
 /// <summary>
-/// Base class for modal View Model classes, implementing a <![CDATA[DialogManager<T>]]>
+/// Base class for modal ViewModel classes, implementing a <![CDATA[DialogManager<T>]]>
 /// </summary>
 /// <typeparam name="T">Type for the Source property</typeparam>
 public abstract class ModalViewModelBase<T> : ViewModelBase<T>, IDialogSupport<T>, IModalViewModelBase<T>

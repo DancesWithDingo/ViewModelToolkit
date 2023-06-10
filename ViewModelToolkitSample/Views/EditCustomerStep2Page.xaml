@@ -35,7 +35,7 @@
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
 
-                    <VerticalStackLayout Spacing="6" IsVisible="{Binding IsLoyaltyPointsBarVisible}" Margin="0,20,0,0">
+                    <VerticalStackLayout IsVisible="{Binding IsLoyaltyPointsBarVisible}" Spacing="6" Margin="0,20,0,0">
                         <Label Text="Select starting account loyalty points:"/>
                         <HorizontalStackLayout Spacing="6">
                             <Button Text="1,000 points" Command="{Binding RewardPointsCommand}" CommandParameter="1000"/>

@@ -1,4 +1,5 @@
-﻿using ViewModelToolkit.Dialogs;
+﻿using ViewModelToolkit;
+using ViewModelToolkit.Dialogs;
 using ViewModelToolkitSample.Models;
 using ViewModelToolkitSample.Services;
 
@@ -41,12 +42,19 @@ public class EditCustomerStep1PageViewModel : CustomerViewModelBase
 
     public DateTime MinimumBirthDate { get; init; }
 
+    public string FirstNameErrorText { get => _FirstNameErrorText; set => Set(ref _FirstNameErrorText, value, setIsDirty: false); }
+    string _FirstNameErrorText;
+
+    public string LastNameErrorText { get => _LastNameErrorText; set => Set(ref _LastNameErrorText, value, setIsDirty: false); }
+    string _LastNameErrorText;
+
     public Command ContinueCommand => _ContinueCommand ??= new Command(async p => {
         if (Validate() ) {
-            Customer input = Update();
-            Customer result = await NavigationService.GoToEditCustomerStep2PageAsync(input);
+            Customer current = Update();
+            Customer result = await NavigationService.GoToEditCustomerStep2PageAsync(current);
             if ( !result.IsDefault() ) {
-                InitializeCleanly(() => Initialize(result));
+                // Reinitialize without changing the IsDirty flag:
+                ExecuteCleanly(() => Initialize(result));
                 DialogManager.ExecuteDefaultSaveButtonCommand();
             }
         }

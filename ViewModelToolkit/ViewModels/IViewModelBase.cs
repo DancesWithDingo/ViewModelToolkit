@@ -10,15 +10,15 @@ public interface IViewModelBase
     bool IsDirty { get; set; }
 
     /// <summary>
-    /// Basic View Model initializer (should not be called from ViewModelBase<![CDATA[<T>]]> descendents)
+    /// Base ViewModel initializer (should not be called from ViewModelBase<![CDATA[<T>]]> descendents)
     /// </summary>
     void Initialize();
 
     /// <summary>
-    /// Provides support for executing actions without changing IsDirty
+    /// Provides support for executing actions without changing the IsDirty flag
     /// </summary>
     /// <param name="action">Action to execute cleanly</param>
-    void InitializeCleanly(Action action);
+    void ExecuteCleanly(Action action);
 }
 
 
@@ -26,7 +26,7 @@ public interface IViewModelBase<T> : IViewModelBase
 {
     /// <summary>
     /// Backing store property for the ViewModel. Holds the original value that was used to initialize
-    /// the View Model. The Source property should not be modified after initialization.
+    /// the ViewModel. The Source property should not be modified after initialization.
     /// </summary>
     T Source { get; }
 
@@ -36,7 +36,7 @@ public interface IViewModelBase<T> : IViewModelBase
     bool IsValid { get; }
 
     /// <summary>
-    /// Base View Model initializer, sets the value for Source
+    /// Base ViewModel initializer, sets the value for Source
     /// </summary>
     /// <param name="item">The item to be assigned to the Source variable of type <typeparamref name="T"/></param>
     /// <exception cref="ArgumentNullException"></exception>
@@ -44,16 +44,16 @@ public interface IViewModelBase<T> : IViewModelBase
 
     /// <summary>
     /// A <see langword="virtual"/> method creates and returns an object of type <typeparamref name="T"/>
-    /// containing the current property values from the View Model.
+    /// containing the current property values from the ViewModel.
     /// </summary>
     /// <returns>An object of type <typeparamref name="T"/> containing the current property values
-    /// from the View Model.</returns>
+    /// from the ViewModel.</returns>
     T Update();
 
 
     /// <summary>
     /// A virtual function that can be overriden by inheritors to provide logic for validating
-    /// the state of the View Model properties. Sets the IsValid flag before returning the result.
+    /// the state of the ViewModel properties. Sets the IsValid flag before returning the result.
     /// </summary>
     /// <returns>A boolean value indicating if the validation was successful</returns>
     bool Validate();

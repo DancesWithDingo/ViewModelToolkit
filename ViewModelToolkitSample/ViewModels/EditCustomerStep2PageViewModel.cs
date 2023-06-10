@@ -1,8 +1,7 @@
-﻿using ViewModelToolkit.Dialogs;
-using ViewModelToolkit.ViewModels;
+﻿using ViewModelToolkit;
+using ViewModelToolkit.Dialogs;
 using ViewModelToolkitSample.Models;
 using ViewModelToolkitSample.Services;
-using ViewModelToolkitSample.ViewModels;
 
 namespace ViewModelToolkitSample.ViewModels;
 
@@ -36,7 +35,7 @@ public class EditCustomerStep2PageViewModel : CustomerViewModelBase
         if ( Validate() ) {
             Customer result = await NavigationService.GoToEditCustomerStep3PageAsync(Update());
             if ( !result.IsDefault() ) {
-                InitializeCleanly(() => Initialize(result));
+                ExecuteCleanly(() => Initialize(result));
                 DialogManager.ExecuteDefaultSaveButtonCommand();
             }
         }
@@ -45,10 +44,12 @@ public class EditCustomerStep2PageViewModel : CustomerViewModelBase
 
     public Command EditPointsCommand => _EditPointsCommand ??= new Command(async p => {
         string response = await AlertService.PromptForPointsAsync(LoyaltyPoints);
-        if ( response is not null && int.TryParse(response, out int result) )
-            LoyaltyPoints = result;
-        else if ( response is not null )
-            await AlertService.AlertInvalidLoyaltyPointsInputAsync(response);
+        if ( !response.IsDefault() ) {
+            if ( int.TryParse(response, out int result) )
+                LoyaltyPoints = result;
+            else
+                await AlertService.AlertInvalidLoyaltyPointsInputAsync(response);
+        }
     });
     Command _EditPointsCommand;
 

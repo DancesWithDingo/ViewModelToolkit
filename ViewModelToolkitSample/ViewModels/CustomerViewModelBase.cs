@@ -55,20 +55,11 @@ public class CustomerViewModelBase : ViewModelBase<Customer>, IDialogSupport<Cus
     public DateTime AnniversaryDate { get => _AnniversaryDate; set => Set(ref _AnniversaryDate, value, shouldValidate: true); }
     DateTime _AnniversaryDate;
 
-    public string AnniversaryDateErrorText { get => _AnniversaryDateErrorText; set => Set(ref _AnniversaryDateErrorText, value); }
-    string _AnniversaryDateErrorText;
-
     public DateTime BirthDate { get => _BirthDate; set => Set(ref _BirthDate, value, shouldValidate: true); }
     DateTime _BirthDate;
 
-    public string BirthDateErrorText { get => _BirthDateErrorText; set => Set(ref _BirthDateErrorText, value, setIsDirty: false); }
-    string _BirthDateErrorText;
-
     public string FirstName { get => _FirstName; set => Set(ref _FirstName, value, SetFullName, shouldValidate: true); }
     string _FirstName;
-
-    public string FirstNameErrorText { get => _FirstNameErrorText; set => Set(ref _FirstNameErrorText, value, setIsDirty: false); }
-    string _FirstNameErrorText;
 
     public string FullName { get => _FullName; set => Set(ref _FullName, value); }
     string _FullName;
@@ -76,15 +67,9 @@ public class CustomerViewModelBase : ViewModelBase<Customer>, IDialogSupport<Cus
     public string LastName { get => _LastName; set => Set(ref _LastName, value, SetFullName, shouldValidate: true); }
     string _LastName;
 
-    public string LastNameErrorText { get => _LastNameErrorText; set => Set(ref _LastNameErrorText, value, setIsDirty: false); }
-    string _LastNameErrorText;
-
     public int LoyaltyPoints { get => _LoyaltyPoints; set => Set(ref _LoyaltyPoints, value, SetLoyaltyPointsText); }
     void SetLoyaltyPointsText(int points) => LoyaltyPointsText = points.ToString();
     int _LoyaltyPoints;
-
-    public string LoyaltyPointsErrorText { get => _LoyaltyPointsErrorText; set => Set(ref _LoyaltyPointsErrorText, value, setIsDirty: false); }
-    string _LoyaltyPointsErrorText;
 
     public string LoyaltyPointsText { get => _LoyaltyPointsText; set => Set(ref _LoyaltyPointsText, value); }
     string _LoyaltyPointsText;

@@ -32,8 +32,8 @@ public partial class App : Application
     public class MyCustomDependencyResolver : IDependencyResolver
     {
         public T Resolve<T>() where T : class {
-            // Call into your own container here. The default implementation
-            //   simply performs the following statement:
+            // Call into your own DI container here. The default implementation
+            //   performs the following statement:
             return Activator.CreateInstance<T>();
         }
     }
