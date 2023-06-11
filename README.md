@@ -70,13 +70,11 @@ which would be called in the ViewModel as such:
 NavigationService.GoToSimplePage("Hello world!");
 ```
 
-### `ViewModelBase<T>` class
+### Model-based Simple Navigation
 
 The abstract base class `ViewModelBase<T>` provides support for strongly-typed ViewModels. The `Source` property holds the model value passed to the ViewModel in the `Initialize(T)` method. `Source` is intended to describe the data at the time of initialization, and as such should remain static throughout the ViewModel lifecycle.
 
-The `Update` virtual function should be overriden to return a typed object representing the current state of the ViewModel notification properties.
- 
-An optional `Validate()` virtual function can be overriden to provide validation logic for the ViewModel.
+The `Update` virtual function should be overriden to return a typed object representing the current state of the ViewModel notification properties. An optional `Validate()` virtual function can be overriden to provide validation logic for the ViewModel.
 
 Here's an example of a strongly typed ViewModel of type `int`.
 
@@ -120,13 +118,9 @@ The `Update` function manages parsing from string to integer, returning the valu
 
 Within the NumberString property declaration, the `Set<T>` override adds another optional parameter, `shouldValidate: bool`. When set to true, the `Validate` function will be called each time the property is set. The default behavior does not validate, and the `Validate` method can be called manually at any time after initialization for more precise control of the validation process.
 
-### Model-based Simple Navigation
-
-The `CoreNavigation` class provides the static function `TModel NavigateToPage<TModel, TView, TViewModel>` to make it easier to instantiate and navigate to a page managing a data `Source` item. To do this manually, we'd need the following commands:
-
 ### Model-based Dialog Navigation
 
-The `CoreNavigation` class provides the static function `TModel NavigateToModalPage` to make it easier to instantiate and navigate to a **modal** page managing a `Source` model item. Hand coding this would require the following commands:
+The `CoreNavigation` class provides the static function `TModel NavigateToModalPage` to make it easier to instantiate and navigate to a **modal** page managing a `Source` model item. Hand coding this would require the following statements:
 
 ```cs
 var pg = new EditPersonPage();
@@ -288,18 +282,18 @@ The `IsDefault()` function is an extension method that determines whether a vari
 
 ## Dependency Injection
 
-As developers, we strive to keep our code clean, nonrepetitive, and managable. We use patterns such as Model-View-ViewModel to separate user interface from business logic. Dependency Injection has become a valuable tool to this end, and ViewModelToolkit provides a hook to allow for usage of virtually any DI tool available for the .NET platform.
+As developers, we strive to keep our code clean, nonrepetitive, and maintainable. We use patterns such as Model-View-ViewModel to separate user interface from business logic. Dependency Injection has become a valuable tool to this end, and ViewModelToolkit provides a hook to allow for usage of virtually any DI tool available for the .NET platform.
 
-Under the hood, CoreNavigation functions `NavigateToPage` and `NavigateToModalPage` do their magic by creating instances of your page View and ViewModel classes for you. This creation is managed by abstracting out calls into a default dependency resolver that simply uses `Activator.CreateInstance<T>()`.
+Under the hood, CoreNavigation functions `NavigateToPage` and `NavigateToModalPage` do their magic by creating instances of your page View and ViewModel classes for you. This creation is managed by abstracting out calls into a default dependency resolver that uses `Activator.CreateInstance<T>()` to instantiate classes.
 
-To configure CoreNavigation to use your own, either implement the `IDependencyResolver` interface on your DI container or on a helper class with access to your DI container. The interface requires a single function declared, `T Resolve<T>()`:
+To configure CoreNavigation to use your own DI solution, either implement the `IDependencyResolver` interface on your DI container or on a helper class with access to your DI container. The interface requires a single function, `T Resolve<T>`:
 
 ```cs
 public class MyCustomDependencyResolver : IDependencyResolver
 {
     public T Resolve<T>() where T : class {
         // Call into your own DI container here. The default implementation
-        //   simply performs the following statement:
+        //   performs the following statement:
         // return Activator.CreateInstance<T>();
     }
 }
