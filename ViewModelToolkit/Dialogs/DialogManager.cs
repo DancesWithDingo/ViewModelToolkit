@@ -158,7 +158,7 @@ public sealed partial class DialogManager<TModel> : BindableObject
 
         isConfigured = true;
 
-        if ( OperatingSystem.IsAndroid() )
+        if ( DeviceInfo.Platform == DevicePlatform.Android )
             IsCancelToolbarItemVisible = false;
 
         void ViewModelIsDirtyChangedHandler(object sender, PropertyChangedEventArgs e) {

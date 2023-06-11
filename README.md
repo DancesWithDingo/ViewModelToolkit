@@ -149,7 +149,7 @@ Person result = await NavigationService.GoToEditPersonPageAsync(person);
 ```
 Because the modal page is executed using a TaskCompletionSource, program control will suspend within the ViewModel until the modal dialog page is dismissed, at which time the result will be returned to the caller.
 
-### `ModalViewModelBase<T>` class
+#### `ModalViewModelBase<T>` class
 
 The abstract base class `ModalViewModelBase<T>`, in addition to providing the functionality of the `ViewModelBase<T>` class, adds `DialogManager` support to the mix. The `DialogManager` class will be discussed in next section. This base class is provided as a convenience, as it adds and implements the `IDialogSupport<T>` interface, and its use removes the need to manually declare and initialize the `DialogManager<T>` ViewModel member. However if you need to implement ViewModel inheritance, you will need to utilize `ViewModelBase<T>` and implement `IDialogSupport<T>` manually. See [**ViewModel Inheritance**](#viewmodel-inheritance) later in this document.
 
@@ -191,9 +191,7 @@ CoreNavigation.ConfigureDefaultButtonBarDisplayMode(SaveBarDisplayMode.BothToolB
 
 ### `ISaveBarView` implementation
 
-At runtime, `DialogManager` searches for an instance of ISaveBarView within the `ContentPage` visual tree. If it cannot find one, it will create an instance of `ViewModelToolkit.Views.SaveBarView` and insert it in the page at the end of the first `Layout` derived control it finds. Depending on the page design, this may be unsuitable behavior.
-
-The page designer can insert a `SaveBarView` in a ContentPage using XAML syntax:
+At runtime, `DialogManager` searches for an instance of ISaveBarView within the `ContentPage` visual tree. If it cannot find one, it will create an instance of `ViewModelToolkit.Views.SaveBarView` and insert it in the page at the end of the first `Layout` derived control it finds. Depending on the page design, this may be the best behavior. Instead, the page designer can insert a `SaveBarView` in a ContentPage using XAML syntax:
 
 ```xml
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -214,7 +212,7 @@ The page designer can insert a `SaveBarView` in a ContentPage using XAML syntax:
 
 ```
 
-For the most flexible solution, the developer can design their own save bar. They need only implement the `ISaveBarView` interface, which ensures the Save and Cancel button properties are declared. Note that these buttons don't need to be actual buttons: any control can be used provided it supports the commanding structure as described above. Even an image with a hit map could be used, and the `ISaveBarButtonView` interface is provided to simplify the task of developing the custom save bar buttons.
+For the most flexibility, the developer can design their own save bar. They need only implement the `ISaveBarView` interface, which ensures the Save and Cancel button properties are declared. Note that these buttons don't need to be actual buttons: any control can be used provided it supports the commanding structure as described above. Even an image with a hit map could be used, and the `ISaveBarButtonView` interface is provided to simplify the task of developing the custom save bar buttons.
 
 The ViewModelToolkitSample application contains an example of a custom save bar that is vertically oriented and includes an additional Help button. 
 
@@ -310,6 +308,6 @@ CoreNavigation.ConfigureDependencyResolver(new MyCustomDependencyResolver());
 
 All good applications deal with the unexpected in a consistent manner. ViewModelToolkit provides a simple exception handling mechanism that can easily be expanded or integrated into an existing exception management system. Interface `IExceptionService` allows this expansion point. By default, `DefaultExceptionService` implements method `HandleException(Exception)` by writing the exception information to the debug window and rethrowing the exception. The developer can declare their own custom `IExceptionService`-implemented instance near the top of the App.xaml.cs file as follows:
 
-```
+```cs
 CoreNavigation.ConfigureExceptionHandler(new MyExceptionHander());
 ```

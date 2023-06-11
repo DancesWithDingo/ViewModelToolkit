@@ -37,7 +37,7 @@ public class ModalPageHandler : PageHandler
         void ManageBarButtons() {
             var navItem = NavigationController.TopViewController.NavigationItem;
 
-            var tbi = Page.ToolbarItems.Where(tbi => tbi.Priority == int.MinValue).FirstOrDefault();
+            var tbi = Page.ToolbarItems.FirstOrDefault(tbi => tbi.Priority == int.MinValue);
             if ( tbi is not null ) {
                 Page.ToolbarItems.Remove(tbi);
 

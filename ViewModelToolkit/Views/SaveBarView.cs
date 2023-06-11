@@ -6,8 +6,8 @@ public class SaveBarButton : Button, ISaveBarButtonView { }
 
 public class SaveBarView : ContentView, ISaveBarView
 {
-    readonly bool isMacOS = OperatingSystem.IsMacOS() || OperatingSystem.IsMacCatalyst();
-    readonly bool isWindows = OperatingSystem.IsWindows();
+    readonly bool isMacOS = DeviceInfo.Platform == DevicePlatform.MacCatalyst;
+    readonly bool isWindows = DeviceInfo.Platform == DevicePlatform.WinUI;
 
     readonly Grid buttonBar;
 
@@ -21,7 +21,7 @@ public class SaveBarView : ContentView, ISaveBarView
                     HorizontalOptions = LayoutOptions.Start,
                     VerticalOptions = LayoutOptions.Center,
                     ColumnSpacing = 6,
-                    Margin = OperatingSystem.IsWindows() ? 2 : 0,
+                    Margin = isWindows ? 2 : 0,
                     ColumnDefinitions = {
                         new ColumnDefinition(),
                         new ColumnDefinition(),
@@ -47,10 +47,10 @@ public class SaveBarView : ContentView, ISaveBarView
         };
 
         buttonBar.Add(CancelButton);
-        buttonBar.Insert(OperatingSystem.IsWindows() ? 0 : 1, SaveButton);
+        buttonBar.Insert(isWindows ? 0 : 1, SaveButton);
 
-        buttonBar.SetColumn(SaveButton, OperatingSystem.IsWindows() ? 0 : 1);
-        buttonBar.SetColumn(CancelButton, OperatingSystem.IsWindows() ? 1 : 0);
+        buttonBar.SetColumn(SaveButton, isWindows ? 0 : 1);
+        buttonBar.SetColumn(CancelButton, isWindows ? 1 : 0);
 
         PropertyChanged += (s, e) => {
             if ( e.PropertyName == Grid.HorizontalOptionsProperty.PropertyName )
