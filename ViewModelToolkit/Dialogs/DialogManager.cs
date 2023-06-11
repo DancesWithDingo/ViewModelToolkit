@@ -8,16 +8,16 @@ namespace ViewModelToolkit.Dialogs;
 public enum SaveBarDisplayMode { None, Default, SaveBarOnly, ToolBarOnly, BothToolBarAndSaveBar }
 
 
-public sealed partial class DialogManager<TResult> : BindableObject
+public sealed partial class DialogManager<TModel> : BindableObject
 {
-    public DialogManager(ViewModelBase<TResult> vm) => ViewModel = vm;
+    public DialogManager(ViewModelBase<TModel> vm) => ViewModel = vm;
 
     bool isConfigured = false;
 
     #region Properties
 
     ToolbarManager ToolbarManager { get; } = new();
-    ViewModelBase<TResult> ViewModel { get; init; }
+    ViewModelBase<TModel> ViewModel { get; init; }
     IExceptionService ExceptionService { get; set; }
 
     #endregion
@@ -26,9 +26,9 @@ public sealed partial class DialogManager<TResult> : BindableObject
 
     public Command CancelButtonCommand { get => (Command)GetValue(CancelButtonCommandProperty); set => SetValue(CancelButtonCommandProperty, value); }
     public static readonly BindableProperty CancelButtonCommandProperty =
-        BindableProperty.Create(nameof(CancelButtonCommand), typeof(Command), typeof(DialogManager<TResult>), propertyChanged: OnCancelButtonCommandPropertyChanged);
+        BindableProperty.Create(nameof(CancelButtonCommand), typeof(Command), typeof(DialogManager<TModel>), propertyChanged: OnCancelButtonCommandPropertyChanged);
     static void OnCancelButtonCommandPropertyChanged(BindableObject bindable, object oldValue, object newValue) {
-        var o = bindable as DialogManager<TResult>;
+        var o = bindable as DialogManager<TModel>;
         var cmd = (Command)newValue;
         o.ToolbarManager.SetCancelButtonCommand(cmd);
         cmd?.ChangeCanExecute();
@@ -36,71 +36,71 @@ public sealed partial class DialogManager<TResult> : BindableObject
 
     public object CancelButtonCommandParameter { get => (object)GetValue(CancelButtonCommandParameterProperty); set => SetValue(CancelButtonCommandParameterProperty, value); }
     public static readonly BindableProperty CancelButtonCommandParameterProperty =
-        BindableProperty.Create(nameof(CancelButtonCommandParameter), typeof(object), typeof(DialogManager<TResult>), 0, propertyChanged: OnCancelButtonCommandParameterPropertyChanged);
+        BindableProperty.Create(nameof(CancelButtonCommandParameter), typeof(object), typeof(DialogManager<TModel>), 0, propertyChanged: OnCancelButtonCommandParameterPropertyChanged);
     static void OnCancelButtonCommandParameterPropertyChanged(BindableObject bindable, object oldValue, object newValue) {
-        var o = bindable as DialogManager<TResult>;
+        var o = bindable as DialogManager<TModel>;
         o.ToolbarManager.SetCancelButtonCommandParameter(newValue);
     }
 
     public string CancelButtonText { get => (string)GetValue(CancelButtonTextProperty); set => SetValue(CancelButtonTextProperty, value); }
     public static readonly BindableProperty CancelButtonTextProperty =
-        BindableProperty.Create(nameof(CancelButtonText), typeof(string), typeof(DialogManager<TResult>), "Cancel", propertyChanged: OnCancelButtonTextPropertyChanged);
+        BindableProperty.Create(nameof(CancelButtonText), typeof(string), typeof(DialogManager<TModel>), "Cancel", propertyChanged: OnCancelButtonTextPropertyChanged);
     static void OnCancelButtonTextPropertyChanged(BindableObject bindable, object oldValue, object newValue) {
-        var o = bindable as DialogManager<TResult>;
+        var o = bindable as DialogManager<TModel>;
         o.ToolbarManager.SetCancelButtonText((string)newValue);
     }
 
     public AlertDetails CancelWhenDirtyAlertDetails { get => (AlertDetails)GetValue(CancelWhenDirtyAlertDetailsProperty); set => SetValue(CancelWhenDirtyAlertDetailsProperty, value); }
     public static readonly BindableProperty CancelWhenDirtyAlertDetailsProperty =
-        BindableProperty.Create(nameof(CancelWhenDirtyAlertDetails), typeof(AlertDetails), typeof(DialogManager<TResult>));
+        BindableProperty.Create(nameof(CancelWhenDirtyAlertDetails), typeof(AlertDetails), typeof(DialogManager<TModel>));
 
     public SaveBarDisplayMode DisplayMode { get => (SaveBarDisplayMode)GetValue(DisplayModeProperty); set => SetValue(DisplayModeProperty, value); }
     public static readonly BindableProperty DisplayModeProperty =
-        BindableProperty.Create(nameof(DisplayMode), typeof(SaveBarDisplayMode), typeof(DialogManager<TResult>), SaveBarDisplayMode.Default, propertyChanged: OnButtonBarDisplayModePropertyChanged);
+        BindableProperty.Create(nameof(DisplayMode), typeof(SaveBarDisplayMode), typeof(DialogManager<TModel>), SaveBarDisplayMode.Default, propertyChanged: OnButtonBarDisplayModePropertyChanged);
     static void OnButtonBarDisplayModePropertyChanged(BindableObject bindable, object oldValue, object newValue) {
-        var o = bindable as DialogManager<TResult>;
+        var o = bindable as DialogManager<TModel>;
         var mode = (SaveBarDisplayMode)newValue;
-        if ( !o.isConfigured ) throw new InvalidOperationException($"{nameof(DialogManager<TResult>)} must be configured using the Configure(ContentPage, SaveBarDisplayMode) method.");
+        if ( !o.isConfigured ) throw new InvalidOperationException($"{nameof(DialogManager<TModel>)} must be configured using the Configure(ContentPage, SaveBarDisplayMode) method.");
         o.ToolbarManager.DisplayMode = mode;
     }
 
     public bool IsCancelButtonVisible { get => (bool)GetValue(IsCancelButtonVisibleProperty); set => SetValue(IsCancelButtonVisibleProperty, value); }
     public static readonly BindableProperty IsCancelButtonVisibleProperty =
-        BindableProperty.Create(nameof(IsCancelButtonVisible), typeof(bool), typeof(DialogManager<TResult>), true, propertyChanged: OnIsCancelButtonVisiblePropertyChanged);
+        BindableProperty.Create(nameof(IsCancelButtonVisible), typeof(bool), typeof(DialogManager<TModel>), true, propertyChanged: OnIsCancelButtonVisiblePropertyChanged);
     static void OnIsCancelButtonVisiblePropertyChanged(BindableObject bindable, object oldValue, object newValue) {
-        var o = bindable as DialogManager<TResult>;
+        var o = bindable as DialogManager<TModel>;
         o.ToolbarManager.IsCancelButtonVisible = (bool)newValue;
     }
 
     public bool IsCancelToolbarItemVisible { get => (bool)GetValue(IsCancelToolbarItemVisibleProperty); set => SetValue(IsCancelToolbarItemVisibleProperty, value); }
     public static readonly BindableProperty IsCancelToolbarItemVisibleProperty =
-        BindableProperty.Create(nameof(IsCancelToolbarItemVisible), typeof(bool), typeof(DialogManager<TResult>), true, propertyChanged: OnIsCancelToolbarItemVisiblePropertyChanged);
+        BindableProperty.Create(nameof(IsCancelToolbarItemVisible), typeof(bool), typeof(DialogManager<TModel>), true, propertyChanged: OnIsCancelToolbarItemVisiblePropertyChanged);
     static void OnIsCancelToolbarItemVisiblePropertyChanged(BindableObject bindable, object oldValue, object newValue) {
-        var o = bindable as DialogManager<TResult>;
+        var o = bindable as DialogManager<TModel>;
         o.ToolbarManager.IsCancelToolbarItemVisible = (bool)newValue;
     }
 
     public bool IsSaveButtonVisible { get => (bool)GetValue(IsSaveButtonVisibleProperty); set => SetValue(IsSaveButtonVisibleProperty, value); }
     public static readonly BindableProperty IsSaveButtonVisibleProperty =
-        BindableProperty.Create(nameof(IsSaveButtonVisible), typeof(bool), typeof(DialogManager<TResult>), true, propertyChanged: OnIsSaveButtonVisiblePropertyChanged);
+        BindableProperty.Create(nameof(IsSaveButtonVisible), typeof(bool), typeof(DialogManager<TModel>), true, propertyChanged: OnIsSaveButtonVisiblePropertyChanged);
     static void OnIsSaveButtonVisiblePropertyChanged(BindableObject bindable, object oldValue, object newValue) {
-        var o = bindable as DialogManager<TResult>;
+        var o = bindable as DialogManager<TModel>;
         o.ToolbarManager.IsSaveButtonVisible = (bool)newValue;
     }
 
     public bool IsSaveButtonAlwaysEnabled { get => (bool)GetValue(IsSaveButtonAlwaysEnabledProperty); set => SetValue(IsSaveButtonAlwaysEnabledProperty, value); }
     public static readonly BindableProperty IsSaveButtonAlwaysEnabledProperty =
-        BindableProperty.Create(nameof(IsSaveButtonAlwaysEnabled), typeof(bool), typeof(DialogManager<TResult>), propertyChanged: OnIsSaveButtonAlwaysEnabledPropertyChanged);
+        BindableProperty.Create(nameof(IsSaveButtonAlwaysEnabled), typeof(bool), typeof(DialogManager<TModel>), propertyChanged: OnIsSaveButtonAlwaysEnabledPropertyChanged);
     static void OnIsSaveButtonAlwaysEnabledPropertyChanged(BindableObject bindable, object oldValue, object newValue) {
-        var o = bindable as DialogManager<TResult>;
+        var o = bindable as DialogManager<TModel>;
         o.ChangeCommandsCanExecute();
     }
 
     public Command SaveButtonCommand { get => (Command)GetValue(SaveButtonCommandProperty); set => SetValue(SaveButtonCommandProperty, value); }
     public static readonly BindableProperty SaveButtonCommandProperty =
-        BindableProperty.Create(nameof(SaveButtonCommand), typeof(Command), typeof(DialogManager<TResult>), propertyChanged: OnSaveButtonCommandPropertyChanged);
+        BindableProperty.Create(nameof(SaveButtonCommand), typeof(Command), typeof(DialogManager<TModel>), propertyChanged: OnSaveButtonCommandPropertyChanged);
     static void OnSaveButtonCommandPropertyChanged(BindableObject bindable, object oldValue, object newValue) {
-        var o = bindable as DialogManager<TResult>;
+        var o = bindable as DialogManager<TModel>;
         var cmd = (Command)newValue;
         o.ToolbarManager.SetSaveButtonCommand(cmd);
         cmd?.ChangeCanExecute();
@@ -108,23 +108,23 @@ public sealed partial class DialogManager<TResult> : BindableObject
 
     public object SaveButtonCommandParameter { get => (object)GetValue(SaveButtonCommandParameterProperty); set => SetValue(SaveButtonCommandParameterProperty, value); }
     public static readonly BindableProperty SaveButtonCommandParameterProperty =
-        BindableProperty.Create(nameof(SaveButtonCommandParameter), typeof(object), typeof(DialogManager<TResult>), propertyChanged: OnSaveButtonCommandParameterPropertyChanged);
+        BindableProperty.Create(nameof(SaveButtonCommandParameter), typeof(object), typeof(DialogManager<TModel>), propertyChanged: OnSaveButtonCommandParameterPropertyChanged);
     static void OnSaveButtonCommandParameterPropertyChanged(BindableObject bindable, object oldValue, object newValue) {
-        var o = bindable as DialogManager<TResult>;
+        var o = bindable as DialogManager<TModel>;
         o.ToolbarManager.SetCancelButtonCommandParameter(newValue);
     }
 
     public string SaveButtonText { get => (string)GetValue(SaveButtonTextProperty); set => SetValue(SaveButtonTextProperty, value); }
     public static readonly BindableProperty SaveButtonTextProperty =
-        BindableProperty.Create(nameof(SaveButtonText), typeof(string), typeof(DialogManager<TResult>), "Save", propertyChanged: OnSaveButtonTextPropertyChanged);
+        BindableProperty.Create(nameof(SaveButtonText), typeof(string), typeof(DialogManager<TModel>), "Save", propertyChanged: OnSaveButtonTextPropertyChanged);
     static void OnSaveButtonTextPropertyChanged(BindableObject bindable, object oldValue, object newValue) {
-        var o = bindable as DialogManager<TResult>;
+        var o = bindable as DialogManager<TModel>;
         o.ToolbarManager.SetSaveButtonText((string)newValue);
     }
 
     public bool ShouldCancelIgnoreIsDirty { get => (bool)GetValue(ShouldButtonIgnoreIsDirtyProperty); set => SetValue(ShouldButtonIgnoreIsDirtyProperty, value); }
     public static readonly BindableProperty ShouldButtonIgnoreIsDirtyProperty =
-        BindableProperty.Create(nameof(ShouldCancelIgnoreIsDirty), typeof(bool), typeof(DialogManager<TResult>));
+        BindableProperty.Create(nameof(ShouldCancelIgnoreIsDirty), typeof(bool), typeof(DialogManager<TModel>));
 
     #endregion
 
@@ -138,17 +138,17 @@ public sealed partial class DialogManager<TResult> : BindableObject
         CancelButtonCommand?.ChangeCanExecute();
     }
 
-    public void Configure<TPage>(
-        TPage page,
+    public void Configure<TView>(
+        TView page,
         SaveBarDisplayMode displayMode = SaveBarDisplayMode.Default,
-        Func<TPage, ISaveBarView> saveBarInjector = null,
+        Func<TView, ISaveBarView> saveBarInjector = null,
         AlertDetails cancelWhenDirtyAlertDetails = null,
         IExceptionService exceptionService = null
-    ) where TPage : ContentPage {
+    ) where TView : ContentPage {
         CancelButtonCommand = DefaultCancelButtonCommand;
         SaveButtonCommand = DefaultSaveButtonCommand;
 
-        ToolbarManager.Configure<TResult, TPage>(page, displayMode, saveBarInjector);
+        ToolbarManager.Configure<TModel, TView>(page, displayMode, saveBarInjector);
 
         CancelWhenDirtyAlertDetails = cancelWhenDirtyAlertDetails;
         ExceptionService = exceptionService ?? new DefaultExceptionService();
@@ -191,14 +191,14 @@ public sealed partial class DialogManager<TResult> : BindableObject
 
     #region Task Completion
 
-    TaskCompletionSource<TResult> tcs;
+    TaskCompletionSource<TModel> tcs;
 
-    public Task<TResult> ExecuteDialogTaskAsync() {
-        tcs = new TaskCompletionSource<TResult>();
+    public Task<TModel> ExecuteDialogTaskAsync() {
+        tcs = new TaskCompletionSource<TModel>();
         return tcs.Task;
     }
 
-    void SetDialogResult(TResult result) => tcs.SetResult(result);
+    void SetDialogResult(TModel result) => tcs.SetResult(result);
 
     #endregion
 
@@ -218,7 +218,7 @@ public sealed partial class DialogManager<TResult> : BindableObject
         if ( !ViewModel.Validate() ) return;
 
         try {
-            TResult result = ViewModel.Update();
+            TModel result = ViewModel.Update();
             SetDialogResult(result);
             if ( result is not null )
                 ViewModel.IsDirty = false;

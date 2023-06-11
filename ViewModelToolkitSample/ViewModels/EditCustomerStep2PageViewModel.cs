@@ -35,6 +35,7 @@ public class EditCustomerStep2PageViewModel : CustomerViewModelBase
     public override bool Validate() => base.Validate(true);
 
     public bool IsExistingAccount => !IsNewAccount;
+
     public bool IsLoyaltyPointsBarVisible { get => _IsLoyaltyPointsBarVisible; set => Set(ref _IsLoyaltyPointsBarVisible, value); }
     bool _IsLoyaltyPointsBarVisible = true;
 

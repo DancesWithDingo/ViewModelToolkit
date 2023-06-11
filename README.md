@@ -9,12 +9,12 @@ In addition to providing the abstract `ViewModelBase` class, the additional comp
 At its most basic, VMT provides three ViewModelBase base classes:
 
 1. `ViewModelBase`, used for simple navigation to another page,
-2. `ViewModelBase<T>`, used for task-based modal and modeless navigation to another page with a strongly typed ViewModel.
+2. `ViewModelBase<T>`, used for simple navigation to another page with a strongly typed model object passed to the `Initialize` method,
 3. `ModalViewModelBase<T>`, used for task-based modal navigation to another page, adding toolbar items and/or a button bar with Save and Cancel buttons.
 
 ### `ViewModelBase` class
 
-At the root of the hierarchy is `ViewModelBase`, which provides the basic functionality. An `IsDirty` property is managed by the `Set<T>` function that handles the `INotifyPropertyChanged` calls and sets the `IsDirty` flag automatically.
+At the root of the hierarchy is `ViewModelBase`, which provides the basic ViewModel lifecycle functionality. An `IsDirty` property is managed by the `Set<T>` function that handles the `INotifyPropertyChanged` calls and sets the `IsDirty` flag automatically.
 
 Basic usage of `ViewModel.Set<T>` within a property setter is illustrated here:
 
@@ -35,9 +35,9 @@ void SetFullName(string _) => FullName = $"{FirstName} {LastName}";
 ```
 The optional argument `setIsDirty: bool` allows a property to disable the default behavior where `IsDirty` is set to true. The default value is `true`.
 
-#### `CoreNavigation.NavigateToPage<TPage, TViewModel>`
+### Simple Navigation
 
-The `CoreNavigation` class provides the static method `NavigateToPage<TPage, TViewModel>` to make it easier to instantiate and navigate to a page. To do this manually, we'd need the following commands:
+The `CoreNavigation` class provides the static method `NavigateToPage<TView, TViewModel>` to make it easier to instantiate and navigate to another ContentPage. To do this manually, we'd need the following statements:
 
 ```cs
 var pg = new SimplePage();
@@ -47,13 +47,13 @@ pg.BindingContext = vm;
 App.Current.MainPage.Navigation.PushAsync(pg);
 ```
 
-Or you can simply use `NavigateToPage()`, which does all of that under the covers:
+Or you can simply use `NavigateToPage()` which does all of that under the hood:
 
 ```cs
 CoreNavigation.NavigateToPage<SimplePage, SimplePageViewModel>();
 ```
 
-Both methods work, but the latter is more consise and will better allow for dependency injection in more complex scenarios. See [**Dependency Injection**](#dependency-injection) later in this document.
+Both methods get the job done, but the latter is more consise and will be more flexible for use of dependency injection in more complex scenarios. See [**Dependency Injection**](#dependency-injection) later in this document.
 
 To stay in compliance with the MVVM design pattern, best practices would mandate that navigation methods such as the above be placed in a static navigation service class. Under MVVM, the ViewModel should not know anything about the View class, so we would do something like the following:
 
@@ -73,11 +73,11 @@ GoToSimplePage("Hello world!");
 
 ### `ViewModelBase<T>` class
 
-The abstract base class `ViewModelBase<T>` provides support for strongly-typed ViewModels. The `Source` property holds the value passed to the ViewModel in the `Initialize(T)` method. `Source` is intended to describe the data at the time of initialization, and as such should remain static throughout the ViewModel lifecycle.
+The abstract base class `ViewModelBase<T>` provides support for strongly-typed ViewModels. The `Source` property holds the model value passed to the ViewModel in the `Initialize(T)` method. `Source` is intended to describe the data at the time of initialization, and as such should remain static throughout the ViewModel lifecycle.
 
-An `Update()` virtual function should be overriden to return a typed object representing the current state of the ViewModel notification properties.
+The `Update` virtual function should be overriden to return a typed object representing the current state of the ViewModel notification properties.
  
-An optional `Validate()` virtual function can be overriden to provide validation logic for the ViewModel. 
+An optional `Validate()` virtual function can be overriden to provide validation logic for the ViewModel.
 
 Here's an example of a strongly typed ViewModel of type `int`.
 
@@ -85,7 +85,7 @@ Here's an example of a strongly typed ViewModel of type `int`.
 public class CustomPageViewModel : ViewModelBase<int>
 {
     public override void Initialize(int item) {
-        base.Initialize(item);
+        base.Initialize(item); // Sets the Source property
         NumberString = string.Empty;
     }
 
@@ -104,8 +104,8 @@ public class CustomPageViewModel : ViewModelBase<int>
                 NumberStringErrorText = $"{NumberString} is not an integer between 1 and 10.";
         }
 
-        bool hasError = !string.IsNullOrWhiteSpace(NumberStringErrorText);
-        return base.Validate(!hasError);
+        bool noErrors = string.IsNullOrWhiteSpace(NumberStringErrorText);
+        return base.Validate(noErrors); // Sets the IsValid property
     }
 
     public string NumberString { get => _NumberString; set => Set(ref _NumberString, value, shouldValidate: true); }
@@ -115,15 +115,14 @@ public class CustomPageViewModel : ViewModelBase<int>
     string _NumberStringErrorText;
 }
 ```
-When writing an `Initialize()` method, keep in mind that it can be called more than once in a page's lifecycle. As such, it's important to ensure that the method cleans up any class-wide properties (such as observable collections, event handlers, etc.) before doing any initialization. And to repeat, the `Source` property is intented to represent the object passed in through `Initialize()` and thus should not be changed unless reinitializing the ViewModel.
+When writing an `Initialize` method, keep in mind that it can be called more than once in a page's lifecycle. As such, it's important to ensure that the method cleans up any class-wide properties (such as observable collections, event handlers, etc.) before doing any initialization. And to repeat, the `Source` property is intented to represent the object passed in through `Initialize` and thus should not be changed unless reinitializing the ViewModel.
 
-The `Update()` function manages parsing from string to integer, returning the value of the number entered. And the `Validate()` function evaluates the state of the ViewModel properties. Note that the call to `base.Validate(bool)` sets a boolean flag named `IsValid` that can be used to determine the current state, for example in the `CanExecute()` declaration of the `ICommand` interface.
+The `Update` function manages parsing from string to integer, returning the value of the number entered. And the `Validate` function evaluates the state of the ViewModel properties. Note that the call to `base.Validate(bool)` sets a boolean flag named `IsValid` that can be used to determine the current state, for example in the `CanExecute` declaration of the `ICommand` interface.
 
-The `Set<T>` override adds another optional parameter, `shouldValidate: bool`. When set to true, the `Validate()` function will be called each time the property is set. The default behavior does not validate, and the Validate() method can be called manually at any time after initialization for more precise control of the validation process.
+Within the NumberString property declaration, the `Set<T>` override adds another optional parameter, `shouldValidate: bool`. When set to true, the `Validate` function will be called each time the property is set. The default behavior does not validate, and the `Validate` method can be called manually at any time after initialization for more precise control of the validation process.
 
-#### `CoreNavigation.NavigateToPage<TResult, TPage, TViewModel>`
-
-The `CoreNavigation` class provides the static function `TResult NavigateToPage<TResult, TPage, TViewModel>` to make it easier to instantiate and navigate to a page managing a data `Source` item. To do this manually, we'd need the following commands:
+### Model-based Simple Navigation
+The `CoreNavigation` class provides the static function `TModel NavigateToPage<TModel, TView, TViewModel>` to make it easier to instantiate and navigate to a page managing a data `Source` item. To do this manually, we'd need the following commands:
 
 ```cs
 var pg = new ModalPage();
@@ -181,7 +180,7 @@ public class ModalPageViewModel : ViewModelBase<Person>, IDialogSupport<Person>
 }
 
 ```
-The `IDialogSupport<TResult>` interface requires a read/init `DialogManager<TResult>` property. Once declared, the `DialogManager` will collaborate with the View to present a default `SaveBarView` view. Page designers can add the default `SaveBarView` control (or any view implementing the 'ISaveBarView' interface). Or not, and one will be added automagically. Control freaks can even override the save bar injection entirely with their own implementation of the `ISaveBarView` interface.
+The `IDialogSupport<TModel>` interface requires a read/init `DialogManager<TModel>` property. Once declared, the `DialogManager` will collaborate with the View to present a default `SaveBarView` view. Page designers can add the default `SaveBarView` control (or any view implementing the 'ISaveBarView' interface). Or not, and one will be added automagically. Control freaks can even override the save bar injection entirely with their own implementation of the `ISaveBarView` interface.
 
 
 ### The hidden `ToolbarManager` component
@@ -229,7 +228,7 @@ The ViewModelToolkitSample application contains an example of a custom save bar 
 
 #### Custom `ISaveBarView` Injection
 
-If the developer would like to provide an instance of an `ISaveBarView` implemented control at **runtime**, the `CoreNavigation.NavigateToModalPageAsync` function has an optional parameter, `saveBarInjector: Func<TPage, ISaveBarView>` to facilitate this. The supplied function will receive the newly created `ContentPage` instance. The developer should instantiate their own ISaveBarView class here and insert it into the `ContentPage` visual tree, returning a reference to the custom save bar.
+If the developer would like to provide an instance of an `ISaveBarView` implemented control at **runtime**, the `CoreNavigation.NavigateToModalPageAsync` function has an optional parameter, `saveBarInjector: Func<TView, ISaveBarView>` to facilitate this. The supplied function will receive the newly created `ContentPage` instance. The developer should instantiate their own ISaveBarView class here and insert it into the `ContentPage` visual tree, returning a reference to the custom save bar.
 
 The ViewModelToolkitSample also contains an example of this usage in the `NavigationService.GoToCustomFormPageAsync` function.
 

@@ -105,7 +105,7 @@ public abstract class ViewModelBase<T> : ViewModelBase, IViewModelBase<T>
     /// Set the value of the backing store to the new value, optionally calling
     /// a provided action and an optional flag whether to change the IsDirty property
     /// </summary>
-    /// <typeparam name="TResult">The type of the property and backing store</typeparam>
+    /// <typeparam name="TModel">The type of the property and backing store</typeparam>
     /// <param name="field">Backing field</param>
     /// <param name="newValue">New value to assign to property</param>
     /// <param name="setAction">Optional action to invoke after property is set</param>
@@ -113,8 +113,8 @@ public abstract class ViewModelBase<T> : ViewModelBase, IViewModelBase<T>
     /// <param name="shouldValidate">Optional to specify if Validate() should be called after the backing store is set</param>
     /// <param name="propertyName">Name of this property (for internal use, do not assign)</param>
     /// <returns>Boolean indicating whether the property was set with a different value</returns>
-    protected virtual bool Set<TResult>(ref TResult field, TResult newValue, Action<TResult> setAction = null, bool setIsDirty = true, bool shouldValidate = false, [CallerMemberName] string propertyName = null) {
-        var wasSet = base.Set<TResult>(ref field, newValue, setAction, setIsDirty, propertyName);
+    protected virtual bool Set<TModel>(ref TModel field, TModel newValue, Action<TModel> setAction = null, bool setIsDirty = true, bool shouldValidate = false, [CallerMemberName] string propertyName = null) {
+        var wasSet = base.Set<TModel>(ref field, newValue, setAction, setIsDirty, propertyName);
         if ( !isInitializing && shouldValidate )
             Validate();
         return wasSet;

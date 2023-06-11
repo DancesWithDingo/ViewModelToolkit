@@ -58,11 +58,11 @@ sealed class ToolbarManager : BindableObject
 
     #region Public Methods
 
-    public void Configure<TResult, TPage>(
-            TPage page,
+    public void Configure<TModel, TView>(
+            TView page,
             SaveBarDisplayMode displayMode,
-            Func<TPage, ISaveBarView> saveBarInjector = null
-    ) where TPage : ContentPage {
+            Func<TView, ISaveBarView> saveBarInjector = null
+    ) where TView : ContentPage {
         _ = page ?? throw new ArgumentNullException(nameof(page));
 
         SaveBar = page.FindFirstDescendent<ISaveBarView>() ??
