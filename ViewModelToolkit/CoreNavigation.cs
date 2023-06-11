@@ -31,22 +31,22 @@ public static partial class CoreNavigation
     public static void ConfigureDependencyResolver(IDependencyResolver resolver) => CurrentDependencyResolver = resolver ?? new DefaultDependencyResolver();
 
     /// <summary>
-    /// Provides navigation to a ContentPage of type TPage, with a non-generic ViewModel of type ViewModelBase
+    /// Provides navigation to a ContentPage of type TView, with a non-generic ViewModel of type ViewModelBase
     /// initialized using either the default Initialize() method or the optional <paramref name="initialization"/> action.
     /// </summary>
-    /// <typeparam name="TPage">Type</typeparam>
+    /// <typeparam name="TView">Type</typeparam>
     /// <typeparam name="TViewModel"></typeparam>
     /// <param name="useTransitionAnimation">An optional boolean indicating whether to use the default animation (default: <see langword="true"/>)</param>
-    /// <param name="initialization">An optional <![CDATA[Action<TPage, TViewModel>]]> initializer</param>
+    /// <param name="initialization">An optional <![CDATA[Action<TView, TViewModel>]]> initializer</param>
     /// <exception cref="NullReferenceException">Thrown if the DependencyResolver couldn't resolve the ViewModel type.</exception>
-    public static void NavigateToPage<TPage, TViewModel>(
+    public static void NavigateToPage<TView, TViewModel>(
             bool useTransitionAnimation = true,
-            Action<TPage, TViewModel> initialization = null
+            Action<TView, TViewModel> initialization = null
         )
-            where TPage : ContentPage, new()
+            where TView : ContentPage, new()
             where TViewModel : ViewModelBase {
         try {
-            var page = CurrentDependencyResolver.Resolve<TPage>() ?? new TPage();
+            var page = CurrentDependencyResolver.Resolve<TView>() ?? new TView();
             var vm = CurrentDependencyResolver.Resolve<TViewModel>()
                 ?? throw new NullReferenceException($"Could not resolve and construct the type specified by TViewModel");
 
@@ -63,27 +63,26 @@ public static partial class CoreNavigation
             if ( page != null )
                 Navigation.PushAsync(page, useTransitionAnimation);
         } catch ( Exception ex ) {
-            System.Diagnostics.Debug.WriteLine($"NavigateToCorePage ex: {ex}");
             CurrentExceptionService.HandleException(ex);
         }
     }
 
     /// <summary>
-    /// Provides navigation to a ContentPage of type <typeparamref name="TPage"/>, with a generic ViewModel of type ViewModelBase<typeparamref name="TResult"/>
+    /// Provides navigation to a ContentPage of type <typeparamref name="TView"/>, with a generic ViewModel of type ViewModelBase<typeparamref name="TModel"/>
     /// initialized using either the default Initialize() method or the optional <paramref name="initialization"/> action.
     /// </summary>
-    /// <typeparam name="TResult">Type of the Model object passed in as <paramref name="input"/> and returned.</typeparam>
-    /// <typeparam name="TPage">Type for the page to be navigated to. Must derive from ContentPage.</typeparam>
-    /// <typeparam name="TViewModel">Type for the ViewModel to be navigated to. Must derive from ModalViewModelBase<typeparamref name="TResult"/>></typeparam>
-    /// <param name="input">Model of type <typeparamref name="TResult"/> used to initialize the ViewModel</param>
+    /// <typeparam name="TModel">Type of the Model object passed in as <paramref name="input"/> and returned.</typeparam>
+    /// <typeparam name="TView">Type for the page to be navigated to. Must derive from ContentPage.</typeparam>
+    /// <typeparam name="TViewModel">Type for the ViewModel to be navigated to. Must derive from ModalViewModelBase<typeparamref name="TModel"/>></typeparam>
+    /// <param name="input">Model of type <typeparamref name="TModel"/> used to initialize the ViewModel</param>
     /// <param name="useTransitionAnimation">An optional boolean indicating whether to use the default animation (default: <see langword="true"/>)</param>
-    /// <param name="initialization">An optional <![CDATA[Action<TPage, TViewModel>]]> initializer</param>
-    /// <exception cref="NullReferenceException">Thown if the DependencyResolver couldn't resolve the ViewModel type.</exception>
-    public static void NavigateToPage<TResult, TPage, TViewModel>(TResult input, bool useTransitionAnimation = true, Action<TPage, TViewModel> initialization = null)
-            where TPage : ContentPage, new()
-            where TViewModel : ViewModelBase<TResult> {
+    /// <param name="initialization">An optional <![CDATA[Action<TView, TViewModel>]]> initializer</param>
+    /// <exception cref="NullReferenceException">Thown if the DependencyResolver can't resolve the ViewModel type.</exception>
+    public static void NavigateToPage<TModel, TView, TViewModel>(TModel input, bool useTransitionAnimation = true, Action<TView, TViewModel> initialization = null)
+            where TView : ContentPage, new()
+            where TViewModel : ViewModelBase<TModel> {
         try {
-            var page = CurrentDependencyResolver.Resolve<TPage>() ?? new TPage();
+            var page = CurrentDependencyResolver.Resolve<TView>() ?? new TView();
             var vm = CurrentDependencyResolver.Resolve<TViewModel>()
                 ?? throw new NullReferenceException($"Could not resolve and construct the type specified by TViewModel ({typeof(TViewModel).FullName})");
 
@@ -99,39 +98,38 @@ public static partial class CoreNavigation
 
             Navigation.PushAsync(page, useTransitionAnimation);
         } catch ( Exception ex ) {
-            System.Diagnostics.Debug.WriteLine($"NavigateToCorePage ex: {ex}");
             CurrentExceptionService.HandleException(ex);
         }
     }
 
     /// <summary>
-    /// Provides navigation to a ContentPage of type <typeparamref name="TPage"/>, with a generic ViewModel of type
-    /// ViewModelBase<typeparamref name="TResult"/> initialized using either the default Initialize() method or the
+    /// Provides navigation to a ContentPage of type <typeparamref name="TView"/>, with a generic ViewModel of type
+    /// ViewModelBase<typeparamref name="TModel"/> initialized using either the default Initialize() method or the
     /// optional <paramref name="initialization"/> action.
     /// </summary>
-    /// <typeparam name="TResult">Type of the Model object passed in as <paramref name="input"/> and returned.</typeparam>
-    /// <typeparam name="TPage">Type for the page to be navigated to. Must derive from ContentPage.</typeparam>
-    /// <typeparam name="TViewModel">Type for the ViewModel to be navigated to. Must derive from ModalViewModelBase<typeparamref name="TResult"/>></typeparam>
-    /// <param name="input">Model of type <typeparamref name="TResult"/> used to initialize the ViewModel</param>
+    /// <typeparam name="TModel">Type of the Model object passed in as <paramref name="input"/> and returned.</typeparam>
+    /// <typeparam name="TView">Type for the page to be navigated to. Must derive from ContentPage.</typeparam>
+    /// <typeparam name="TViewModel">Type for the ViewModel to be navigated to. Must derive from ModalViewModelBase<typeparamref name="TModel"/>></typeparam>
+    /// <param name="input">Model of type <typeparamref name="TModel"/> used to initialize the ViewModel</param>
     /// <param name="useTransitionAnimation">An optional boolean indicating whether to use the default animation (default: <see langword="true"/>)</param>
     /// <param name="nullResultHandling">An optional value of enum type NullResultHandling indicating whether to return <see langword="default"/> or the value of <paramref name="input"/> (default: ReturnDefault)</param>
-    /// <param name="initialization">An optional <![CDATA[Action<TPage, TViewModel>]]> initializer</param>
+    /// <param name="initialization">An optional <![CDATA[Action<TView, TViewModel>]]> initializer</param>
     /// <param name="saveBarInjector">An optional Func<![CDATA[<ContentPage, ISaveBarView>]]> that permits custom creation and insertion of an ISaveBarView instance into the visual tree.</param>
     /// <param name="shouldSuppressReturnNavigationAnimation"></param>
-    /// <returns>Result of the modal action of type <typeparamref name="TResult"/></returns>
+    /// <returns>Result of the modal action of type <typeparamref name="TModel"/></returns>
     /// <exception cref="NullReferenceException">Thown if the DependencyResolver couldn't resolve the ViewModel type.</exception>
-    public static async Task<TResult> NavigateToModalPageAsync<TResult, TPage, TViewModel>(
-            TResult input,
+    public static async Task<TModel> NavigateToModalPageAsync<TModel, TView, TViewModel>(
+            TModel input,
             bool useTransitionAnimation = true,
             NullResultHandling nullResultHandling = NullResultHandling.ReturnDefault,
-            Action<TPage, TViewModel> initialization = null,
-            Func<TPage, ISaveBarView> saveBarInjector = null,
-            Func<TResult, bool> shouldSuppressReturnNavigationAnimation = null
+            Action<TView, TViewModel> initialization = null,
+            Func<TView, ISaveBarView> saveBarInjector = null,
+            Func<TModel, bool> shouldSuppressReturnNavigationAnimation = null
         )
-            where TPage : ContentPage, new()
-            where TViewModel : ViewModelBase<TResult>, IDialogSupport<TResult> {
+            where TView : ContentPage, new()
+            where TViewModel : ViewModelBase<TModel>, IDialogSupport<TModel> {
         try {
-            var page = CurrentDependencyResolver.Resolve<TPage>() ?? new TPage();
+            var page = CurrentDependencyResolver.Resolve<TView>() ?? new TView();
             var vm = CurrentDependencyResolver.Resolve<TViewModel>()
                 ?? throw new NullReferenceException($"Could not resolve and construct the type specified by TViewModel");
 
@@ -156,7 +154,7 @@ public static partial class CoreNavigation
             var navPage = new NavigationPage(page);
             await Navigation.PushModalAsync(navPage, useTransitionAnimation);
 
-            TResult result = await vm.DialogManager.ExecuteModalTaskAsync();
+            TModel result = await vm.DialogManager.ExecuteDialogTaskAsync();
 
             bool shouldAnimate = useTransitionAnimation
                 && !(shouldSuppressReturnNavigationAnimation?.Invoke(result) ?? false);

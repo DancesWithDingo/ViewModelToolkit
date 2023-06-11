@@ -6,15 +6,15 @@ namespace ViewModelToolkitSample;
 
 public class IocResolver : IDependencyResolver
 {
-    public T Resolve<T>() where T : class => IocContainer.Resolve<T>();
+    public T Resolve<T>() where T : class => IocResolverRegistration.Resolve<T>();
 }
 
 
-public static class IocContainer
+public static class IocResolverRegistration
 {
     public static T Resolve<T>() where T : class => App.Current.MainPage.Handler.MauiContext.Services.GetService<T>();
 
-    public static MauiAppBuilder IocConfiguration(this MauiAppBuilder builder) {
+    public static MauiAppBuilder ConfigureIocContainer(this MauiAppBuilder builder) {
         IServiceCollection services = builder.Services;
 
         services.AddSingleton<IExceptionService, DefaultExceptionService>();

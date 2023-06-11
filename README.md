@@ -1,6 +1,6 @@
 # ViewModelToolkit
 
-ViewModelToolkit is a .NET MAUI toolkit for users of the Model-View-ViewModel (MVVM) pattern. The package includes ViewModelBase, DialogManager and CoreNavigation, three components that can make a programmer's job much easier while providing a (relatively) simple, clean and consise codebase.
+ViewModelToolkit is a .NET MAUI toolkit for C# developers using the Model-View-ViewModel (MVVM) pattern. The package includes ViewModelBase, DialogManager and CoreNavigation, three components that can make a programmer's job much easier while providing a (relatively) simple, clean and consise codebase.
 
 In addition to providing the abstract `ViewModelBase` class, the additional components make it easier to navigate to pages *modally*, treating each navigation as an atomic awaitable task. Gone are the days tracking whether the user hit the cancel button, back button or the device hardware button. No matter how the user closes the dialog, control returns to the statement *after* the navigation call, returning the result of the dialog.
 
@@ -53,7 +53,7 @@ Or you can simply use `NavigateToPage()`, which does all of that under the cover
 CoreNavigation.NavigateToPage<SimplePage, SimplePageViewModel>();
 ```
 
-Either method works, but the latter is more consise, and it will allow for dependency injection when used for ViewModel instantiation. See [**Dependency Injection**](#dependency-injection) later in this document.
+Both methods work, but the latter is more consise and will better allow for dependency injection in more complex scenarios. See [**Dependency Injection**](#dependency-injection) later in this document.
 
 To stay in compliance with the MVVM design pattern, best practices would mandate that navigation methods such as the above be placed in a static navigation service class. Under MVVM, the ViewModel should not know anything about the View class, so we would do something like the following:
 
@@ -73,7 +73,7 @@ GoToSimplePage("Hello world!");
 
 ### `ViewModelBase<T>` class
 
-The abstract base class `ViewModelBase<T>` provides support for strongly-typed ViewModels. The `Source` property holds the value passed to the ViewModel in the `Initialize(T)` method. `Source` is intended to describe the data at the time of initialization, and as such should **NEVER** be altered by the programmer.
+The abstract base class `ViewModelBase<T>` provides support for strongly-typed ViewModels. The `Source` property holds the value passed to the ViewModel in the `Initialize(T)` method. `Source` is intended to describe the data at the time of initialization, and as such should remain static throughout the ViewModel lifecycle.
 
 An `Update()` virtual function should be overriden to return a typed object representing the current state of the ViewModel notification properties.
  
@@ -115,7 +115,7 @@ public class CustomPageViewModel : ViewModelBase<int>
     string _NumberStringErrorText;
 }
 ```
-When writing an `Initialize()` method, keep in mind that it can be called more than once in a page's lifecycle. As such, it's important to ensure that the method cleans up any class-wide properties (such as observable collections, event handlers, etc.) before doing any initialization. And to repeat, the `Source` property is intented to represent the object passed in through `Initialize()` and thus should never be changed.
+When writing an `Initialize()` method, keep in mind that it can be called more than once in a page's lifecycle. As such, it's important to ensure that the method cleans up any class-wide properties (such as observable collections, event handlers, etc.) before doing any initialization. And to repeat, the `Source` property is intented to represent the object passed in through `Initialize()` and thus should not be changed unless reinitializing the ViewModel.
 
 The `Update()` function manages parsing from string to integer, returning the value of the number entered. And the `Validate()` function evaluates the state of the ViewModel properties. Note that the call to `base.Validate(bool)` sets a boolean flag named `IsValid` that can be used to determine the current state, for example in the `CanExecute()` declaration of the `ICommand` interface.
 
@@ -129,7 +129,7 @@ The `CoreNavigation` class provides the static function `TResult NavigateToPage<
 var pg = new ModalPage();
 var vm = new ModalPageViewModel<Person>(); // where ModalPageViewModel derives from ViewModelBase<T>
 var person = new Person { FirstName = "John", LastName = "Smith" }
-vm.Initialize(person); // initialize the ViewModelViewModel with the Person object
+vm.Initialize(person); // initialize the ViewModel with the Person object
 pg.BindingContext = vm;
 App.Current.MainPage.Navigation.PushModalAsync(pg);
 Person result = await vm.DialogManager.ExecuteModalTaskAsync();
@@ -317,7 +317,7 @@ CoreNavigation.ConfigureDependencyResolver(new MyCustomDependencyResolver());
 
 ## Exception Handling
 
-All good applications deal with the unexpected in a consistent manner. ViewModelToolkit provides a simple exception handling mechanism that can easily be expanded or integrated into an existing exception management system. Interface `IExceptionService` allows this expansion point. By default, `DefaultExceptionService` implements method `HandleException(Exception)` by writing the exception information to the debug window and rethrowing the exception. Configure your custom `IExceptionService` instance near the top of the App.xaml.cs file as follows:
+All good applications deal with the unexpected in a consistent manner. ViewModelToolkit provides a simple exception handling mechanism that can easily be expanded or integrated into an existing exception management system. Interface `IExceptionService` allows this expansion point. By default, `DefaultExceptionService` implements method `HandleException(Exception)` by writing the exception information to the debug window and rethrowing the exception. The developer can declare their own custom `IExceptionService`-implemented instance near the top of the App.xaml.cs file as follows:
 
 ```
 CoreNavigation.ConfigureExceptionHandler(new MyExceptionHander());

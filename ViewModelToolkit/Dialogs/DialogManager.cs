@@ -193,7 +193,7 @@ public sealed partial class DialogManager<TResult> : BindableObject
 
     TaskCompletionSource<TResult> tcs;
 
-    public Task<TResult> ExecuteModalTaskAsync() {
+    public Task<TResult> ExecuteDialogTaskAsync() {
         tcs = new TaskCompletionSource<TResult>();
         return tcs.Task;
     }
