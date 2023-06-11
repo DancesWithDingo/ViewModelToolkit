@@ -70,17 +70,17 @@ public abstract class ViewModelBase : BindableObject, IViewModelBase
 /// current property values from the ViewModel, and an optional Validate <see langword="virtual"/> method that can be
 /// overriden if validation is required.
 /// </summary>
-/// <typeparam name="T">Type for the Source property</typeparam>
-public abstract class ViewModelBase<T> : ViewModelBase, IViewModelBase<T>
+/// <typeparam name="TModel">Type for the Source property</typeparam>
+public abstract class ViewModelBase<TModel> : ViewModelBase, IViewModelBase<TModel>
 {
     /// <inheritdoc/>
-    public virtual void Initialize(T item) => Source = item ?? throw new ArgumentNullException(nameof(item), "Parameter item cannot be null.");
+    public virtual void Initialize(TModel item) => Source = item ?? throw new ArgumentNullException(nameof(item), "Parameter item cannot be null.");
 
     /// <inheritdoc/>
-    public T Source { get; private set; }
+    public TModel Source { get; private set; }
 
     /// <inheritdoc/>
-    public virtual T Update() => default;
+    public virtual TModel Update() => default;
 
     /// <inheritdoc/>
     public bool IsValid { get; private set; } = true;
@@ -96,7 +96,7 @@ public abstract class ViewModelBase<T> : ViewModelBase, IViewModelBase<T>
     /// <returns>The value passed in through the isValid parameter</returns>
     protected bool Validate(bool isValid) {
         IsValid = isValid;
-        if ( this is IDialogSupport<T> ds )
+        if ( this is IDialogSupport<TModel> ds )
             ds.DialogManager.ChangeCommandsCanExecute();
         return isValid;
     }
@@ -105,7 +105,7 @@ public abstract class ViewModelBase<T> : ViewModelBase, IViewModelBase<T>
     /// Set the value of the backing store to the new value, optionally calling
     /// a provided action and an optional flag whether to change the IsDirty property
     /// </summary>
-    /// <typeparam name="TModel">The type of the property and backing store</typeparam>
+    /// <typeparam name="T">The type of the property and backing store</typeparam>
     /// <param name="field">Backing field</param>
     /// <param name="newValue">New value to assign to property</param>
     /// <param name="setAction">Optional action to invoke after property is set</param>
@@ -113,8 +113,8 @@ public abstract class ViewModelBase<T> : ViewModelBase, IViewModelBase<T>
     /// <param name="shouldValidate">Optional to specify if Validate() should be called after the backing store is set</param>
     /// <param name="propertyName">Name of this property (for internal use, do not assign)</param>
     /// <returns>Boolean indicating whether the property was set with a different value</returns>
-    protected virtual bool Set<TModel>(ref TModel field, TModel newValue, Action<TModel> setAction = null, bool setIsDirty = true, bool shouldValidate = false, [CallerMemberName] string propertyName = null) {
-        var wasSet = base.Set<TModel>(ref field, newValue, setAction, setIsDirty, propertyName);
+    protected virtual bool Set<T>(ref T field, T newValue, Action<T> setAction = null, bool setIsDirty = true, bool shouldValidate = false, [CallerMemberName] string propertyName = null) {
+        var wasSet = base.Set<T>(ref field, newValue, setAction, setIsDirty, propertyName);
         if ( !isInitializing && shouldValidate )
             Validate();
         return wasSet;
@@ -122,12 +122,12 @@ public abstract class ViewModelBase<T> : ViewModelBase, IViewModelBase<T>
 
     /// <summary>
     /// A <see langword="sealed"/> override of the base class method. This SHOULD NOT BE INVOKED as it
-    /// simply calls the <see langword="virtual"/> base Initialize<typeparamref name="T"/> method.
+    /// simply calls the <see langword="virtual"/> base Initialize<typeparamref name="TModel"/> method.
     /// </summary>
     [Obsolete("This method is defined to prevent propogation of the base class Initialize(). It should not be used.", true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable CS0809 // Obsolete member overrides non-obsolete member
-    public sealed override void Initialize() => Initialize(default(T));
+    public sealed override void Initialize() => Initialize(default(TModel));
 #pragma warning restore CS0809 // Obsolete member overrides non-obsolete member
 }
 
@@ -135,12 +135,12 @@ public abstract class ViewModelBase<T> : ViewModelBase, IViewModelBase<T>
 /// <summary>
 /// Base class for modal ViewModel classes, implementing a <![CDATA[DialogManager<T>]]>
 /// </summary>
-/// <typeparam name="T">Type for the Source property</typeparam>
-public abstract class ModalViewModelBase<T> : ViewModelBase<T>, IDialogSupport<T>, IModalViewModelBase<T>
+/// <typeparam name="TModel">Type for the Source property</typeparam>
+public abstract class ModalViewModelBase<TModel> : ViewModelBase<TModel>, IDialogSupport<TModel>, IModalViewModelBase<TModel>
 {
     public ModalViewModelBase() {
         DialogManager = new(this);
     }
 
-    public DialogManager<T> DialogManager { get; init; }
+    public DialogManager<TModel> DialogManager { get; init; }
 }

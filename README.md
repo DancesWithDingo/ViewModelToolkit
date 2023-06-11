@@ -33,7 +33,7 @@ string _LastName;
 
 void SetFullName(string _) => FullName = $"{FirstName} {LastName}";
 ```
-The optional argument `setIsDirty: bool` allows a property to disable the default behavior where `IsDirty` is set to true. The default value is `true`.
+The optional argument `setIsDirty: bool` allows a property to disable the default behavior where `IsDirty` is set to true automatically. The default value is `true`.
 
 ### Simple Navigation
 
@@ -60,15 +60,14 @@ To stay in compliance with the MVVM design pattern, best practices would mandate
 ```cs
 public static class NavigationService
 {
-    public static void GoToSimplePage(string text) {
+    public static void GoToSimplePage(string text) =>
         CoreNavigation.NavigateToPage<SimplePage, SimplePageViewModel>();
-    }
 ```
 
 which would be called in the ViewModel as such:
 
 ```cs
-GoToSimplePage("Hello world!");
+NavigationService.GoToSimplePage("Hello world!");
 ```
 
 ### `ViewModelBase<T>` class
@@ -122,46 +121,46 @@ The `Update` function manages parsing from string to integer, returning the valu
 Within the NumberString property declaration, the `Set<T>` override adds another optional parameter, `shouldValidate: bool`. When set to true, the `Validate` function will be called each time the property is set. The default behavior does not validate, and the `Validate` method can be called manually at any time after initialization for more precise control of the validation process.
 
 ### Model-based Simple Navigation
+
 The `CoreNavigation` class provides the static function `TModel NavigateToPage<TModel, TView, TViewModel>` to make it easier to instantiate and navigate to a page managing a data `Source` item. To do this manually, we'd need the following commands:
 
+### Model-based Dialog Navigation
+
+The `CoreNavigation` class provides the static function `TModel NavigateToModalPage` to make it easier to instantiate and navigate to a **modal** page managing a `Source` model item. Hand coding this would require the following commands:
+
 ```cs
-var pg = new ModalPage();
-var vm = new ModalPageViewModel<Person>(); // where ModalPageViewModel derives from ViewModelBase<T>
+var pg = new EditPersonPage();
+var vm = new EditPersonPageViewModel(); // where EditPersonPageViewModel derives from ViewModelBase<Person>
 var person = new Person { FirstName = "John", LastName = "Smith" }
 vm.Initialize(person); // initialize the ViewModel with the Person object
 pg.BindingContext = vm;
 App.Current.MainPage.Navigation.PushModalAsync(pg);
-Person result = await vm.DialogManager.ExecuteModalTaskAsync();
+Person result = await vm.DialogManager.ExecuteDialogTaskAsync();
 
 ```
 
-The call to `DialogManager.ExecuteModalTaskAsync()` will be discussed later in the **`DialogManager`** section. Instead of typing these seven mostly boilerplate lines of code, the simpler approach would be to use `NavigateToPage<Page, PageViewModel>(person)`:
-
-```cs
-var result = await CoreNavigation.NavigateToPage<ModalPage, ModalPageViewModel>(person);
-```
-This would be implemented within our `NavigationService` as:
+The call to `DialogManager.ExecuteModalTaskAsync()` will be discussed later in the [**`DialogManager`**](#dialogmanager-class) section. Instead of typing these seven mostly boilerplate lines of code, the simpler approach would be to use `NavigateToModalPage`:
 
 ```cs
 public static class NavigationService
 {
-    public static async Task<Person> GoToPersonDialogPageAsync(Person person) =>
-        await CoreNavigation.NavigateToModalPageAsync<Person, PersonDialogPage, PersonDialogPageViewModel>(person);
-    }
+    public static async Task<Person> GoToEditPersonPageAsync(Person person) =>
+        await CoreNavigation.NavigateToModalPageAsync<Person, EditPersonPage, EditPersonPageViewModel>(person);
+}
 ```
 That would be invoked in the ViewModel as in this example:
 
 ```cs
-Person result = await NavigationService.GoToPersonDialogPageAsync(person);
+Person result = await NavigationService.GoToEditPersonPageAsync(person);
 ```
-As discussed above, control will suspend within the ViewModel until the modal dialog page is dismissed, at which time the result will be returned.
+Because the modal page is executed using a TaskCompletionSource, program control will suspend within the ViewModel until the modal dialog page is dismissed, at which time the result will be returned to the caller.
 
 ### `ModalViewModelBase<T>` class
 
-The abstract base class `ModalViewModelBase<T>`, in addition to providing the fuctionality of the `ViewModelBase<T>` class, adds `DialogManager` support to the mix. The `DialogManager` class will be discussed in next section. This base class is provided as a convenience, as it adds and implements the `IDialogSupport<T>` interface, and its use removes the need to manually declare and initialize the `DialogManager<T>` ViewModel member. However if you need to implement ViewModel inheritance, you will need to utilize `ViewModelBase<T>` and implement `IDialogSupport<T>` yourself. See **ViewModel Inheritance** later in this document.
+The abstract base class `ModalViewModelBase<T>`, in addition to providing the fuctionality of the `ViewModelBase<T>` class, adds `DialogManager` support to the mix. The `DialogManager` class will be discussed in next section. This base class is provided as a convenience, as it adds and implements the `IDialogSupport<T>` interface, and its use removes the need to manually declare and initialize the `DialogManager<T>` ViewModel member. However if you need to implement ViewModel inheritance, you will need to utilize `ViewModelBase<T>` and implement `IDialogSupport<T>` manually. See [**ViewModel Inheritance**](#viewmodel-inheritance) later in this document.
 
 
-## `DialogManager` class
+## DialogManager class
 
 The purpose of the `DialogManager` class is to encapsulate all of the goodness we would expect from a modal dialog into an easy to reuse component. In addition to providing Save and Cancel buttons, there are bindable properties for each button's `Text`, `Command` and `CommandParameter` properties, as well as others to control visual aspects of the buttons. (And bindable properties mean the `DialogManager` component can participate in XAML-based data binding.)
 
@@ -180,7 +179,7 @@ public class ModalPageViewModel : ViewModelBase<Person>, IDialogSupport<Person>
 }
 
 ```
-The `IDialogSupport<TModel>` interface requires a read/init `DialogManager<TModel>` property. Once declared, the `DialogManager` will collaborate with the View to present a default `SaveBarView` view. Page designers can add the default `SaveBarView` control (or any view implementing the 'ISaveBarView' interface). Or not, and one will be added automagically. Control freaks can even override the save bar injection entirely with their own implementation of the `ISaveBarView` interface.
+The `IDialogSupport<TModel>` interface requires a read/init `DialogManager<TModel>` property. Once declared, the `DialogManager` will collaborate with the View to present a default `SaveBarView` view. Page designers can add a `SaveBarView` control (or any view implementing the 'ISaveBarView' interface) to the page. If not provided, and one will be added automagically. Control freaks can even override the save bar injection entirely with their own implementation of the `ISaveBarView` interface.
 
 
 ### The hidden `ToolbarManager` component
@@ -198,7 +197,7 @@ CoreNavigation.ConfigureDefaultButtonBarDisplayMode(SaveBarDisplayMode.BothToolB
 
 ### `ISaveBarView` implementation
 
-During configuration, `DialogManager` searches for an instance of ISaveBarView within the `ContentPage` visual tree. If it cannot find one, it will create an instance of `ViewModelToolkit.Views.SaveBarView` and insert it in the page at the end of the first `Layout` derived control it finds. Depending on the page design, this may be unsuitable behavior.
+At runtime, `DialogManager` searches for an instance of ISaveBarView within the `ContentPage` visual tree. If it cannot find one, it will create an instance of `ViewModelToolkit.Views.SaveBarView` and insert it in the page at the end of the first `Layout` derived control it finds. Depending on the page design, this may be unsuitable behavior.
 
 The page designer can insert a `SaveBarView` in a ContentPage using XAML syntax:
 
@@ -220,9 +219,8 @@ The page designer can insert a `SaveBarView` in a ContentPage using XAML syntax:
 </ContentPage>
 
 ```
-The `Text`, `Command`, `CommandParameter` and other properties on `SaveBarView` are **bindable properties**, so we can use data binding to set the Save and Cancel button properties from either the View or the ViewModel. More about that in the [**ViewModel Configuration**](#viewmodel-configuration) section later in this document.
 
-For the most customizable solution, the developer can design their own save bar. They need only implement the `ISaveBarView` interface, which ensures the Save and Cancel button properties are declared. Note that these buttons don't need to be actual buttons: any control can be used provided it supports the commanding structure as described above. Even an image with a hit map could be used, and the `ISaveBarButtonView` interface is provided to simplify the task of developing the custom save bar buttons.
+For the most flexible solution, the developer can design their own save bar. They need only implement the `ISaveBarView` interface, which ensures the Save and Cancel button properties are declared. Note that these buttons don't need to be actual buttons: any control can be used provided it supports the commanding structure as described above. Even an image with a hit map could be used, and the `ISaveBarButtonView` interface is provided to simplify the task of developing the custom save bar buttons.
 
 The ViewModelToolkitSample application contains an example of a custom save bar that is vertically oriented and includes an additional Help button. 
 
@@ -234,9 +232,9 @@ The ViewModelToolkitSample also contains an example of this usage in the `Naviga
 
 ## ViewModel Configuration
 
-Since "Save" and "Cancel" are not always the most suitable strings for the buttons and default button actions often need to be replaced, `DialogManager` allows the developer to customize these features on a per-ViewModel basis. While these changes can be declared in XAML as mentioned above, this allows customization to be made in the ViewModel (where some could argue it belongs in MVVM).
+Since "Save" and "Cancel" are not always the most suitable strings for the buttons and default button actions often need to be replaced, `DialogManager` allows the developer to customize these features on a per-ViewModel basis. While these changes can be declared in XAML as mentioned above, it's often more appropriate for customization to be made in the ViewModel (where some could argue it belongs in MVVM).
 
-For example, a "wizard-style" multi-page dialog would need to provide a custom experience. Here's what that could look like:
+For example, a "wizard-style" multi-page dialog would need to provide a custom navigation experience. Here's what that could look like:
 
 ```cs
 public override void Initialize(Person item) {
