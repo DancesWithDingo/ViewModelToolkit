@@ -1,5 +1,6 @@
 ﻿using ViewModelToolkit;
 using ViewModelToolkit.Dialogs;
+using ViewModelToolkit.Services;
 using ViewModelToolkitSample.Models;
 using ViewModelToolkitSample.Services;
 
@@ -7,6 +8,12 @@ namespace ViewModelToolkitSample.ViewModels;
 
 public class EditCustomerStep2PageViewModel : CustomerViewModelBase
 {
+    readonly IExceptionService _exceptionService;
+
+    public EditCustomerStep2PageViewModel(IExceptionService exceptionService) {
+        _exceptionService = exceptionService;
+    }
+
     public override void Initialize(Customer item) {
         base.Initialize(item);
         IsLoyaltyPointsBarVisible = IsNewAccount;
@@ -32,12 +39,16 @@ public class EditCustomerStep2PageViewModel : CustomerViewModelBase
     bool _IsLoyaltyPointsBarVisible = true;
 
     public Command ContinueCommand => _ContinueCommand ??= new Command(async p => {
-        if ( Validate() ) {
-            Customer result = await NavigationService.GoToEditCustomerStep3PageAsync(Update());
-            if ( !result.IsDefault() ) {
-                ExecuteCleanly(() => Initialize(result));
-                DialogManager.ExecuteDefaultSaveButtonCommand();
+        try {
+            if ( Validate() ) {
+                Customer result = await NavigationService.GoToEditCustomerStep3PageAsync(Update());
+                if ( !result.IsDefault() ) {
+                    ExecuteCleanly(() => Initialize(result));
+                    DialogManager.ExecuteDefaultSaveButtonCommand();
+                }
             }
+        } catch ( Exception ex ) {
+            _exceptionService.HandleException(ex);
         }
     }, _ => !IsNewAccount || (IsDirty && IsValid));
     Command _ContinueCommand;

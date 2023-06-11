@@ -1,5 +1,6 @@
 ﻿using ViewModelToolkit;
 using ViewModelToolkit.Dialogs;
+using ViewModelToolkit.Services;
 using ViewModelToolkitSample.Models;
 using ViewModelToolkitSample.Services;
 
@@ -10,8 +11,10 @@ public class EditCustomerStep1PageViewModel : CustomerViewModelBase
     const int MINIMUM_ACCOUNT_HOLDER_AGE = 18;
 
     readonly DateTime defaultPickerDateTime = DateTime.Today.AddYears(-MINIMUM_ACCOUNT_HOLDER_AGE);
+    readonly IExceptionService _exceptionService;
 
-    public EditCustomerStep1PageViewModel() {
+    public EditCustomerStep1PageViewModel(IExceptionService exceptionService) {
+        _exceptionService = exceptionService;
         DialogManager = new(this);
         MinimumBirthDate = defaultPickerDateTime;
     }
@@ -49,14 +52,18 @@ public class EditCustomerStep1PageViewModel : CustomerViewModelBase
     string _LastNameErrorText;
 
     public Command ContinueCommand => _ContinueCommand ??= new Command(async p => {
-        if (Validate() ) {
-            Customer current = Update();
-            Customer result = await NavigationService.GoToEditCustomerStep2PageAsync(current);
-            if ( !result.IsDefault() ) {
-                // Reinitialize without changing the IsDirty flag:
-                ExecuteCleanly(() => Initialize(result));
-                DialogManager.ExecuteDefaultSaveButtonCommand();
+        try {
+            if ( Validate() ) {
+                Customer current = Update();
+                Customer result = await NavigationService.GoToEditCustomerStep2PageAsync(current);
+                if ( !result.IsDefault() ) {
+                    // Reinitialize without changing the IsDirty flag:
+                    ExecuteCleanly(() => Initialize(result));
+                    DialogManager.ExecuteDefaultSaveButtonCommand();
+                }
             }
+        } catch ( Exception ex ) {
+            _exceptionService.HandleException(ex);
         }
     }, _ => !IsNewAccount || (IsDirty && IsValid));
     Command _ContinueCommand;

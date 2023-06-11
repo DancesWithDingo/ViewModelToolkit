@@ -6,10 +6,6 @@ namespace ViewModelToolkitSample.ViewModels;
 
 public class MainPageViewModel : ViewModelBase
 {
-    public override void Initialize() {
-        base.Initialize();
-    }
-
 #pragma warning disable CA1822 // Mark members as static
     public string CustomFormPageDescription => GetCustomFormDescription();
     public string CustomerEditorDescription => GetCustomerEditorDescription();

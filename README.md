@@ -315,5 +315,12 @@ CoreNavigation.ConfigureDependencyResolver(new MyCustomDependencyResolver());
 ```
 
 
-##Exception Handling
+## Exception Handling
+
+All good applications deal with the unexpected in a consistent manner. ViewModelToolkit provides a simple exception handling mechanism that can easily be expanded or integrated into an existing exception management system. Interface `IExceptionService` allows this expansion point. By default, `DefaultExceptionService` implements method `HandleException(Exception)` by writing the exception information to the debug window and rethrowing the exception. Configure your custom `IExceptionService` instance near the top of the App.xaml.cs file as follows:
+
+```
+CoreNavigation.ConfigureExceptionHandler(new MyExceptionHander());
+```
+
 

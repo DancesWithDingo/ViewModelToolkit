@@ -11,14 +11,14 @@ public partial class App : Application
         InitializeComponent();
 
         // Allows setting an application-wide default for all modal pages:
-        CoreNavigation.ConfigureDefaultButtonBarDisplayMode(SaveBarDisplayMode.Default);
+        //CoreNavigation.ConfigureDefaultButtonBarDisplayMode(SaveBarDisplayMode.Default);
 
         // Allows setting an application-wide default for details of the
         //   alert window presented when cancelling out of a dialog with changes:
         CoreNavigation.ConfigureDefaultCancelWhenDirtyAlertDetails(new AlertDetails(title: "Forget your changes?", yesText: "Continue"));
 
-        // Allows informing the engine to call into your dependency injection container:
-        // CoreNavigation.ConfigureDependencyResolver(new MyCustomDependencyResolver());
+        // Register the dependency injection container:
+         CoreNavigation.ConfigureDependencyResolver(new IocResolver());
 
         CoreNavigation.ConfigureExceptionHandler(new MyExceptionHander());
 
@@ -29,14 +29,6 @@ public partial class App : Application
         MainPage = new NavigationPage(pg);
     }
 
-    public class MyCustomDependencyResolver : IDependencyResolver
-    {
-        public T Resolve<T>() where T : class {
-            // Call into your own DI container here. The default implementation
-            //   performs the following statement:
-            return Activator.CreateInstance<T>();
-        }
-    }
 
     public class MyExceptionHander : IExceptionService
     {
