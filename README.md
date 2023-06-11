@@ -1,6 +1,6 @@
 # ViewModelToolkit
 
-ViewModelToolkit is a .NET MAUI toolkit for C# developers using the Model-View-ViewModel (MVVM) pattern. The package includes ViewModelBase, DialogManager and CoreNavigation, three components that can make a programmer's job much easier while providing a (relatively) simple, clean and consise codebase.
+ViewModelToolkit is a .NET MAUI toolkit for C# developers using the Model-View-ViewModel (MVVM) pattern. The package includes ViewModelBase, DialogManager and CoreNavigation, three components that can make a programmer's job much easier while providing a (relatively) simple, clean and concise codebase.
 
 In addition to providing the abstract `ViewModelBase` class, the additional components make it easier to navigate to pages *modally*, treating each navigation as an atomic awaitable task. Gone are the days tracking whether the user hit the cancel button, back button or the device hardware button. No matter how the user closes the dialog, control returns to the statement *after* the navigation call, returning the result of the dialog.
 
@@ -14,7 +14,7 @@ At its most basic, VMT provides three ViewModelBase base classes:
 
 ### `ViewModelBase` class
 
-At the root of the hierarchy is `ViewModelBase`, which provides the basic ViewModel lifecycle functionality. An `IsDirty` property is managed by the `Set<T>` function that handles the `INotifyPropertyChanged` calls and sets the `IsDirty` flag automatically.
+At the root of the hierarchy is `ViewModelBase`, which provides the basic ViewModel life cycle functionality. An `IsDirty` property is managed by the `Set<T>` function that handles the `INotifyPropertyChanged` calls and sets the `IsDirty` flag automatically.
 
 Basic usage of `ViewModel.Set<T>` within a property setter is illustrated here:
 
@@ -53,7 +53,7 @@ Or you can simply use `NavigateToPage()` which does all of that under the hood:
 CoreNavigation.NavigateToPage<SimplePage, SimplePageViewModel>();
 ```
 
-Both methods get the job done, but the latter is more consise and will be more flexible for use of dependency injection in more complex scenarios. See [**Dependency Injection**](#dependency-injection) later in this document.
+Both methods get the job done, but the latter is more concise and will be more flexible for use of dependency injection in more complex scenarios. See [**Dependency Injection**](#dependency-injection) later in this document.
 
 To stay in compliance with the MVVM design pattern, best practices would mandate that navigation methods such as the above be placed in a static navigation service class. Under MVVM, the ViewModel should not know anything about the View class, so we would do something like the following:
 
@@ -72,9 +72,9 @@ NavigationService.GoToSimplePage("Hello world!");
 
 ### Model-based Simple Navigation
 
-The abstract base class `ViewModelBase<T>` provides support for strongly-typed ViewModels. The `Source` property holds the model value passed to the ViewModel in the `Initialize(T)` method. `Source` is intended to describe the data at the time of initialization, and as such should remain static throughout the ViewModel lifecycle.
+The abstract base class `ViewModelBase<T>` provides support for strongly-typed ViewModels. The `Source` property holds the model value passed to the ViewModel in the `Initialize(T)` method. `Source` is intended to describe the data at the time of initialization, and as such should remain static throughout the ViewModel life cycle.
 
-The `Update` virtual function should be overriden to return a typed object representing the current state of the ViewModel notification properties. An optional `Validate()` virtual function can be overriden to provide validation logic for the ViewModel.
+The `Update` virtual function should be overridden to return a typed object representing the current state of the ViewModel notification properties. An optional `Validate()` virtual function can be overridden to provide validation logic for the ViewModel.
 
 Here's an example of a strongly typed ViewModel of type `int`.
 
@@ -112,7 +112,7 @@ public class CustomPageViewModel : ViewModelBase<int>
     string _NumberStringErrorText;
 }
 ```
-When writing an `Initialize` method, keep in mind that it can be called more than once in a page's lifecycle. As such, it's important to ensure that the method cleans up any class-wide properties (such as observable collections, event handlers, etc.) before doing any initialization. And to repeat, the `Source` property is intented to represent the object passed in through `Initialize` and thus should not be changed unless reinitializing the ViewModel.
+When writing an `Initialize` method, keep in mind that it can be called more than once in a page's life cycle. As such, it's important to ensure that the method cleans up any class-wide properties (such as observable collections, event handlers, etc.) before doing any initialization. And to repeat, the `Source` property is intended to represent the object passed in through `Initialize` and thus should not be changed unless re-initializing the ViewModel.
 
 The `Update` function manages parsing from string to integer, returning the value of the number entered. And the `Validate` function evaluates the state of the ViewModel properties. Note that the call to `base.Validate(bool)` sets a boolean flag named `IsValid` that can be used to determine the current state, for example in the `CanExecute` declaration of the `ICommand` interface.
 
@@ -151,7 +151,7 @@ Because the modal page is executed using a TaskCompletionSource, program control
 
 ### `ModalViewModelBase<T>` class
 
-The abstract base class `ModalViewModelBase<T>`, in addition to providing the fuctionality of the `ViewModelBase<T>` class, adds `DialogManager` support to the mix. The `DialogManager` class will be discussed in next section. This base class is provided as a convenience, as it adds and implements the `IDialogSupport<T>` interface, and its use removes the need to manually declare and initialize the `DialogManager<T>` ViewModel member. However if you need to implement ViewModel inheritance, you will need to utilize `ViewModelBase<T>` and implement `IDialogSupport<T>` manually. See [**ViewModel Inheritance**](#viewmodel-inheritance) later in this document.
+The abstract base class `ModalViewModelBase<T>`, in addition to providing the functionality of the `ViewModelBase<T>` class, adds `DialogManager` support to the mix. The `DialogManager` class will be discussed in next section. This base class is provided as a convenience, as it adds and implements the `IDialogSupport<T>` interface, and its use removes the need to manually declare and initialize the `DialogManager<T>` ViewModel member. However if you need to implement ViewModel inheritance, you will need to utilize `ViewModelBase<T>` and implement `IDialogSupport<T>` manually. See [**ViewModel Inheritance**](#viewmodel-inheritance) later in this document.
 
 
 ## DialogManager class
@@ -184,7 +184,7 @@ You'll never directly deal with `ToolbarManager`, but buried under the `DialogMa
 
 By default, `ToolbarItem` views will be used for mobile devices and the internal `SaveBarView` will be used for desktop environments. The `DisplayMode` property allows the developer to configure what buttons the `ToolbarManager` will display any combination of  `ToolbarItem` controls in the navigation bar and `ISaveBarView`. The default can be configured application-wide by calling this method near the top of the App.xaml.cs file:
 
-```
+```cs
 CoreNavigation.ConfigureDefaultButtonBarDisplayMode(SaveBarDisplayMode.BothToolBarAndSaveBar);
 ```
 
@@ -247,7 +247,7 @@ The declaration of `ContinueCommand` is described the next section.
 
 ## ViewModel Inheritance
 
-More complex applications can require higher levels of inheritence among ViewModels. This can easily be accomplished using `ViewModelBase<T>`. See the Customer Editor Dialog sample for an illustration. Each of the three pages of that dialog inherit from a common `CustomerViewModelBase` class, which contains a `Source` property of type `Customer`, the notification properties, a base `Initialize(T item)` method, an `Update()` override, and other members common to all three pages.
+More complex applications can require higher levels of inheritance among ViewModels. This can easily be accomplished using `ViewModelBase<T>`. See the Customer Editor Dialog sample for an illustration. Each of the three pages of that dialog inherit from a common `CustomerViewModelBase` class, which contains a `Source` property of type `Customer`, the notification properties, a base `Initialize(T item)` method, an `Update()` override, and other members common to all three pages.
 
 Each of the edit customer pages need only declare the specific notification properties and commands needed to provide the forward navigation.  Here's an example of how `ContinueCommand` could handle the navigation from page one to page two:
 
@@ -282,7 +282,7 @@ The `IsDefault()` function is an extension method that determines whether a vari
 
 ## Dependency Injection
 
-As developers, we strive to keep our code clean, nonrepetitive, and maintainable. We use patterns such as Model-View-ViewModel to separate user interface from business logic. Dependency Injection has become a valuable tool to this end, and ViewModelToolkit provides a hook to allow for usage of virtually any DI tool available for the .NET platform.
+As developers, we strive to keep our code clean, non-repetitive, and maintainable. We use patterns such as Model-View-ViewModel to separate user interface from business logic. Dependency Injection has become a valuable tool to this end, and ViewModelToolkit provides a hook to allow for usage of virtually any DI tool available for the .NET platform.
 
 Under the hood, CoreNavigation functions `NavigateToPage` and `NavigateToModalPage` do their magic by creating instances of your page View and ViewModel classes for you. This creation is managed by abstracting out calls into a default dependency resolver that uses `Activator.CreateInstance<T>()` to instantiate classes.
 
@@ -313,5 +313,3 @@ All good applications deal with the unexpected in a consistent manner. ViewModel
 ```
 CoreNavigation.ConfigureExceptionHandler(new MyExceptionHander());
 ```
-
-
