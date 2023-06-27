@@ -18,7 +18,7 @@ public partial class App : Application
         CoreNavigation.ConfigureDefaultCancelWhenDirtyAlertDetails(new AlertDetails(title: "Forget your changes?", yesText: "Continue"));
 
         // Register the dependency injection container:
-         CoreNavigation.ConfigureDependencyResolver(new IocResolver());
+        CoreNavigation.ConfigureDependencyResolver(new IocResolver());
 
         CoreNavigation.ConfigureExceptionHandler(new MyExceptionHander());
 

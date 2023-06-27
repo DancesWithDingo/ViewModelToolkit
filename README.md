@@ -1,12 +1,12 @@
 # ViewModelToolkit
 
-ViewModelToolkit is a .NET MAUI toolkit for C# developers using the Model-View-ViewModel (MVVM) pattern. The package includes ViewModelBase, DialogManager and CoreNavigation, three components that can make a programmer's job much easier while providing a (relatively) simple, clean and concise codebase.
+ViewModelToolkit is a set of .NET MAUI tools for C# developers using the Model-View-ViewModel (MVVM) pattern. The package includes ViewModelBase, DialogManager and CoreNavigation, three components that can make a programmer's job much easier while maintaining a simple, uniform and concise codebase.
 
-In addition to providing the abstract `ViewModelBase` class, the additional components make it easier to navigate to pages *modally*, treating each navigation as an atomic awaitable task. Gone are the days tracking whether the user hit the cancel button, back button or the device hardware button. No matter how the user closes the dialog, control returns to the statement *after* the navigation call, returning the result of the dialog.
+In addition to providing the abstract `ViewModelBase` class, the additional components make it easier to navigate to pages *modally*, treating each navigation as an atomic awaitable task. Gone are the days tracking whether the user hit the cancel button, back button or the device hardware button. No matter how the user closes the dialog, control returns to the statement *after* the navigation call, returning the result of the dialog to the call site.
 
 ## ViewModelBase
 
-At its most basic, VMT provides three ViewModelBase base classes:
+ViewModelToolkit provides three ViewModelBase base classes:
 
 1. `ViewModelBase`, used for simple navigation to another page,
 2. `ViewModelBase<T>`, used for simple navigation to another page with a strongly typed model object passed to the `Initialize` method,
@@ -14,7 +14,7 @@ At its most basic, VMT provides three ViewModelBase base classes:
 
 ### `ViewModelBase` class
 
-At the root of the hierarchy is `ViewModelBase`, which provides the basic ViewModel lifecycle functionality. An `IsDirty` property is managed by the `Set<T>` function that handles the `INotifyPropertyChanged` calls and sets the `IsDirty` flag automatically.
+At the root of the hierarchy is `ViewModelBase`, which provides the basic ViewModel lifecycle functionality. The `IsDirty` property is managed by the `Set<T>` function which handles the `INotifyPropertyChanged` calls and sets the `IsDirty` flag automatically.
 
 Basic usage of `ViewModel.Set<T>` within a property setter is illustrated here:
 
@@ -188,6 +188,25 @@ By default, `ToolbarItem` views will be used for mobile devices and the internal
 CoreNavigation.ConfigureDefaultButtonBarDisplayMode(SaveBarDisplayMode.BothToolBarAndSaveBar);
 ```
 
+<table>
+    <tr>
+        <td>Desktop Save Bar</td>
+        <td>Mobile ToolBarItems</td>
+    </tr>
+    <tr>
+        <td><img src='./docs/img/desktop-savebar.png' style='height: 200px'/></td>
+        <td><img src='./docs/img/mobile-toolbar.png' style='height:150px'></td/>
+    </tr>
+</table>
+
+#### Cancel button on the left?
+Yes, the ToolbarItem Cancel button is displayed on the left of the title within the navigation toolbar on iOS mobile devices. This is accomplished by means of a .NET MAUI Handler that attaches to each ContentPage and quietly moves the cancel button to the left on pages with `IDialogSupport` implemented, where it belongs. To include this in your own applications, add the following line to your MauiProgram.cs file within the CreateMauiApp() function:
+
+```
+builder.ConfigureViewModelToolkit()
+```
+
+For custom control over this behavior, see the source code for ModalPageHandler.cs in the ViewModelToolkit repository.
 
 ### `ISaveBarView` implementation
 
@@ -206,7 +225,7 @@ At runtime, `DialogManager` searches for an instance of ISaveBarView within the 
             <!-- page content redacted -->
             
             <vmtv:SaveBarView Grid.Row="2" SaveButtonText="Submit"/>
-        </VerticalStackLayout>
+        </Grid>
     </ScrollView>
 </ContentPage>
 
@@ -214,7 +233,7 @@ At runtime, `DialogManager` searches for an instance of ISaveBarView within the 
 
 For the most flexibility, the developer can design their own save bar. They need only implement the `ISaveBarView` interface, which ensures the Save and Cancel button properties are declared. Note that these buttons don't need to be actual buttons: any control can be used provided it supports the commanding structure as described above. Even an image with a hit map could be used, and the `ISaveBarButtonView` interface is provided to simplify the task of developing the custom save bar buttons.
 
-The ViewModelToolkitSample application contains an example of a custom save bar that is vertically oriented and includes an additional Help button. 
+The ViewModelToolkitSample application contains an example (CustomFormPage.xaml) of a custom save bar that is vertically oriented and includes an additional Help button. 
 
 #### Custom `ISaveBarView` Injection
 
@@ -250,7 +269,7 @@ More complex applications can require higher levels of inheritance among ViewMod
 Each of the edit customer pages need only declare the specific notification properties and commands needed to provide the forward navigation.  Here's an example of how `ContinueCommand` could handle the navigation from page one to page two:
 
 ```cs
-public Command ContinueCommand => _ContinueCommand ??= new Command(async p => {
+public Command ContinueCommand => _ContinueCommand ??= new Command(async _ => {
     if ( Validate() ) {
         Customer current = Update();
         Customer result = await NavigationService.GoToEditCustomerStep2PageAsync(current);
@@ -274,7 +293,7 @@ public static async Task<Customer> GoToEditCustomerStep2PageAsync(Customer custo
         (customer,
          shouldSuppressReturnNavigationAnimation: p => !p.IsDefault());
 ```
-In this snippet, the `GoToEditCustomerStep2PageAsync()` method is passed a function that returns false (don't suppress animation) if the Customer is null (the user cancelled) and true (don't animate)  otherwise, meaning do not animate when the user saves their changes.
+In this snippet, the `GoToEditCustomerStep2PageAsync()` method is passed an anonymous function that returns false (don't suppress animation) if the Customer is null (the user cancelled) and true (don't animate)  otherwise, meaning do not animate when the user saves their changes.
 
 The `IsDefault()` function is an extension method that determines whether a variable is set to the default value for that type (null for objects or value type defaults otherwise). This parameter is added to the navigation methods for both pages two and three, so that when the user finally presses the Save button on page three, return navigation is skipped going back to the home page.
 
@@ -302,6 +321,14 @@ Then configure CoreNavigation near the top of your App.xaml.cs constructor:
 ```cs
 CoreNavigation.ConfigureDependencyResolver(new MyCustomDependencyResolver());
 ```
+
+In the sample application, Dependency Injection is implemented using services built into .NET MAUI. The service is configured within MauiProgram.cs, in the `CreateMauiApp()` function. The call `builder.ConfigureIocContainer()` initializes our component services. In App.xaml.cs, tell CoreNavigation to use an instance of `IocResolver()` for resolution with the statement:
+
+```
+CoreNavigation.ConfigureDependencyResolver(new IocResolver());
+```
+
+CoreNavigation will now use the registered services for View, ViewModel and service instantiation.
 
 
 ## Exception Handling

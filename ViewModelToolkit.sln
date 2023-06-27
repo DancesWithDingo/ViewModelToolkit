@@ -12,6 +12,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModelToolkitSample", "ViewModelToolkitSample\ViewModelToolkitSample.csproj", "{72985E31-ED1A-459E-8CF1-E4173A4ECA41}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{D027AC31-119F-4946-B3FD-8932A11FE860}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "img", "img", "{65808532-911E-426B-A2DF-45CC67ACD680}"
+	ProjectSection(SolutionItems) = preProject
+		docs\img\desktop-savebar.png = docs\img\desktop-savebar.png
+		docs\img\mobile-toolbar.png = docs\img\mobile-toolbar.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,5 +60,9 @@ Global
 		$2.NewLineForFinally = False
 		$2.SpaceWithinOtherParentheses = True
 		$2.scope = text/x-csharp
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D027AC31-119F-4946-B3FD-8932A11FE860} = {BB92FBCC-30F3-4DC3-B726-89403F43792E}
+		{65808532-911E-426B-A2DF-45CC67ACD680} = {D027AC31-119F-4946-B3FD-8932A11FE860}
 	EndGlobalSection
 EndGlobal
