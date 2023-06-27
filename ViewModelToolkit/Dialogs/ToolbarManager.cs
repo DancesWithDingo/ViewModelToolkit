@@ -3,6 +3,8 @@ using ViewModelToolkit.Views;
 
 namespace ViewModelToolkit.Dialogs;
 
+public class CancelToolbarItem : ToolbarItem { }
+
 sealed class ToolbarManager : BindableObject
 {
     const string CANCEL_BUTTON_TEXT = "Cancel";
@@ -10,7 +12,7 @@ sealed class ToolbarManager : BindableObject
 
     #region  Properties
 
-    ToolbarItem CancelToolbarItem { get; } = new ToolbarItem { Text = CANCEL_BUTTON_TEXT, Priority = int.MinValue };
+    CancelToolbarItem CancelToolbarItem { get; } = new CancelToolbarItem { Text = CANCEL_BUTTON_TEXT };
     ToolbarItem SaveToolbarItem { get; } = new ToolbarItem { Text = SAVE_BUTTON_TEXT, Priority = int.MaxValue };
 
     ISaveBarView SaveBar { get; set; }

@@ -29,4 +29,3 @@ public static class IocResolverRegistration
         return builder;
     }
 }
-

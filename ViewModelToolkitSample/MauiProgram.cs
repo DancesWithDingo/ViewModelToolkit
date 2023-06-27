@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using ViewModelToolkit;
 
 namespace ViewModelToolkitSample;
 
@@ -9,14 +10,11 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .ConfigureIocContainer()
+            .ConfigureViewModelToolkit()
             .ConfigureFonts(fonts => {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
-
-        builder.ConfigureMauiHandlers(handlers => {
-            handlers.AddHandler(typeof(ContentPage), typeof(ViewModelToolkit.ModalPageHandler));
-        });
 
 #if DEBUG
         builder.Logging.AddDebug();
@@ -25,4 +23,3 @@ public static class MauiProgram
         return builder.Build();
     }
 }
-

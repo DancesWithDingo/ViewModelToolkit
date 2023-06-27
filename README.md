@@ -14,7 +14,7 @@ At its most basic, VMT provides three ViewModelBase base classes:
 
 ### `ViewModelBase` class
 
-At the root of the hierarchy is `ViewModelBase`, which provides the basic ViewModel life cycle functionality. An `IsDirty` property is managed by the `Set<T>` function that handles the `INotifyPropertyChanged` calls and sets the `IsDirty` flag automatically.
+At the root of the hierarchy is `ViewModelBase`, which provides the basic ViewModel lifecycle functionality. An `IsDirty` property is managed by the `Set<T>` function that handles the `INotifyPropertyChanged` calls and sets the `IsDirty` flag automatically.
 
 Basic usage of `ViewModel.Set<T>` within a property setter is illustrated here:
 
@@ -72,7 +72,7 @@ NavigationService.GoToSimplePage("Hello world!");
 
 ### Model-based Simple Navigation
 
-The abstract base class `ViewModelBase<T>` provides support for strongly-typed ViewModels. The `Source` property holds the model value passed to the ViewModel in the `Initialize(T)` method. `Source` is intended to describe the data at the time of initialization, and as such should remain static throughout the ViewModel life cycle.
+The abstract base class `ViewModelBase<T>` provides support for strongly-typed ViewModels. The `Source` property holds the model value passed to the ViewModel in the `Initialize(T)` method. `Source` is intended to describe the data at the time of initialization, and as such should remain static throughout the ViewModel lifecycle.
 
 The `Update` virtual function should be overridden to return a typed object representing the current state of the ViewModel notification properties. An optional `Validate()` virtual function can be overridden to provide validation logic for the ViewModel.
 
@@ -112,7 +112,7 @@ public class CustomPageViewModel : ViewModelBase<int>
     string _NumberStringErrorText;
 }
 ```
-When writing an `Initialize` method, keep in mind that it can be called more than once in a page's life cycle. As such, it's important to ensure that the method cleans up any class-wide properties (such as observable collections, event handlers, etc.) before doing any initialization. And to repeat, the `Source` property is intended to represent the object passed in through `Initialize` and thus should not be changed unless re-initializing the ViewModel.
+When writing an `Initialize` method, keep in mind that it can be called more than once in a page's lifecycle. As such, it's important to ensure that the method cleans up any class-wide properties (such as observable collections, event handlers, etc.) before doing any initialization. And to repeat, the `Source` property is intended to represent the object passed in through `Initialize` and thus should not be changed unless re-initializing the ViewModel.
 
 The `Update` function manages parsing from string to integer, returning the value of the number entered. And the `Validate` function evaluates the state of the ViewModel properties. Note that the call to `base.Validate(bool)` sets a boolean flag named `IsValid` that can be used to determine the current state, for example in the `CanExecute` declaration of the `ICommand` interface.
 
