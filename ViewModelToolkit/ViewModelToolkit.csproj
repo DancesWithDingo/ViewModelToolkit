@@ -13,7 +13,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
-		<ReleaseVersion>0.1.18</ReleaseVersion>
+		<ReleaseVersion>0.1.19</ReleaseVersion>
 		<SynchReleaseVersion>false</SynchReleaseVersion>
 	</PropertyGroup>
 
@@ -21,7 +21,7 @@
 		<PackageOutputPath>./nupkg</PackageOutputPath>
 		<Authors>L. Jim Marquardt</Authors>
 		<Description>A C# toolkit for users of the MVVM pattern. Includes ViewModelBase, DialogManager and CoreNavigation.</Description>
-		<Version>0.1.18</Version>
+		<Version>0.1.19</Version>
 		<Copyright>Copyright 2016-2023 © L. Jim Marquardt. All rights reserved.</Copyright>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<RepositoryUrl>https://github.com/DancesWithDingo/ViewModelToolkit</RepositoryUrl>

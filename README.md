@@ -19,9 +19,18 @@ At the root of the hierarchy is `ViewModelBase`, which provides the basic ViewMo
 Basic usage of `ViewModel.Set<T>` within a property setter is illustrated here:
 
 ```cs
-public string FullName { get => _FullName; set => Set(ref _FullName, value); }
-string _FullName;
+public class EditPersonViewModel : ViewModelBase<Person>
+{
+    internal override void Initialize(Person item) {
+        base.Initialize(item);
+        FullName = item.FullName;
+    }
+
+    public string FullName { get => _FullName; set => Set(ref _FullName, value); }
+    string _FullName;
+}
 ```
+
 The optional argument `setAction: Action<T>` allows specification of an action to be invoked when the property changes. In the following example, the `SetFullName` method will be executed whenever either of the `FirstName` or `LastName` properties changes.
 
 ```cs
