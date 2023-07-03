@@ -5,7 +5,7 @@ using ViewModelToolkit.Views;
 
 namespace ViewModelToolkit;
 
-public enum NullResultHandling { ReturnDefault, ReturnInput }
+public enum DefaultResultHandling { ReturnDefault, ReturnInput }
 
 public static partial class CoreNavigation
 {
@@ -112,7 +112,7 @@ public static partial class CoreNavigation
     /// <typeparam name="TViewModel">Type for the ViewModel to be navigated to. Must derive from ModalViewModelBase<typeparamref name="TModel"/>></typeparam>
     /// <param name="input">Model of type <typeparamref name="TModel"/> used to initialize the ViewModel</param>
     /// <param name="useTransitionAnimation">An optional boolean indicating whether to use the default animation (default: <see langword="true"/>)</param>
-    /// <param name="nullResultHandling">An optional value of enum type NullResultHandling indicating whether to return <see langword="default"/> or the value of <paramref name="input"/> (default: ReturnDefault)</param>
+    /// <param name="defaultResultHandling">An optional value of enum type DefaultResultHandling indicating whether to return <see langword="default"/> or the value of <paramref name="input"/> (default: ReturnDefault)</param>
     /// <param name="initialization">An optional <![CDATA[Action<TView, TViewModel>]]> initializer</param>
     /// <param name="saveBarInjector">An optional Func<![CDATA[<ContentPage, ISaveBarView>]]> that permits custom creation and insertion of an ISaveBarView instance into the visual tree.</param>
     /// <param name="shouldSuppressReturnNavigationAnimation"></param>
@@ -121,7 +121,7 @@ public static partial class CoreNavigation
     public static async Task<TModel> NavigateToModalPageAsync<TModel, TView, TViewModel>(
             TModel input,
             bool useTransitionAnimation = true,
-            NullResultHandling nullResultHandling = NullResultHandling.ReturnDefault,
+            DefaultResultHandling defaultResultHandling = DefaultResultHandling.ReturnDefault,
             Action<TView, TViewModel> initialization = null,
             Func<TView, ISaveBarView> saveBarInjector = null,
             Func<TModel, bool> shouldSuppressReturnNavigationAnimation = null
@@ -162,7 +162,7 @@ public static partial class CoreNavigation
             await Navigation.PopModalAsync(shouldAnimate);
 
             return result.IsDefault()
-                ? nullResultHandling == NullResultHandling.ReturnInput
+                ? defaultResultHandling == DefaultResultHandling.ReturnInput
                     ? vm.Source
                     : default
                 : result;
