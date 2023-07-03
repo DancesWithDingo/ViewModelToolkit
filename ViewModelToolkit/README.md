@@ -11,6 +11,7 @@ ViewModelToolkit provides three ViewModelBase base classes:
 2. `ViewModelBase<T>`, used for simple navigation to another page with a strongly typed model object passed to the `Initialize` method,
 3. `ModalViewModelBase<T>`, used for task-based modal navigation to another page, adding toolbar items and/or a button bar with Save and Cancel buttons.
 
+*DialogManager* encapsulates modal dialog behavior for ContentPage based pages, and *CoreNavigation* provides a simplified syntax for presenting a modal dialog page as an awaitable asynchronous task.
 
 ## Documentation
 Complete documentation is available in the GitHub repository: https://github.com/DancesWithDingo/ViewModelToolkit.git
